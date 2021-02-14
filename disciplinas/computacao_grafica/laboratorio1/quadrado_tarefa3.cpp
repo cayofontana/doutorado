@@ -20,7 +20,7 @@ struct vectorPoints
 {
 	t_point* points;
 	int total;
-	void (*add)();
+	void (*add)(float x, float y);
 	void (*move)(t_point);
 };
 typedef struct vectorPoints t_vectorPoints;
@@ -32,12 +32,159 @@ struct keyboardControl
 };
 typedef struct keyboardControl t_keyboardControl;
 
-void movePoints(t_point point);
+struct mouseControl
+{
+	t_point point;
+	bool isLeftClicked;
+};
+typedef struct mouseControl t_mouseControl;
 
-t_point mouseClickPoint;
-bool isLeftClicked;
-t_keyboardControl* keyboardControl;
 t_vectorPoints* vectorPoints;
+t_keyboardControl* keyboardControl;
+t_mouseControl* mouseControl;
+
+void movePoints(t_point point);
+t_point convertToGLCoordenates(int x, int y);
+void addPoints(float x, float y);
+
+void initialization(void);
+
+float calculateEuclidianDistance(t_point p1, t_point p2);
+bool isOnRectangle(t_point p1, t_point p2, t_point pc);
+
+void setValue(unsigned char key, int value);
+void keyEvent(unsigned char key, int value);
+void executeKeyAction(void);
+
+void move(int x, int y);
+bool checkClickArea(t_point mouseMovePoint);
+
+void init(void);
+void display(void);
+void keyPress(unsigned char key, int x, int y);
+void keyUp(unsigned char key, int x, int y);
+void mouse(int button, int state, int x, int y);
+void mouseMotion(int x, int y);
+void idle(void);
+void onExit(void);
+
+int main(int argc, char** argv)
+{
+	initialization();
+
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitWindowSize(TAMANHO_JANELA, TAMANHO_JANELA); 
+	glutInitWindowPosition(100, 100);
+	glutCreateWindow("hello world");
+	init();	
+	glutDisplayFunc(display); 
+	glutKeyboardFunc(keyPress);
+	glutIgnoreKeyRepeat(true);
+	glutKeyboardUpFunc(keyUp);
+	glutMouseFunc(mouse);
+	glutMotionFunc(mouseMotion);
+	glutIdleFunc(idle);
+	atexit(onExit);
+	glutMainLoop();
+
+	return (0);
+}
+
+void init(void)
+{
+	/* selecionar cor de fundo (preto) */
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	/* inicializar sistema de visualizacao */
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+}
+
+void display(void)
+{
+	int i;
+
+	/* Limpar todos os pixels  */
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	/* Define cor dos vértices com os valores R, G e B variando de 0.0 a 1.0 */
+	glColor3f(1.0, 1.0, 1.0);
+	/* Desenhar um polígono branco (retângulo) */
+	
+	if (vectorPoints->total > 0)
+	{
+		glBegin(GL_POLYGON);
+		glVertex3f(vectorPoints->points[0].x, vectorPoints->points[0].y, 0.0);
+		for (i = 1; i < vectorPoints->total; i++)
+			glVertex3f(vectorPoints->points[i - 1].x + (vectorPoints->points[i].x - vectorPoints->points[i - 1].x), vectorPoints->points[i - 1].y + (vectorPoints->points[i].y - vectorPoints->points[i - 1].y), 0.0);
+		glEnd();
+	}
+
+	/* Desenhar no frame buffer! */
+	glutSwapBuffers(); //Funcao apropriada para janela double buffer
+}
+
+void keyPress(unsigned char key, int x, int y)
+{
+	if (!mouseControl->isLeftClicked)
+	{
+		mouseControl->point.x = mouseControl->point.y = 0.0f;
+		keyboardControl->keyPressed = true;
+		vectorPoints->move = &movePoints;
+		keyEvent(key, 1);
+	}
+}
+
+void keyUp(unsigned char key, int x, int y)
+{
+	if (!mouseControl->isLeftClicked)
+	{
+		keyEvent(key, 0);
+		vectorPoints->move = NULL;
+		keyboardControl->keyPressed = false;
+	}
+}
+
+void mouse(int button, int state, int x, int y)
+{
+	if (!keyboardControl->keyPressed)
+	{
+		mouseControl->point = convertToGLCoordenates(x, y);
+
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+			mouseControl->isLeftClicked = state == GLUT_DOWN;
+		else
+			mouseControl->isLeftClicked = false;
+	}
+}	
+
+void mouseMotion(int x, int y)
+{
+	t_point mouseMovePoint;
+
+	if (!keyboardControl->keyPressed)
+	{
+		mouseMovePoint = convertToGLCoordenates(x, y);
+		if (mouseControl->isLeftClicked && checkClickArea(mouseMovePoint))
+			move(x, y);
+		mouseControl->point = mouseMovePoint;
+	}
+}
+
+void idle(void)
+{
+	if (keyboardControl->keyPressed)
+		executeKeyAction();
+	
+	glutPostRedisplay();
+}
+
+void onExit(void)
+{
+	free(vectorPoints->points);
+	free(vectorPoints);
+}
 
 t_point convertToGLCoordenates(int x, int y)
 {
@@ -62,8 +209,8 @@ void movePoints(t_point point)
 
 	for (i = 0; i < vectorPoints->total; i++)
 	{
-		vectorPoints->points[i].x += (point.x - mouseClickPoint.x);
-		vectorPoints->points[i].y += (point.y - mouseClickPoint.y);
+		vectorPoints->points[i].x += (point.x - mouseControl->point.x);
+		vectorPoints->points[i].y += (point.y - mouseControl->point.y);
 	}
 }
 
@@ -71,15 +218,16 @@ void initialization(void)
 {
 	vectorPoints = (t_vectorPoints*) calloc(1, sizeof(t_vectorPoints));
 	vectorPoints->points = (t_point*) malloc(sizeof(t_point));
+	vectorPoints->move = NULL;
+	vectorPoints->add = &addPoints;
 
 	keyboardControl = (t_keyboardControl*) calloc(1, sizeof(t_keyboardControl));
-	printf("%d\n", keyboardControl->keyPressed);	
+	mouseControl = (t_mouseControl*) calloc(1, sizeof(t_mouseControl));;
 
-	addPoints(0.25, 0.25);
-	addPoints(0.50, 0.25);
-	addPoints(0.50, 0.50);
-	addPoints(0.25, 0.50);
-	vectorPoints->move = NULL;
+	vectorPoints->add(0.25, 0.25);
+	vectorPoints->add(0.50, 0.25);
+	vectorPoints->add(0.50, 0.50);
+	vectorPoints->add(0.25, 0.50);
 }
 
 void setValue(unsigned char key, int value)
@@ -171,122 +319,4 @@ bool checkClickArea(t_point mouseMovePoint)
 	findOpositeVertices(&vertex1, &vertex2);
 
 	return (isOnRectangle(vertex1, vertex2, mouseMovePoint));
-}
-
-void init(void) 
-{
-	/* selecionar cor de fundo (preto) */
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	/* inicializar sistema de visualizacao */
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-}
-
-void display(void)
-{
-	int i;
-
-	/* Limpar todos os pixels  */
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	/* Define cor dos vértices com os valores R, G e B variando de 0.0 a 1.0 */
-	glColor3f(1.0, 1.0, 1.0);
-	/* Desenhar um polígono branco (retângulo) */
-	
-	if (vectorPoints->total > 0)
-	{
-		glBegin(GL_POLYGON);
-		glVertex3f(vectorPoints->points[0].x, vectorPoints->points[0].y, 0.0);
-		for (i = 1; i < vectorPoints->total; i++)
-			glVertex3f(vectorPoints->points[i - 1].x + (vectorPoints->points[i].x - vectorPoints->points[i - 1].x), vectorPoints->points[i - 1].y + (vectorPoints->points[i].y - vectorPoints->points[i - 1].y), 0.0);
-		glEnd();
-	}
-
-	/* Desenhar no frame buffer! */
-	glutSwapBuffers(); //Funcao apropriada para janela double buffer
-}
-
-void keyPress(unsigned char key, int x, int y)
-{
-	if (!isLeftClicked)
-	{
-		mouseClickPoint.x = mouseClickPoint.y = 0.0f;
-		keyboardControl->keyPressed = true;
-		vectorPoints->move = &movePoints;
-		keyEvent(key, 1);
-	}
-}
-
-void keyUp(unsigned char key, int x, int y)
-{
-	if (!isLeftClicked)
-	{
-		keyEvent(key, 0);
-		vectorPoints->move = NULL;
-		keyboardControl->keyPressed = false;
-	}
-}
-
-void mouse(int button, int state, int x, int y)
-{
-	if (!keyboardControl->keyPressed)
-	{
-		mouseClickPoint = convertToGLCoordenates(x, y);
-
-		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-			isLeftClicked = state == GLUT_DOWN;
-		else
-			isLeftClicked = false;
-	}
-}	
-
-void mouseMotion(int x, int y)
-{
-	t_point mouseMovePoint;
-
-	if (!keyboardControl->keyPressed)
-	{
-		mouseMovePoint = convertToGLCoordenates(x, y);
-		if (isLeftClicked && checkClickArea(mouseMovePoint))
-			move(x, y);
-		mouseClickPoint = mouseMovePoint;
-	}
-}
-
-void idle(void)
-{
-	if (keyboardControl->keyPressed)
-		executeKeyAction();
-	
-	glutPostRedisplay();
-}
-
-void onExit(void)
-{
-	free(vectorPoints->points);
-	free(vectorPoints);
-}
-
-int main(int argc, char** argv)
-{
-	initialization();
-
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-	glutInitWindowSize(TAMANHO_JANELA, TAMANHO_JANELA); 
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("hello world");
-	init();	
-	glutDisplayFunc(display); 
-	glutKeyboardFunc(keyPress);
-	glutIgnoreKeyRepeat(true);
-	glutKeyboardUpFunc(keyUp);
-	glutMouseFunc(mouse);
-	glutMotionFunc(mouseMotion);
-	glutIdleFunc(idle);
-	atexit(onExit);
-	glutMainLoop();
-
-	return (0);
 }
