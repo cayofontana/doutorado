@@ -222,7 +222,7 @@ void initialization(void)
 	vectorPoints->add = &addPoints;
 
 	keyboardControl = (t_keyboardControl*) calloc(1, sizeof(t_keyboardControl));
-	mouseControl = (t_mouseControl*) calloc(1, sizeof(t_mouseControl));;
+	mouseControl = (t_mouseControl*) calloc(1, sizeof(t_mouseControl));
 
 	vectorPoints->add(0.25, 0.25);
 	vectorPoints->add(0.50, 0.25);
@@ -309,7 +309,7 @@ void findOpositeVertices(t_point *v1, t_point *v2)
 
 bool isOnRectangle(t_point p1, t_point p2, t_point pc)
 {
-    return ((pc.x <= max(p1.x, p2.x)) && (pc.x >= min(p1.x, p2.x)) && (pc.y <= max(p1.y, p2.y)) && (pc.y >= min(p1.y, p2.y)));
+	return ((pc.x <= max(p1.x, p2.x)) && (pc.x >= min(p1.x, p2.x)) && (pc.y <= max(p1.y, p2.y)) && (pc.y >= min(p1.y, p2.y)));
 }
 
 bool checkClickArea(t_point mouseMovePoint)
