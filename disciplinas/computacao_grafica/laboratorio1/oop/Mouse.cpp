@@ -26,3 +26,8 @@ Mouse::clicked(int x, int y) {
 	// 	this->point = point;
 	// }
 }
+
+bool
+Mouse::isLeftButtonClicked(void) {
+	return (leftButtonClicked);
+}

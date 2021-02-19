@@ -44,3 +44,8 @@ Keyboard::executeKeyAction(void) {
 	// if (vectorPoints->move)
 	// 	vectorPoints->move(point);
 }
+
+void
+Keyboard::setKeyPressed(bool keyPressed) {
+	this->keyPressed = keyPressed;
+}

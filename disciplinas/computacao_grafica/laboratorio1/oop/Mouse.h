@@ -8,10 +8,12 @@ public:
 	Mouse();
 
 	void click(int, int, int, int);
-	void clicked(int, int) ;
+	void clicked(int, int);
+	bool isLeftButtonClicked(void);
+	Point getPoint(void);
 
 private:
-	// Point &point;
+	Point* point;
 	bool leftButtonClicked;
 };
 
