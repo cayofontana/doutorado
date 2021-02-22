@@ -2,14 +2,18 @@
 #define KEYBOARD_H
 
 #include "Point.h"
+#include "View.h"
 
 class Keyboard {
 public:
 	Keyboard();
 
-	void setValue(unsigned char key, int value);
-	void keyEvent(unsigned char key, int value);
+	void onKeyPress(unsigned char);
+	void onKeyUp(unsigned char);
+	void setValue(unsigned char, int);
+	void keyEvent(unsigned char, int);
 	void executeKeyAction(void);
+	bool getKeyPressed(void);
 	void setKeyPressed(bool);
 
 private:

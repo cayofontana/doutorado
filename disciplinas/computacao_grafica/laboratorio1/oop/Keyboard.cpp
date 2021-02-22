@@ -4,6 +4,17 @@ Keyboard::Keyboard() {
 }
 
 void
+Keyboard::onKeyPress(unsigned char key) {
+	keyPressed = true;
+	keyEvent(key, 1);
+}
+
+void keyUp(unsigned char key) {
+	keyEvent(key, 0);
+	keyPressed = false;
+}
+
+void
 Keyboard::setValue(unsigned char key, int value) {
 	keyStatus[(int)key] = value;
 }
@@ -43,6 +54,11 @@ Keyboard::executeKeyAction(void) {
 
 	// if (vectorPoints->move)
 	// 	vectorPoints->move(point);
+}
+
+bool
+Keyboard::getKeyPressed(void) {
+	return (keyPressed);
 }
 
 void
