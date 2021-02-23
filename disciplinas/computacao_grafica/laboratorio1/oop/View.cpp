@@ -7,31 +7,17 @@ View::getInstance(void) {
 }
 
 void
-View::initialize(void) {
-	/* selecionar cor de fundo (preto) */
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-
-	/* inicializar sistema de visualizacao */
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-}
-
-void
 View::display(void) {
-	/* Limpar todos os pixels  */
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	/* Define cor dos vértices com os valores R, G e B variando de 0.0 a 1.0 */
 	glColor3f(0.0, 0.0, 1.0);
-	/* Desenhar um polígono branco (retângulo) */
+
 	glBegin(GL_POLYGON);
 	for (auto point : View::getInstance().points)
 		glVertex3f(point.getX(), point.getY(), 0.0);
 	glEnd();
 
-	/* Desenhar no frame buffer! */
-	glutSwapBuffers(); //Funcao apropriada para janela double buffer
+	glutSwapBuffers();
 }
 
 void
@@ -65,6 +51,15 @@ View::View() {
 
 View::~View() {
 	delete keyboard;
+}
+
+void
+View::initialize(void) {
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
 }
 
 void
