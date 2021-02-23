@@ -14,7 +14,6 @@ public:
 	void move(void);
 	Point getPoint(void);
 	bool hasKeyPressed(void);
-	void setKeyPressed(bool);
 
 private:
 	std::vector<int> keys;
