@@ -1,6 +1,6 @@
 #include "Keyboard.h"
 
-Keyboard::Keyboard() : keys(256), point(0.0f, 0.0f) {
+Keyboard::Keyboard() : keys(256), point(0.0f, 0.0f), color(1.0f, 0.0f, 0.0f) {
 }
 
 void
@@ -46,6 +46,11 @@ Keyboard::move(void) {
 Point
 Keyboard::getPoint(void) {
 	return (point);
+}
+
+Color
+Keyboard::getColor(void) {
+	return (color);
 }
 
 bool

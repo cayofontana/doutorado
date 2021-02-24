@@ -5,6 +5,7 @@
 #include <list>
 
 #include "Point.h"
+#include "Color.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 
@@ -31,8 +32,11 @@ private:
 	Mouse* mouse;
 	std::list<Point> points;
 	Point pointReference;
+	Color color;
 	int width;
 	int height;
+
+	void reset(void);
 };
 
 #endif

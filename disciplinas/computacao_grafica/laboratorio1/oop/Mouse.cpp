@@ -1,6 +1,6 @@
 #include "Mouse.h"
 
-Mouse::Mouse() : point(0.0f, 0.0f), increasePoint(0.0f, 0.0f) {
+Mouse::Mouse() : point(0.0f, 0.0f), increasePoint(0.0f, 0.0f), color(0.0f, 0.0f, 1.0f) {
 }
 
 void
@@ -33,6 +33,11 @@ Mouse::isMotionClickOnArea(void) {
 Point
 Mouse::getPoint(void) {
 	return (increasePoint);
+}
+
+Color
+Mouse::getColor(void) {
+	return (color);
 }
 
 bool

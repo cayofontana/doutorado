@@ -10,7 +10,7 @@ void
 View::display(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glColor3f(0.0, 0.0, 1.0);
+	glColor3f(View::getInstance().color.getRed(), View::getInstance().color.getGreen(), View::getInstance().color.getBlue());
 
 	glBegin(GL_POLYGON);
 	for (auto point : View::getInstance().points)
@@ -44,6 +44,7 @@ View::mouseClickMotion(int x, int y) {
 		View::getInstance().mouse->clickMotion(x, y, View::getInstance().width, View::getInstance().height, View::getInstance().points);
 		if (View::getInstance().mouse->isLeftButtonClicked() && View::getInstance().mouse->isMotionClickOnArea()) {
 			View::getInstance().pointReference = View::getInstance().mouse->getPoint();
+			View::getInstance().color = View::getInstance().mouse->getColor();
 			View::getInstance().update();
 		}
 	}
@@ -53,14 +54,18 @@ void
 View::idle(void) {
 	if (View::getInstance().keyboard->hasKeyPressed()) {
 		View::getInstance().pointReference = View::getInstance().keyboard->getPoint();
+		View::getInstance().color = View::getInstance().keyboard->getColor();
 		View::getInstance().keyboard->move();
 		View::getInstance().update();
 	}
 
+	if (!View::getInstance().keyboard->hasKeyPressed() && !View::getInstance().mouse->isLeftButtonClicked())
+		View::getInstance().reset();
+
 	glutPostRedisplay();
 }
 
-View::View() : pointReference(0.0f, 0.0f) {
+View::View() : pointReference(0.0f, 0.0f), color(1.0f, 1.0f, 1.0f) {
 	keyboard = new Keyboard();
 	mouse = new Mouse();
 	
@@ -90,4 +95,11 @@ void
 View::update(void) {
 	for (auto& point : View::getInstance().points)
 		point.increase(pointReference.getX(), pointReference.getY());
+}
+
+void
+View::reset(void) {
+	color.setRed(1.0f);
+	color.setGreen(1.0f);
+	color.setBlue(1.0f);
 }

@@ -5,6 +5,7 @@
 #include <list>
 
 #include "Point.h"
+#include "Color.h"
 
 class Mouse {
 public:
@@ -15,10 +16,12 @@ public:
 	bool isLeftButtonClicked(void);
 	bool isMotionClickOnArea(void);
 	Point getPoint(void);
+	Color getColor(void);
 
 private:
 	Point point;
 	Point increasePoint;
+	Color color;
 	bool leftButtonClicked;
 	bool motionClickOnArea;
 
