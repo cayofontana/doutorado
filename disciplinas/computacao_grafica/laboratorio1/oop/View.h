@@ -6,12 +6,13 @@
 
 #include "Point.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 
 class View {
 public:
 	~View();
 
-	void initialize(void);
+	void initialize(const int, const int);
 	void update(void);
 
 	static View& getInstance(void);
@@ -19,13 +20,19 @@ public:
 	static void display(void);
 	static void keyPress(unsigned char, int, int);
 	static void keyUp(unsigned char, int, int);
+	static void mouseClick(int, int, int, int);
+	static void mouseClickMotion(int, int);
 	static void idle(void);
 
 private:
 	View();
 
 	Keyboard* keyboard;
+	Mouse* mouse;
 	std::list<Point> points;
+	Point pointReference;
+	int width;
+	int height;
 };
 
 #endif
