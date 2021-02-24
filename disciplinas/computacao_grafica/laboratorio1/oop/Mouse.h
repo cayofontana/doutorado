@@ -12,7 +12,6 @@ public:
 
 	void click(int, int, int, int, const int, const int);
 	void clickMotion(int, int, const int, const int, std::list<Point>);
-	bool isClickOnArea(std::list<Point>);
 	bool isLeftButtonClicked(void);
 	bool isMotionClickOnArea(void);
 	Point getPoint(void);
@@ -23,6 +22,7 @@ private:
 	bool leftButtonClicked;
 	bool motionClickOnArea;
 
+	bool isClickOnArea(std::list<Point>);
 	float min(float a, float b);
 	float max(float a, float b);
 };
