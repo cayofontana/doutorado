@@ -13,7 +13,7 @@ void
 Mouse::clickMotion(int x, int y, const int width, const int height, std::list<Point> points) {
 	Point mousePoint(x, y, width, height);
 	
-	if (motionClickOnArea = (leftButtonClicked && isClickOnArea(points))) {
+	if ((motionClickOnArea = (leftButtonClicked && isClickOnArea(points)))) {
 		increasePoint.setX(mousePoint.getX() - point.getX());
 		increasePoint.setY(mousePoint.getY() - point.getY());
 		point = mousePoint;
