@@ -1,5 +1,5 @@
-CPP			= g++
-CPPFLAGS	= -Wall -lGL -lglut
+CPP 		= g++
+CPPFLAGS 	= -Wall -lGL -lglut
 
 all:
 	$(CPP) -o lab1 Point.cpp Color.cpp Keyboard.cpp Mouse.cpp View.cpp Main.cpp $(CPPFLAGS)
