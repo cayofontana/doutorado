@@ -10,7 +10,7 @@ Mouse::click(int button, int state, int x, int y, const int width, const int hei
 	GLfloat fX = (GLfloat)x/width;
     GLfloat fY = (GLfloat)(height - y)/height;
 
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		choosingColor = 1;
 	}
 	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
@@ -38,7 +38,7 @@ Mouse::clickMotion(int x, int y, const int width, const int height, std::vector<
 		//Atualiza posicao do clique
 		clickPoint->setX(fX);
 		clickPoint->setY(fY);
-		
+
 		/**
 		COLOQUE SEU CODIGO AQUI
 		**/
