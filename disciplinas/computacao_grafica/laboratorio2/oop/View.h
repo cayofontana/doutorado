@@ -14,9 +14,12 @@ public:
 
 	void initialize(const int, const int);
 	void update(void);
+	void reset(void);
 
 	static View& getInstance(void);
 	static void display(void);
+	static void keyPress(unsigned char, int, int);
+	static void keyUp(unsigned char, int, int);
 	static void mouseClick(int, int, int, int);
 	static void mouseClickMotion(int, int);
 	static void idle(void);
@@ -24,10 +27,12 @@ public:
 private:
 	Keyboard* keyboard;
 	Mouse* mouse;
+	Color color;
 	Point pointReference;
 	Point* pointUpdate;
 	std::vector<Point*> points;
 	float *pointsArray;
+	int curvePoints;
 	int width;
 	int height;
 

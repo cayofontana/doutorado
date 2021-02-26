@@ -1,9 +1,5 @@
 #include "View.h"
 
-#include <iostream>
-
-using namespace std;
-
 View&
 View::getInstance(void) {
 	static View instance;
@@ -12,30 +8,47 @@ View::getInstance(void) {
 
 void
 View::display(void) {
-	int i;
-
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	//Definicao do polinomio com os atuais pontos de controle
+	View::getInstance().convertToArray(View::getInstance().points, &View::getInstance().pointsArray, 3);
+	glMap1f(GL_MAP1_VERTEX_3, 0.0, 1.0, 3, 4, View::getInstance().pointsArray);
+
 	/* Desenha a curva aproximada por n+1 pontos. */
-	int n = 30;
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_LINE_STRIP);
-	for (i = 0; i <= n; i++)
+	for (int i = 0; i <= View::getInstance().curvePoints; i++)
 		//Avaliacao do polinomio, retorna um vertice (equivalente a um glVertex3fv) 
-		glEvalCoord1f((GLfloat) i/(GLfloat)n);
+		glEvalCoord1f((GLfloat) i/(GLfloat)View::getInstance().curvePoints);
 	glEnd();
 
 	/* Desenha os pontos de controle. */
 	glPointSize(5.0);
-	glColor3f(1.0, 1.0, 0.0);
+	glColor3f(View::getInstance().color.getRed(), View::getInstance().color.getGreen(), View::getInstance().color.getBlue());
 	glBegin(GL_POINTS);
 	for (auto point : View::getInstance().points)
 		glVertex3f(point->getX(), point->getY(), 0.0f);
 	glEnd();
 
-	glMap1f(GL_MAP1_VERTEX_3, 0.0, 1.0, 3, 4, View::getInstance().pointsArray);
+	
 
 	glutSwapBuffers();
+}
+
+void
+View::keyPress(unsigned char key, int x, int y) {
+	if (!View::getInstance().mouse->isLeftButtonClicked()) {
+		View::getInstance().keyboard->keyEvent(key, 1, &View::getInstance().curvePoints);
+		View::getInstance().color = View::getInstance().keyboard->getColor();
+	}
+}
+
+void
+View::keyUp(unsigned char key, int x, int y) {
+	if (!View::getInstance().mouse->isLeftButtonClicked()) {
+		View::getInstance().keyboard->keyEvent(key, 0, &View::getInstance().curvePoints);
+		View::getInstance().color = View::getInstance().keyboard->getColor();
+	}
 }
 
 void
@@ -49,9 +62,8 @@ View::mouseClickMotion(int x, int y) {
 	if (!View::getInstance().keyboard->hasKeyPressed()) {
 		View::getInstance().pointUpdate = View::getInstance().mouse->clickMotion(x, y, View::getInstance().width, View::getInstance().height, View::getInstance().points);
 		if (View::getInstance().mouse->isLeftButtonClicked() && View::getInstance().mouse->isMotionClickOnArea()) {
-			cout << "Passei" << endl;
 			View::getInstance().pointReference = View::getInstance().mouse->getPoint();
-		// 	View::getInstance().color = View::getInstance().mouse->getColor();
+			View::getInstance().color = View::getInstance().mouse->getColor();
 			View::getInstance().update();
 		}
 	}
@@ -59,20 +71,13 @@ View::mouseClickMotion(int x, int y) {
 
 void
 View::idle(void) {
-	// if (View::getInstance().keyboard->hasKeyPressed()) {
-	// 	View::getInstance().pointReference = View::getInstance().keyboard->getPoint();
-	// 	View::getInstance().color = View::getInstance().keyboard->getColor();
-	// 	View::getInstance().keyboard->move();
-	// 	View::getInstance().update();
-	// }
-
-	// if (!View::getInstance().keyboard->hasKeyPressed() && !View::getInstance().mouse->isLeftButtonClicked())
-	// 	View::getInstance().reset();
+	if (!View::getInstance().keyboard->hasKeyPressed() && !View::getInstance().mouse->isLeftButtonClicked())
+		View::getInstance().reset();
 
 	glutPostRedisplay();
 }
 
-View::View() : pointReference(0.0f, 0.0f) {
+View::View() : color(1.0, 1.0, 0.0), pointReference(0.0f, 0.0f), curvePoints(30) {
 	keyboard = new Keyboard();
 	mouse = new Mouse();
 
@@ -107,16 +112,16 @@ View::initialize(const int width, const int height) {
 
 void
 View::update(void) {
-	for (auto& point : View::getInstance().points) {
-		if (point == pointUpdate) {
+	for (auto& point : View::getInstance().points)
+		if (point == pointUpdate)
 			point->increase(pointReference.getX(), pointReference.getY());
-			for (std::vector<Point>::size_type i, j = i = 0; j < points.size(); j++) {
-				pointsArray[i++] = (*points[j]).getX();
-				pointsArray[i++] = (*points[j]).getY();
-				pointsArray[i++] = 0.0f;
-			}
-		}
-	}
+}
+
+void
+View::reset(void) {
+	color.setRed(1.0f);
+	color.setGreen(1.0f);
+	color.setBlue(0.0f);
 }
 
 void

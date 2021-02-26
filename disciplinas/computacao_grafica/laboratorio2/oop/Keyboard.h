@@ -11,16 +11,13 @@ class Keyboard {
 public:
 	Keyboard();
 
-	void keyEvent(unsigned char, int);
+	void keyEvent(unsigned char, int, int*);
 	void setValue(unsigned char, int);
-	void move(void);
-	Point getPoint(void);
 	Color getColor(void);
 	bool hasKeyPressed(void);
 
 private:
 	std::vector<int> keys;
-	Point point;
 	Color color;
 };
 

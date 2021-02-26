@@ -1,9 +1,6 @@
 #include "Mouse.h"
 
-#include <iostream>
-using namespace std;
-
-Mouse::Mouse() : point(0.0f, 0.0f), increasePoint(0.0f, 0.0f), color(0.0f, 0.0f, 1.0f) {
+Mouse::Mouse() : point(0.0f, 0.0f), increasePoint(0.0f, 0.0f), color(1.0f, 0.0f, 0.0f) {
 }
 
 void

@@ -17,9 +17,12 @@ main(int argc, char** argv) {
 	glutInitWindowPosition(atoi(argv[3]), atoi(argv[4]));
 	glutCreateWindow(argv[0]);
 	View::getInstance().initialize(atoi(argv[1]), atoi(argv[2]));
+	glutKeyboardFunc(View::getInstance().keyPress);
+	glutKeyboardUpFunc(View::getInstance().keyUp);	
 	glutMouseFunc(View::getInstance().mouseClick);
 	glutMotionFunc(View::getInstance().mouseClickMotion);
 	glutDisplayFunc(View::getInstance().display);
+	glutIdleFunc(View::getInstance().idle);
 	glutMainLoop();
 
 	return (0);
