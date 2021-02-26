@@ -27,7 +27,8 @@ public:
 private:
 	Keyboard* keyboard;
 	Mouse* mouse;
-	Color color;
+	Color colorPoints;
+	Color colorLine;
 	Point pointReference;
 	Point* pointUpdate;
 	std::vector<Point*> points;
