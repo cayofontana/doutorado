@@ -88,6 +88,11 @@ View::View() : colorPoints(1.0, 1.0, 0.0), colorLine(1.0, 1.0, 1.0), pointRefere
 }
 
 View::~View() {
+	delete keyboard;
+	delete mouse;
+	delete pointUpdate;
+	for (auto& point : View::getInstance().points)
+		delete point;
 }
 
 void
