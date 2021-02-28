@@ -1,14 +1,14 @@
 #include "Mouse.h"
 
-Mouse::Mouse() {
+Mouse::Mouse() : choosingColor(0) {
 }
 
 void
 Mouse::click(int button, int state, int x, int y, const int width, const int height, std::vector<Point*> points) {
 	// leftButtonClicked = (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) ? state == GLUT_DOWN : false;
 
-	GLfloat fX = (GLfloat)x/width;
-    GLfloat fY = (GLfloat)(height - y)/height;
+	GLfloat fX = (GLfloat)x / width;
+	GLfloat fY = (GLfloat)(height - y) / height;
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		choosingColor = 1;
@@ -28,20 +28,24 @@ Mouse::click(int button, int state, int x, int y, const int width, const int hei
 }
 
 void
-Mouse::clickMotion(int x, int y, const int width, const int height, std::vector<Point*> points, Point* clickPoint, Point* projectedPoint) {
+Mouse::clickMotion(int x, int y, const int width, const int height, std::vector<Point*> points, Point* clickPoint, Point* projectedPoint, Color* backgroundColor) {
+	Point* _projectedPoint = nullptr;
+
 	//Corrige a posicao do mouse para a posicao da janela de visualizacao
 	y = height - y;
-	GLfloat fX = (GLfloat)x/width;
-	GLfloat fY = (GLfloat)y/height;
+	GLfloat fX = (GLfloat)x / width;
+	GLfloat fY = (GLfloat)y / height;
 
 	if (choosingColor) {
 		//Atualiza posicao do clique
 		clickPoint->setX(fX);
 		clickPoint->setY(fY);
 
-		/**
-		COLOQUE SEU CODIGO AQUI
-		**/
+		_projectedPoint = Point::calculateIntersection(*points.at(0), *points.at(1), *points.at(2), *clickPoint, projectedPoint->getColor());
+		if (_projectedPoint) {
+			projectedPoint->setX(_projectedPoint->getX());
+			projectedPoint->setY(_projectedPoint->getY());
+		}
 	}
 	else
 		for (auto& point : points)
@@ -49,6 +53,8 @@ Mouse::clickMotion(int x, int y, const int width, const int height, std::vector<
 				point->setX((GLfloat)x/width);
 				point->setY((GLfloat)y/height);
 			}
+
+	delete _projectedPoint;
 }
 
 bool

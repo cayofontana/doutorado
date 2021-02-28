@@ -3,10 +3,12 @@
 
 #include "Color.h"
 
+#include <math.h>
+
 class Point {
 public:
-	// Point(float, float);
-	Point(float, float, float, float, float);
+	Point(float, float, Color);
+	// Point(float, float, float, float, float);
 	// Point(int, int, int, int);
 
 	float getX(void);
@@ -18,6 +20,9 @@ public:
 	void setDragging(int dragging);
 	void increase(float, float);
 	void setGLCoordinates(int, int, int, int);
+	float calculateEuclidianDistance(Point point);
+
+	static Point* calculateIntersection(Point, Point, Point, Point, Color);
 
 private:
 	float x;

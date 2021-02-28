@@ -48,7 +48,7 @@ View::mouseClick(int button, int state, int x, int y) {
 
 void
 View::mouseClickMotion(int x, int y) {
-	View::getInstance().mouse->clickMotion(x, y, View::getInstance().width, View::getInstance().height, View::getInstance().points, &View::getInstance().clickPoint, &View::getInstance().projectedPoint);
+	View::getInstance().mouse->clickMotion(x, y, View::getInstance().width, View::getInstance().height, View::getInstance().points, &View::getInstance().clickPoint, &View::getInstance().projectedPoint, &View::getInstance().backgroundColor);
 	if (View::getInstance().mouse->isLeftButtonClicked() && View::getInstance().mouse->isMotionClickOnArea()) {
 		// View::getInstance().pointReference = View::getInstance().mouse->getPoint();
 		// View::getInstance().color = View::getInstance().mouse->getColor();
@@ -64,16 +64,15 @@ View::idle(void) {
 	glutPostRedisplay();
 }
 
-View::View() : backgroundColor(0.0f, 0.0f, 0.0f), clickPoint(0.0f, 0.0f, 1.0, 1.0, 0.0), projectedPoint(0.0f, 0.0f, 1.0, 1.0, 0.0) {
+View::View() : backgroundColor(0.0f, 0.0f, 0.0f), clickPoint(0.0f, 0.0f, Color(1.0, 1.0, 0.0)), projectedPoint(0.0f, 0.0f, Color(1.0, 1.0, 0.0)) {
 	mouse = new Mouse();
 	
-	points.push_back(new Point(0.1, 0.1, 1.0, 0.0, 0.0));
-	points.push_back(new Point(0.9, 0.1, 0.0, 1.0, 0.0));
-	points.push_back(new Point(0.5, 0.9, 0.0, 0.0, 1.0));
+	points.push_back(new Point(0.1, 0.1, Color(1.0, 0.0, 0.0)));
+	points.push_back(new Point(0.9, 0.1, Color(0.0, 1.0, 0.0)));
+	points.push_back(new Point(0.5, 0.9, Color(0.0, 0.0, 1.0)));
 }
 
 View::~View() {
-	
 }
 
 void
@@ -82,7 +81,7 @@ View::initialize(const int width, const int height) {
 	this->height = height;
 
 	/* selecionar cor de fundo (preto) */
-	glClearColor (0.0, 0.0, 0.0, 0.0);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 	/* inicializar sistema de visualizacao */
 	glMatrixMode(GL_PROJECTION);
