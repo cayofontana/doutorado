@@ -49,18 +49,10 @@ View::mouseClick(int button, int state, int x, int y) {
 void
 View::mouseClickMotion(int x, int y) {
 	View::getInstance().mouse->clickMotion(x, y, View::getInstance().width, View::getInstance().height, View::getInstance().points, &View::getInstance().clickPoint, &View::getInstance().projectedPoint, &View::getInstance().backgroundColor);
-	if (View::getInstance().mouse->isLeftButtonClicked() && View::getInstance().mouse->isMotionClickOnArea()) {
-		// View::getInstance().pointReference = View::getInstance().mouse->getPoint();
-		// View::getInstance().color = View::getInstance().mouse->getColor();
-		View::getInstance().update();
-	}
 }
 
 void
 View::idle(void) {
-	if (!View::getInstance().mouse->isLeftButtonClicked())
-		View::getInstance().reset();
-
 	glutPostRedisplay();
 }
 
@@ -73,6 +65,8 @@ View::View() : backgroundColor(0.0f, 0.0f, 0.0f), clickPoint(0.0f, 0.0f, Color(1
 }
 
 View::~View() {
+	for (auto& point : points)
+		delete point;
 }
 
 void
@@ -87,17 +81,4 @@ View::initialize(const int width, const int height) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-}
-
-void
-View::update(void) {
-	// for (auto& point : View::getInstance().points)
-	// 	point.increase(pointReference.getX(), pointReference.getY());
-}
-
-void
-View::reset(void) {
-	// color.setRed(1.0f);
-	// color.setGreen(1.0f);
-	// color.setBlue(1.0f);
 }

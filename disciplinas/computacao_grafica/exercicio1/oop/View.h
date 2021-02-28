@@ -31,14 +31,6 @@ private:
 	std::vector<Point*> points;
 	int width;
 	int height;
-
-	// Keyboard* keyboard;
-	
-	// Point pointReference;
-	// Color color;
-
-
-	void reset(void);
 };
 
 #endif

@@ -5,8 +5,6 @@ Mouse::Mouse() : choosingColor(0) {
 
 void
 Mouse::click(int button, int state, int x, int y, const int width, const int height, std::vector<Point*> points) {
-	// leftButtonClicked = (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) ? state == GLUT_DOWN : false;
-
 	GLfloat fX = (GLfloat)x / width;
 	GLfloat fY = (GLfloat)(height - y) / height;
 
@@ -45,6 +43,10 @@ Mouse::clickMotion(int x, int y, const int width, const int height, std::vector<
 		if (_projectedPoint) {
 			projectedPoint->setX(_projectedPoint->getX());
 			projectedPoint->setY(_projectedPoint->getY());
+
+			backgroundColor->setRed(Point::getRedColorByInterpolation(*clickPoint, *points.at(2), *points.at(0)));
+			backgroundColor->setGreen(Point::getGreenColorByInterpolation(*clickPoint, *points.at(0), *points.at(1)));
+			backgroundColor->setBlue(Point::getBlueColorByInterpolation(*clickPoint, *points.at(1), *points.at(2)));
 		}
 	}
 	else
@@ -55,45 +57,4 @@ Mouse::clickMotion(int x, int y, const int width, const int height, std::vector<
 			}
 
 	delete _projectedPoint;
-}
-
-bool
-Mouse::isLeftButtonClicked(void) {
-	return (leftButtonClicked);
-}
-
-bool
-Mouse::isMotionClickOnArea(void) {
-	return (motionClickOnArea);
-}
-
-// Point
-// Mouse::getPoint(void) {
-// 	return (increasePoint);
-// }
-
-// Color
-// Mouse::getColor(void) {
-// 	return (color);
-// }
-
-bool
-Mouse::isClickOnArea(std::vector<Point> points) {
-	// for (auto initialPoint = points.begin(), currentPoint = std::next(initialPoint); currentPoint != points.end(); ++currentPoint)
-	// 	if ((point.getX() <= max(initialPoint->getX(), currentPoint->getX())) && 
-	// 		(point.getX() >= min(initialPoint->getX(), currentPoint->getX())) &&
-	// 		(point.getY() <= max(initialPoint->getY(), currentPoint->getY())) &&
-	// 		(point.getY() >= min(initialPoint->getY(), currentPoint->getY())))
-	// 		return (true);
-	return (false);
-}
-
-float
-Mouse::min(float a, float b) {
-	return ((a < b) ? a : b);
-}
-
-float
-Mouse::max(float a, float b) {
-	return ((a > b) ? a : b);
 }
