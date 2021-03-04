@@ -11,6 +11,9 @@ Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), 
 	Pixel pixelReferencia(0.0f, alturaJanela / 2.0f);
 
 	construirBase(100.0f, 40.0f, &pixelReferencia);
+	// bracos.push_back(construirBraco(10.0f, 80.0f, &pixelReferencia));
+	// bracos.push_back(construirBraco(10.0f, 80.0f, &pixelReferencia));
+	// bracos.push_back(construirBraco(10.0f, 80.0f, &pixelReferencia));
 	construirhasteBase(10.0f, 80.0f, &pixelReferencia);
 	construirhasteMedia(10.0f, 80.0f, &pixelReferencia);
 	construirhastePonta(10.0f, 80.0f, &pixelReferencia);
@@ -106,7 +109,8 @@ Robo::construirhastePonta(float largura, float altura, Pixel* pixelReferencia) {
 
 Circunferencia*
 Robo::construirRoda(float raio, Pixel pixelReferencia) {
-	return (new Circunferencia(raio, pixelReferencia));
+	// MELHORAR ESSE PONTO DO POLIMORFISMO
+	return (new Circunferencia(raio, new Pixel(pixelReferencia.obterX(), pixelReferencia.obterY(), pixelReferencia.obterCor())));
 }
 
 Pixel

@@ -2,22 +2,20 @@
 #define CIRCUNFERENCIA_H
 
 #include "Pixel.h"
+#include "FormaGeometrica2D.h"
 
-class Circunferencia {
+class Circunferencia : public FormaGeometrica2D {
 public:
-	Circunferencia(float, Pixel);
+	Circunferencia(float, Pixel*);
+	virtual ~Circunferencia();
 
 	float obterRaio(void);
-	Pixel obterPixel(void);
 	float obterDiametro(void);
-	float obterAngulo(void);
-	void definirAngulo(float);
-	void mover(float, float);
+	Pixel obterPixel(void);
+	void mover(float, float) override;
 	
 private:
 	float raio;
-	Pixel pixel;
-	float angulo;
 };
 
 #endif

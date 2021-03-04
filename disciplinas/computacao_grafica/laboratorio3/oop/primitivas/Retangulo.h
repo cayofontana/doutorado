@@ -1,31 +1,25 @@
 #ifndef RETANGULO_H
 #define RETANGULO_H
 
-#include <vector>
-
 #include "Cor.h"
 #include "Pixel.h"
+#include "FormaGeometrica2D.h"
 
-class Retangulo {
+class Retangulo : public FormaGeometrica2D {
 public:
 	Retangulo(Pixel, float, float, Cor);
-	~Retangulo();
+	virtual ~Retangulo();
 
-	std::vector<Pixel*> obterPixels(void);
 	float obterLargura(void);
 	float obterAltura(void);
 	Cor obterCor(void);
-	float obterAngulo	(void);
-	void definirAngulo(float);
 	void inclinar(int);
-	void mover(float, float);
+	void mover(float, float) override;
 	
 private:
-	std::vector<Pixel*> pixels;
 	float largura;
 	float altura;
 	Cor cor;
-	float angulo;
 };
 
 #endif
