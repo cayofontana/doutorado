@@ -1,6 +1,7 @@
 #include "Cenario.h"
 
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 Cenario&
@@ -18,6 +19,40 @@ Cenario::exibir(void) {
 	for (auto pixel : Cenario::obterInstancia().robo->obterBase()->obterPixels())
 		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
 	glEnd();
+
+	glColor3f(Cenario::obterInstancia().robo->obterHasteBase()->obterCor().obterVermelho(), Cenario::obterInstancia().robo->obterHasteBase()->obterCor().obterVerde(), Cenario::obterInstancia().robo->obterHasteBase()->obterCor().obterAzul());
+	glBegin(GL_POLYGON);
+	for (auto pixel : Cenario::obterInstancia().robo->obterHasteBase()->obterPixels())
+		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
+	glEnd();
+
+	glColor3f(Cenario::obterInstancia().robo->obterHasteMedia()->obterCor().obterVermelho(), Cenario::obterInstancia().robo->obterHasteMedia()->obterCor().obterVerde(), Cenario::obterInstancia().robo->obterHasteMedia()->obterCor().obterAzul());
+	glBegin(GL_POLYGON);
+	for (auto pixel : Cenario::obterInstancia().robo->obterHasteMedia()->obterPixels())
+		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
+	glEnd();
+
+	glColor3f(Cenario::obterInstancia().robo->obterHastePonta()->obterCor().obterVermelho(), Cenario::obterInstancia().robo->obterHastePonta()->obterCor().obterVerde(), Cenario::obterInstancia().robo->obterHastePonta()->obterCor().obterAzul());
+	glBegin(GL_POLYGON);
+	for (auto pixel : Cenario::obterInstancia().robo->obterHastePonta()->obterPixels())
+		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
+	glEnd();
+
+	for (auto& roda : Cenario::obterInstancia().robo->obterRodas()) {
+		glColor3f(roda->obterPixel().obterCor().obterVermelho(), roda->obterPixel().obterCor().obterVerde(), roda->obterPixel().obterCor().obterAzul());
+		glTranslatef(roda->obterPixel().obterX(), roda->obterPixel().obterY(), 0.0f);
+		glRotatef(-roda->obterAngulo(), 0.0f, 0.0f, 1.0f);
+		glPointSize(3.0f);
+		glBegin(GL_POINTS);
+		for (float anguloRaio = 0.0f; anguloRaio <= (2.0f * M_PI); anguloRaio += 0.35) {
+			float x = roda->obterRaio() * sin(anguloRaio);
+			float y = roda->obterRaio() * cos(anguloRaio);
+			glVertex3f(x, y, 0.0f);
+		}
+		glEnd();
+		glRotatef(roda->obterAngulo(), 0.0f, 0.0f, 1.0f);
+		glTranslatef(-roda->obterPixel().obterX(), -roda->obterPixel().obterY(), 0.0f);
+	}
 
 	glutSwapBuffers();
 }
@@ -42,6 +77,7 @@ Cenario::Cenario() {
 
 Cenario::~Cenario() {
 	delete robo;
+	delete teclado;
 }
 
 void
@@ -50,27 +86,19 @@ Cenario::inicializar(const int larguraJanela, const int alturaJanela, const int 
 	this->alturaJanela = alturaJanela;
 	this->larguraCenario = larguraCenario;
 	this->alturaCenario = alturaCenario;
-	robo = new Robo(larguraJanela, alturaJanela);
+	robo = new Robo(larguraCenario, alturaCenario);
 	teclado = new Teclado();
 
-	// selecionar cor de fundo (preto)
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	// The color the windows will redraw. Its done to erase the previous frame.
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black, no opacity(alpha).
 
-	// inicializar sistema de visualizacao 
-	glMatrixMode(GL_PROJECTION);
+	glMatrixMode(GL_PROJECTION); // Select the projection matrix    
+	glOrtho(-(this->larguraCenario/2),     // X coordinate of left edge             
+		(this->larguraCenario/2),     // X coordinate of right edge            
+		-(this->alturaCenario/2),     // Y coordinate of bottom edge             
+		(this->alturaCenario/2),     // Y coordinate of top edge             
+		-100,     // Z coordinate of the “near” plane            
+		100);   // Z coordinate of the “far” plane
+	glMatrixMode(GL_MODELVIEW); // Select the projection matrix    
 	glLoadIdentity();
-	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-
-	// // The color the windows will redraw. Its done to erase the previous frame.
-	// glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black, no opacity(alpha).
-
-	// glMatrixMode(GL_PROJECTION); // Select the projection matrix    
-	// glOrtho(-(this->larguraCenario/2),     // X coordinate of left edge             
-	// 	(this->larguraCenario/2),     // X coordinate of right edge            
-	// 	-(this->alturaCenario/2),     // Y coordinate of bottom edge             
-	// 	(this->alturaCenario/2),     // Y coordinate of top edge             
-	// 	-1,     // Z coordinate of the “near” plane            
-	// 	1);    // Z coordinate of the “far” plane
-	// glMatrixMode(GL_MODELVIEW); // Select the projection matrix    
-	// glLoadIdentity();
 }

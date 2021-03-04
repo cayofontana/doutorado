@@ -8,16 +8,17 @@
 
 class Retangulo {
 public:
-	Retangulo(Pixel*, float, float, Cor);
+	Retangulo(Pixel, float, float, Cor);
 	~Retangulo();
 
 	std::vector<Pixel*> obterPixels(void);
 	float obterLargura(void);
 	float obterAltura(void);
 	Cor obterCor(void);
-	float obterAngulo(void);
+	float obterAngulo	(void);
 	void definirAngulo(float);
-	
+	void inclinar(int);
+	void mover(float, float);
 	
 private:
 	std::vector<Pixel*> pixels;

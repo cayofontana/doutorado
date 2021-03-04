@@ -9,12 +9,22 @@ Teclado::teclar(unsigned char tecla, int valor, Robo* robo) {
 		switch (tecla) {
 			case 'a':
 			case 'A':
-				robo->mover(-0.01, 0);
+				robo->mover(-5, 0);
 				break;
 			case 'd':
 			case 'D':
-				robo->mover(0.01, 0);
+				robo->mover(5, 0);
 				break;
+			case 'f':
+			case 'F':
+				robo->inclinarHasteBase(-1);
+				break;
+			case 'r':
+			case 'R':
+				robo->inclinarHasteBase(1);
+				break;
+			case 27 :
+				exit(0);
 		}
 	definirValor(tecla, valor);
 }

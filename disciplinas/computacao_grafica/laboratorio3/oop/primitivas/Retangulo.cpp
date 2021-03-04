@@ -3,11 +3,11 @@
 #include <iostream>
 using namespace std;
 
-Retangulo::Retangulo(Pixel* pixel, float largura, float altura, Cor cor) : largura(largura), altura(altura), cor(cor), angulo(0) {
-	pixels.push_back(new Pixel(pixel->obterX() - largura / 2, pixel->obterY() - altura / 2));
-	pixels.push_back(new Pixel(pixel->obterX() - largura / 2, pixel->obterY() + altura / 2));
-	pixels.push_back(new Pixel(pixel->obterX() + largura / 2, pixel->obterY() + altura / 2));
-	pixels.push_back(new Pixel(pixel->obterX() + largura / 2, pixel->obterY() - altura / 2));
+Retangulo::Retangulo(Pixel pixel, float largura, float altura, Cor cor) : largura(largura), altura(altura), cor(cor), angulo(0) {
+	pixels.push_back(new Pixel(pixel.obterX() - largura / 2, pixel.obterY() - altura / 2));
+	pixels.push_back(new Pixel(pixel.obterX() - largura / 2, pixel.obterY() + altura / 2));
+	pixels.push_back(new Pixel(pixel.obterX() + largura / 2, pixel.obterY() + altura / 2));
+	pixels.push_back(new Pixel(pixel.obterX() + largura / 2, pixel.obterY() - altura / 2));
 }
 
 Retangulo::~Retangulo() {
@@ -43,4 +43,15 @@ Retangulo::obterAngulo(void) {
 void
 Retangulo::definirAngulo(float angulo) {
 	this->angulo = angulo;
+}
+
+void
+Retangulo::inclinar(int valor) {
+	this->angulo += valor;
+}
+
+void
+Retangulo::mover(float x, float y) {
+	for (auto& pixel : pixels)
+		pixel->incrementar(x, y);
 }
