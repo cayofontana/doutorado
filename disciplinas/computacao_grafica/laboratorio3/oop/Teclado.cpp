@@ -19,11 +19,21 @@ Teclado::teclar(unsigned char tecla, int valor, Robo* robo) {
 				break;
 			case 'f':
 			case 'F':
-				robo->inclinarHasteBase(-1);
 				break;
 			case 'r':
 			case 'R':
-				robo->inclinarHasteBase(1);
+				break;
+			case 'g':
+			case 'G':
+				break;
+			case 't':
+			case 'T':
+				break;
+			case 'h':
+			case 'H':
+				break;
+			case 'y':
+			case 'Y':
 				break;
 			case 27 :
 				exit(0);

@@ -18,23 +18,14 @@ Cenario::exibir(void) {
 		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
 	glEnd();
 
-	glColor3f(Cenario::obterInstancia().robo->obterHasteBase()->obterCor().obterVermelho(), Cenario::obterInstancia().robo->obterHasteBase()->obterCor().obterVerde(), Cenario::obterInstancia().robo->obterHasteBase()->obterCor().obterAzul());
-	glBegin(GL_POLYGON);
-	for (auto pixel : Cenario::obterInstancia().robo->obterHasteBase()->obterPixels())
-		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
-	glEnd();
-
-	glColor3f(Cenario::obterInstancia().robo->obterHasteMedia()->obterCor().obterVermelho(), Cenario::obterInstancia().robo->obterHasteMedia()->obterCor().obterVerde(), Cenario::obterInstancia().robo->obterHasteMedia()->obterCor().obterAzul());
-	glBegin(GL_POLYGON);
-	for (auto pixel : Cenario::obterInstancia().robo->obterHasteMedia()->obterPixels())
-		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
-	glEnd();
-
-	glColor3f(Cenario::obterInstancia().robo->obterHastePonta()->obterCor().obterVermelho(), Cenario::obterInstancia().robo->obterHastePonta()->obterCor().obterVerde(), Cenario::obterInstancia().robo->obterHastePonta()->obterCor().obterAzul());
-	glBegin(GL_POLYGON);
-	for (auto pixel : Cenario::obterInstancia().robo->obterHastePonta()->obterPixels())
-		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
-	glEnd();
+	for (auto const& par : Cenario::obterInstancia().robo->obterBracos()) {
+		auto braco = par.second;
+		glColor3f(braco->obterCor().obterVermelho(), braco->obterCor().obterVerde(), braco->obterCor().obterAzul());
+		glBegin(GL_POLYGON);
+		for (auto pixel : braco->obterPixels())
+			glVertex3f(pixel->obterX(), pixel->obterY(), 0.0);
+		glEnd();
+	}
 
 	for (auto& roda : Cenario::obterInstancia().robo->obterRodas()) {
 		glColor3f(roda->obterPixel().obterCor().obterVermelho(), roda->obterPixel().obterCor().obterVerde(), roda->obterPixel().obterCor().obterAzul());

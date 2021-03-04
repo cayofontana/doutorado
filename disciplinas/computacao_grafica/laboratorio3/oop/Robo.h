@@ -2,9 +2,12 @@
 #define	ROBO_H
 
 #include <vector>
+#include <map>
 
 #include "primitivas/Circunferencia.h"
 #include "primitivas/Retangulo.h"
+
+enum Braco { BASE = 1, MEDIO, PONTA };
 
 class Robo {
 public:
@@ -13,25 +16,18 @@ public:
 
 	void mover(float, float);
 	Retangulo* obterBase(void);
-	Retangulo* obterHasteBase(void);
-	Retangulo* obterHasteMedia(void);
-	Retangulo* obterHastePonta(void);
 	std::vector<Circunferencia*> obterRodas(void);
-	void inclinarHasteBase(int);
+	std::map<Braco, Retangulo*> obterBracos(void);
 
 private:
 	int larguraJanela;
 	int alturaJanela;
 	std::vector<Circunferencia*> rodas;
+	std::map<Braco, Retangulo*> bracos;
 	Retangulo* base;
-	Retangulo* hasteBase;
-	Retangulo* hasteMedia;
-	Retangulo* hastePonta;
 
 	void construirBase(float, float, Pixel*);
-	void construirhasteBase(float, float, Pixel*);
-	void construirhasteMedia(float, float, Pixel*);
-	void construirhastePonta(float, float, Pixel*);
+	Retangulo* construirBraco(float, float, Pixel*, Cor*);
 	Circunferencia* construirRoda(float, Pixel, Cor*);
 
 	Pixel obterEixoEsquerdo(void);
