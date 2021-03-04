@@ -4,7 +4,6 @@
 #include <GL/glut.h>
 #include <vector>
 
-#include "primitivas/Pixel.h"
 #include "Mouse.h"
 #include "Teclado.h"
 #include "Robo.h"

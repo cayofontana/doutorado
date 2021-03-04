@@ -1,8 +1,8 @@
 #ifndef CIRCUNFERENCIA_H
 #define CIRCUNFERENCIA_H
 
-#include "Pixel.h"
 #include "FormaGeometrica2D.h"
+#include "Pixel.h"
 
 class Circunferencia : public FormaGeometrica2D {
 public:

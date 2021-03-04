@@ -2,7 +2,6 @@
 #define TECLADO_H
 
 #include <vector>
-#include <algorithm>
 
 #include "primitivas/Cor.h"
 #include "Robo.h"

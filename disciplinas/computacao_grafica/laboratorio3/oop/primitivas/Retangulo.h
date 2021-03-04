@@ -1,9 +1,9 @@
 #ifndef RETANGULO_H
 #define RETANGULO_H
 
+#include "FormaGeometrica2D.h"
 #include "Cor.h"
 #include "Pixel.h"
-#include "FormaGeometrica2D.h"
 
 class Retangulo : public FormaGeometrica2D {
 public:

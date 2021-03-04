@@ -1,11 +1,7 @@
 #include "Robo.h"
 
-#include <math.h>
-#include <float.h>
-#include <algorithm>
-
-#include <iostream>
-using namespace std;
+#include <cmath>
+#include <cfloat>
 
 Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), alturaJanela(alturaJanela) {
 	Pixel pixelReferencia(0.0f, alturaJanela / 2.0f);
@@ -17,8 +13,8 @@ Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), 
 	construirhasteBase(10.0f, 80.0f, &pixelReferencia);
 	construirhasteMedia(10.0f, 80.0f, &pixelReferencia);
 	construirhastePonta(10.0f, 80.0f, &pixelReferencia);
-	rodas.push_back(construirRoda(30.0f, obterEixoEsquerdo(Cor(255.0f, 255.0f, 255.0f))));
-	rodas.push_back(construirRoda(30.0f, obterEixoDireito(Cor(255.0f, 255.0f, 255.0f))));
+	rodas.push_back(construirRoda(30.0f, obterEixoEsquerdo(), new Cor(255.0f, 255.0f, 255.0f)));
+	rodas.push_back(construirRoda(30.0f, obterEixoDireito(), new Cor(255.0f, 255.0f, 255.0f)));
 }
 
 Robo::~Robo() {
@@ -108,13 +104,13 @@ Robo::construirhastePonta(float largura, float altura, Pixel* pixelReferencia) {
 }
 
 Circunferencia*
-Robo::construirRoda(float raio, Pixel pixelReferencia) {
+Robo::construirRoda(float raio, Pixel pixelReferencia, Cor* cor) {
 	// MELHORAR ESSE PONTO DO POLIMORFISMO
-	return (new Circunferencia(raio, new Pixel(pixelReferencia.obterX(), pixelReferencia.obterY(), pixelReferencia.obterCor())));
+	return (new Circunferencia(raio, new Pixel(pixelReferencia.obterX(), pixelReferencia.obterY(), *cor)));
 }
 
 Pixel
-Robo::obterEixoEsquerdo(Cor cor) {
+Robo::obterEixoEsquerdo(void) {
 	float x, y, minX = FLT_MAX, minY = FLT_MAX;
 
 	std::vector<Pixel*> pixels = base->obterPixels();
@@ -125,11 +121,11 @@ Robo::obterEixoEsquerdo(Cor cor) {
 			y = minY;
 	}
 
-	return (Pixel(x, y, cor));
+	return (Pixel(x, y));
 }
 
 Pixel
-Robo::obterEixoDireito(Cor cor) {
+Robo::obterEixoDireito(void) {
 	float x, y, maxX = FLT_MIN, minY = FLT_MAX;
 
 	std::vector<Pixel*> pixels = base->obterPixels();
@@ -140,5 +136,5 @@ Robo::obterEixoDireito(Cor cor) {
 			y = minY;
 	}
 
-	return (Pixel(x, y, cor));
+	return (Pixel(x, y));
 }

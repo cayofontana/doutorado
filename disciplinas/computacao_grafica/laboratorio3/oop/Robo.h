@@ -32,10 +32,10 @@ private:
 	void construirhasteBase(float, float, Pixel*);
 	void construirhasteMedia(float, float, Pixel*);
 	void construirhastePonta(float, float, Pixel*);
-	Circunferencia* construirRoda(float, Pixel);
+	Circunferencia* construirRoda(float, Pixel, Cor*);
 
-	Pixel obterEixoEsquerdo(Cor);
-	Pixel obterEixoDireito(Cor);
+	Pixel obterEixoEsquerdo(void);
+	Pixel obterEixoDireito(void);
 };
 
 #endif

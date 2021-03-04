@@ -1,5 +1,7 @@
 #include "Teclado.h"
 
+#include <algorithm>
+
 Teclado::Teclado() : teclas(256), cor(0.0f, 1.0f, 0.0f) {
 }
 
