@@ -71,6 +71,7 @@ Cenario::ociar(void) {
 }
 
 Cenario::Cenario() {
+	teclado = new Teclado();
 }
 
 Cenario::~Cenario() {
@@ -85,18 +86,15 @@ Cenario::inicializar(const int larguraJanela, const int alturaJanela, const int 
 	this->larguraCenario = larguraCenario;
 	this->alturaCenario = alturaCenario;
 	robo = new Robo(larguraCenario, alturaCenario);
-	teclado = new Teclado();
 
-	// The color the windows will redraw. Its done to erase the previous frame.
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black, no opacity(alpha).
-
-	glMatrixMode(GL_PROJECTION); // Select the projection matrix    
-	glOrtho(-(this->larguraCenario/2),     // X coordinate of left edge             
-		(this->larguraCenario/2),     // X coordinate of right edge            
-		-(this->alturaCenario/2),     // Y coordinate of bottom edge             
-		(this->alturaCenario/2),     // Y coordinate of top edge             
-		-100,     // Z coordinate of the “near” plane            
-		100);   // Z coordinate of the “far” plane
-	glMatrixMode(GL_MODELVIEW); // Select the projection matrix    
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glMatrixMode(GL_PROJECTION);
+	glOrtho(-(this->larguraCenario / 2),
+		(this->larguraCenario / 2),
+		-(this->alturaCenario / 2),
+		(this->alturaCenario / 2), 
+		-100,
+		100);
+	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
