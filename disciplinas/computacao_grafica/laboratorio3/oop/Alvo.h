@@ -1,15 +1,21 @@
 #ifndef ALVO_H
 #define ALVO_H
 
-#include "primitivas/Circunferencia.h"
+#include <list>
 
-class Alvo {
+#include "primitivas/Circunferencia.h"
+#include "IConsumidor.h"
+#include "Projetil.h"
+
+class Alvo : public IConsumidor {
 public:
 	Alvo(int, int);
 	~Alvo();
 
 	void desenhar(void);
 	Circunferencia* obterCorpo(void);
+
+	void atualizar(Projetil*) override;
 
 private:
 	int larguraJanela;

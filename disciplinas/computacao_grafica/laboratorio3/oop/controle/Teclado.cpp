@@ -6,7 +6,7 @@ Teclado::Teclado() : teclas(256), cor(0.0f, 1.0f, 0.0f) {
 }
 
 void
-Teclado::teclar(unsigned char tecla, int valor, Robo* robo) {
+Teclado::teclar(unsigned char tecla, int valor, Robo* robo, Alvo* alvo) {
 	if (valor)
 		switch (tecla) {
 			case 'a':
@@ -38,7 +38,7 @@ Teclado::teclar(unsigned char tecla, int valor, Robo* robo) {
 			case ' ':
 				// if (!tiro)
 				// 	tiro = robo.Atira();
-				robo->disparar();
+				robo->disparar(alvo);
 				break;
 			case 27 :
 				exit(0);

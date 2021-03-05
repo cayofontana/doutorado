@@ -20,12 +20,12 @@ Cenario::exibir(void) {
 
 void
 Cenario::pressionarTecla(unsigned char tecla, int x, int y) {
-	Cenario::obterInstancia().teclado->teclar(tecla, 1, Cenario::obterInstancia().robo);
+	Cenario::obterInstancia().teclado->teclar(tecla, 1, Cenario::obterInstancia().robo, Cenario::obterInstancia().alvo);
 }
 
 void
 Cenario::liberarTecla(unsigned char tecla, int x, int y) {
-	Cenario::obterInstancia().teclado->teclar(tecla, 0, Cenario::obterInstancia().robo);
+	Cenario::obterInstancia().teclado->teclar(tecla, 0, Cenario::obterInstancia().robo, Cenario::obterInstancia().alvo);
 }
 
 void

@@ -2,14 +2,24 @@
 #define PROJETIL_H
 
 #include "primitivas/Circunferencia.h"
+#include "IProdutor.h"
+#include "IConsumidor.h"
 
-class Projetil : public Circunferencia {
+#include <list>
+
+class Projetil : public Circunferencia, public IProdutor {
 public:
 	Projetil(float, Pixel*, float, int, float);
 	virtual ~Projetil();
 
 	void desenhar(void) override;
+
+	void adicionar(IConsumidor*) override;
+	void remover(IConsumidor*) override;
+	void notificar(void) override;
+
 private:
+	std::list<IConsumidor*> consumidores;
 };
 
 #endif
