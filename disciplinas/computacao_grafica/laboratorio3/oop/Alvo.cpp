@@ -13,6 +13,7 @@ Alvo::~Alvo() {
 
 void
 Alvo::desenhar(void) {
+	// corpo->mover(1.0f, 0.0f);
 	corpo->desenhar();
 }
 

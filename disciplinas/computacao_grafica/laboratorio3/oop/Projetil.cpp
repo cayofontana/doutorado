@@ -5,3 +5,9 @@ Projetil::Projetil(float raio, Pixel* pixel, float intervaloAngular, int tipo, f
 
 Projetil::~Projetil() {
 }
+
+void
+Projetil::desenhar(void) {
+	mover(0.0f, 2.0f);
+	Circunferencia::desenhar();
+}

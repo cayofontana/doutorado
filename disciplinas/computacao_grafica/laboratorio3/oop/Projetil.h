@@ -7,6 +7,8 @@ class Projetil : public Circunferencia {
 public:
 	Projetil(float, Pixel*, float, int, float);
 	virtual ~Projetil();
+
+	void desenhar(void) override;
 private:
 };
 

@@ -2,7 +2,7 @@
 
 #include <GL/gl.h>
 
-Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), alturaJanela(alturaJanela) {
+Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), alturaJanela(alturaJanela), projetil(nullptr) {
 	Pixel pixelReferencia(0.0f, alturaJanela / 2.0f);
 
 	construirBase(100.0f, 40.0f, &pixelReferencia);
@@ -33,6 +33,8 @@ Robo::desenhar(void) {
 		auto braco = par.second;
 		braco->desenhar();
 	}
+	if (projetil)
+		projetil->desenhar();
 }
 
 void
@@ -64,7 +66,7 @@ Robo::obterBracos(void) {
 void
 Robo::disparar(void) {
 	Pixel* pixelProjetil = Retangulo::obterPixelIntermediario(*Retangulo::obterPixelSuperiorEsquerdo(bracos[Braco::PONTA]->obterPixels()), *Retangulo::obterPixelSuperiorDireito(bracos[Braco::PONTA]->obterPixels()));
-	projetil = new Projetil(5.0f, new Pixel(pixelProjetil->obterX(), pixelProjetil->obterY()), 0.1f, GL_TRIANGLE_FAN, 1.0f);
+	projetil = new Projetil(5.0f, new Pixel(pixelProjetil->obterX(), pixelProjetil->obterY(), Cor(255.0f, 255.0f, 255.0f)), 0.1f, GL_TRIANGLE_FAN, 1.0f);
 }
 
 void

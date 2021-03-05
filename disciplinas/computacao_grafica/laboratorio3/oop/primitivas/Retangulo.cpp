@@ -107,5 +107,5 @@ Retangulo::obterPixelSuperiorDireito(std::vector<Pixel*> pixels) {
 
 Pixel*
 Retangulo::obterPixelIntermediario(Pixel pixelInicial, Pixel pixelFinal) {
-	return (new Pixel((pixelInicial.obterX() + pixelFinal.obterX() / 2.0f), (pixelInicial.obterY() + pixelFinal.obterY() / 2.0f)));
+	return (new Pixel((pixelInicial.obterX() + pixelFinal.obterX()) / 2.0f, (pixelInicial.obterY() + pixelFinal.obterY()) / 2.0f));
 }
