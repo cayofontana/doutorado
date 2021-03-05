@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "primitivas/Cor.h"
-#include "Robo.h"
+#include "../primitivas/Cor.h"
+#include "../Robo.h"
 
 #define INC_KEY 1
 #define INC_KEYIDLE 0.01

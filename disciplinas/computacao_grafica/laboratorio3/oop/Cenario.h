@@ -4,8 +4,8 @@
 #include <GL/glut.h>
 #include <vector>
 
-#include "Mouse.h"
-#include "Teclado.h"
+#include "controle/Mouse.h"
+#include "controle/Teclado.h"
 #include "Robo.h"
 #include "Alvo.h"
 

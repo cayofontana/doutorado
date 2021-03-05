@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "primitivas/Pixel.h"
+#include "../primitivas/Pixel.h"
 
 class Mouse {
 public:
