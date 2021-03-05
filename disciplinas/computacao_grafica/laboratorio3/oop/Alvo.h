@@ -14,6 +14,7 @@ public:
 
 	void desenhar(void);
 	Circunferencia* obterCorpo(void);
+	void reiniciar(void);
 
 	void atualizar(Projetil*) override;
 

@@ -36,8 +36,6 @@ Teclado::teclar(unsigned char tecla, int valor, Robo* robo, Alvo* alvo) {
 			case 'Y':
 				break;
 			case ' ':
-				// if (!tiro)
-				// 	tiro = robo.Atira();
 				robo->disparar(alvo);
 				break;
 			case 27 :

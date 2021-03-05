@@ -75,8 +75,10 @@ Robo::disparar(Alvo* alvo) {
 }
 
 void
-Robo::atualizar(Projetil* projetil) {
-	cout << "Projetil passou pelo robô" << endl;
+Robo::atualizar(Projetil* projetil) {	
+	// VERIFICAR SE O PROJÉTIL ESTÁ FORA DA CENA. SE ESTIVER, LIBERAR A MEMÓRIA DO OBJETO.
+	// if (projetil && Cenario::estahNoCenario(projetil))
+	// 	delete projetil;
 }
 
 void
