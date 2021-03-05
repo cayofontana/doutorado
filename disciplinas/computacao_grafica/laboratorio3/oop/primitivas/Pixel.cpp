@@ -32,13 +32,14 @@ Pixel::obterCor(void) {
 }
 
 void
-Pixel::incrementar(float x, float y) {
-	this->x += x;
-	this->y += y;
+Pixel::definirCor(Cor cor) {
+	this->cor.definirVermelho(cor.obterVermelho());
+	this->cor.definirVerde(cor.obterVerde());
+	this->cor.definirAzul(cor.obterAzul());
 }
 
 void
-Pixel::definirCoordenadasGL(int x, int y, int larguraJanela, int alturaJanela) {
-	this->x = (float)x / (float)larguraJanela;
-	this->y = 1 - (float)y / (float)alturaJanela;
+Pixel::incrementar(float x, float y) {
+	this->x += x;
+	this->y += y;
 }

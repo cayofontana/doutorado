@@ -1,7 +1,6 @@
 #include "Robo.h"
 
-#include <cmath>
-#include <cfloat>
+#include <GL/gl.h>
 
 Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), alturaJanela(alturaJanela) {
 	Pixel pixelReferencia(0.0f, alturaJanela / 2.0f);
@@ -10,8 +9,8 @@ Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), 
 	bracos.insert(std::pair<Braco, Retangulo*>(Braco::BASE, construirBraco(10.0f, 80.0f, &pixelReferencia, new Cor(0.0f, 0.0f, 255.0f))));
 	bracos.insert(std::pair<Braco, Retangulo*>(Braco::MEDIO, construirBraco(10.0f, 80.0f, &pixelReferencia, new Cor(255.0f, 255.0f, 0.0f))));
 	bracos.insert(std::pair<Braco, Retangulo*>(Braco::PONTA, construirBraco(10.0f, 80.0f, &pixelReferencia, new Cor(0.0f, 255.0f, 0.0f))));
-	rodas.push_back(construirRoda(30.0f, obterEixoEsquerdo(), new Cor(255.0f, 255.0f, 255.0f)));
-	rodas.push_back(construirRoda(30.0f, obterEixoDireito(), new Cor(255.0f, 255.0f, 255.0f)));
+	rodas.push_back(construirRoda(30.0f, 0.35f, Retangulo::obterPixelInferirEsquerdo(base->obterPixels()), new Cor(255.0f, 255.0f, 255.0f)));
+	rodas.push_back(construirRoda(30.0f, 0.35f, Retangulo::obterPixelInferirDireito(base->obterPixels()), new Cor(255.0f, 255.0f, 255.0f)));
 }
 
 Robo::~Robo() {
@@ -21,6 +20,18 @@ Robo::~Robo() {
 	for (auto const& par : bracos) {
 		auto braco = par.second;
 		delete braco;
+	}
+	delete projetil;
+}
+
+void
+Robo::desenhar(void) {
+	base->desenhar();
+	for (auto& roda : rodas)
+		roda->desenhar();
+	for (auto const& par : bracos) {
+		auto braco = par.second;
+		braco->desenhar();
 	}
 }
 
@@ -51,6 +62,12 @@ Robo::obterBracos(void) {
 }
 
 void
+Robo::disparar(void) {
+	Pixel* pixelProjetil = Retangulo::obterPixelIntermediario(*Retangulo::obterPixelSuperiorEsquerdo(bracos[Braco::PONTA]->obterPixels()), *Retangulo::obterPixelSuperiorDireito(bracos[Braco::PONTA]->obterPixels()));
+	projetil = new Projetil(5.0f, new Pixel(pixelProjetil->obterX(), pixelProjetil->obterY()), 0.1f, GL_TRIANGLE_FAN, 1.0f);
+}
+
+void
 Robo::construirBase(float largura, float altura, Pixel* pixelReferencia) {
 	Pixel pixelCentralBase(pixelReferencia->obterX(), (pixelReferencia->obterY() - pixelReferencia->obterY() * 0.3) * -1);
 	base = new Retangulo(pixelCentralBase, largura, altura, Cor(255.0f, 0.0f, 0.0f));
@@ -70,36 +87,7 @@ Robo::construirBraco(float largura, float altura, Pixel* pixelReferencia, Cor* c
 }
 
 Circunferencia*
-Robo::construirRoda(float raio, Pixel pixelReferencia, Cor* cor) {
-	return (new Circunferencia(raio, new Pixel(pixelReferencia.obterX(), pixelReferencia.obterY(), *cor)));
-}
-
-Pixel
-Robo::obterEixoEsquerdo(void) {
-	float x, y, minX = FLT_MAX, minY = FLT_MAX;
-
-	std::vector<Pixel*> pixels = base->obterPixels();
-	for (auto pixelInicial = pixels.begin(), pixelAtual = std::next(pixelInicial); pixelAtual != pixels.end(); ++pixelAtual) {
-		if (x > (minX = std::min((*pixelInicial)->obterX(), (*pixelAtual)->obterX())))
-			x = minX;
-		if (y > (minY = std::min((*pixelInicial)->obterY(), (*pixelAtual)->obterY())))
-			y = minY;
-	}
-
-	return (Pixel(x, y));
-}
-
-Pixel
-Robo::obterEixoDireito(void) {
-	float x, y, maxX = FLT_MIN, minY = FLT_MAX;
-
-	std::vector<Pixel*> pixels = base->obterPixels();
-	for (auto pixelInicial = pixels.begin(), pixelAtual = std::next(pixelInicial); pixelAtual != pixels.end(); ++pixelAtual) {
-		if (x < (maxX = std::max((*pixelInicial)->obterX(), (*pixelAtual)->obterX())))
-			x = maxX;
-		if (y > (minY = std::min((*pixelInicial)->obterY(), (*pixelAtual)->obterY())))
-			y = minY;
-	}
-
-	return (Pixel(x, y));
+Robo::construirRoda(float raio, float intervaloAngular, Pixel* pixelReferencia, Cor* cor) {
+	pixelReferencia->definirCor(*cor);
+	return (new Circunferencia(raio, pixelReferencia, intervaloAngular, GL_POINTS, 3.0f));
 }

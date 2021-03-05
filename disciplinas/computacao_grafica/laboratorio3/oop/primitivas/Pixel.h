@@ -13,8 +13,8 @@ public:
 	float obterY(void);
 	void definirY(float);
 	Cor obterCor(void);
+	void definirCor(Cor);
 	void incrementar(float, float);
-	void definirCoordenadasGL(int, int, int, int);
 
 private:
 	float x;

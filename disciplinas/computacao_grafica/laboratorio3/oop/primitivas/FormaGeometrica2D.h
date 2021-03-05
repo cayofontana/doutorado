@@ -14,6 +14,7 @@ public:
 	float obterAngulo(void);
 
 	virtual void mover(float, float) = 0;
+	virtual void desenhar(void) = 0;
 
 protected:
 	std::vector<Pixel*> pixels;

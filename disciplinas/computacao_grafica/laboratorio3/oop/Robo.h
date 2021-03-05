@@ -6,6 +6,7 @@
 
 #include "primitivas/Circunferencia.h"
 #include "primitivas/Retangulo.h"
+#include "Projetil.h"
 
 enum Braco { BASE = 1, MEDIO, PONTA };
 
@@ -14,10 +15,12 @@ public:
 	Robo(int, int);
 	~Robo();
 
+	void desenhar(void);
 	void mover(float, float);
 	Retangulo* obterBase(void);
 	std::vector<Circunferencia*> obterRodas(void);
 	std::map<Braco, Retangulo*> obterBracos(void);
+	void disparar(void);
 
 private:
 	int larguraJanela;
@@ -25,13 +28,11 @@ private:
 	std::vector<Circunferencia*> rodas;
 	std::map<Braco, Retangulo*> bracos;
 	Retangulo* base;
+	Projetil* projetil;
 
 	void construirBase(float, float, Pixel*);
 	Retangulo* construirBraco(float, float, Pixel*, Cor*);
-	Circunferencia* construirRoda(float, Pixel, Cor*);
-
-	Pixel obterEixoEsquerdo(void);
-	Pixel obterEixoDireito(void);
+	Circunferencia* construirRoda(float, float, Pixel*, Cor*);
 };
 
 #endif

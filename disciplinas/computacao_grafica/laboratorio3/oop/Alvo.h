@@ -8,6 +8,7 @@ public:
 	Alvo(int, int);
 	~Alvo();
 
+	void desenhar(void);
 	Circunferencia* obterCorpo(void);
 
 private:

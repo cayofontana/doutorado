@@ -5,7 +5,7 @@
 
 class Projetil : public Circunferencia {
 public:
-	Projetil(float, Pixel*);
+	Projetil(float, Pixel*, float, int, float);
 	virtual ~Projetil();
 private:
 };
