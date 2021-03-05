@@ -7,6 +7,7 @@
 #include "Mouse.h"
 #include "Teclado.h"
 #include "Robo.h"
+#include "Alvo.h"
 
 class Cenario {
 public:
@@ -28,6 +29,7 @@ private:
 	int alturaCenario;
 	Robo* robo;
 	Teclado* teclado;
+	Alvo* alvo;
 
 	Cenario();
 };
