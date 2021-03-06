@@ -4,8 +4,6 @@
 #include <vector>
 
 #include "../primitivas/Cor.h"
-#define INC_KEY 1
-#define INC_KEYIDLE 0.01
 
 class Cenario;
 
