@@ -94,10 +94,10 @@ Cenario::objetoVisivel(FormaGeometrica2D* formaGeometrica2D) {
 
 	for (auto pixelObjeto : pixelsObjeto)
 		for (auto pixelIncial = pixelsCenario.begin(), pixelAtual = std::next(pixelIncial); pixelAtual != pixelsCenario.end(); ++pixelAtual)
-			if ((pixelObjeto->obterX() <= max((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) && 
-				(pixelObjeto->obterX() >= min((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) &&
-				(pixelObjeto->obterY() <= max((*pixelIncial)->obterY(), (*pixelAtual)->obterY())) &&
-				(pixelObjeto->obterY() >= min((*pixelIncial)->obterY(), (*pixelAtual)->obterY())))
+			if ((pixelObjeto->obterX() <= std::max((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) && 
+				(pixelObjeto->obterX() >= std::min((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) &&
+				(pixelObjeto->obterY() <= std::max((*pixelIncial)->obterY(), (*pixelAtual)->obterY())) &&
+				(pixelObjeto->obterY() >= std::min((*pixelIncial)->obterY(), (*pixelAtual)->obterY())))
 				return (true);
 	return (false);
 }
