@@ -1,6 +1,8 @@
 #include "Cenario.h"
 
 #include <cmath>
+#include <iostream>
+using namespace std;
 
 Cenario&
 Cenario::obterInstancia(void) {
@@ -20,12 +22,12 @@ Cenario::exibir(void) {
 
 void
 Cenario::pressionarTecla(unsigned char tecla, int x, int y) {
-	Cenario::obterInstancia().teclado->teclar(tecla, 1, Cenario::obterInstancia().robo, Cenario::obterInstancia().alvo);
+	Cenario::obterInstancia().teclado->teclar(tecla, 1, &Cenario::obterInstancia());
 }
 
 void
 Cenario::liberarTecla(unsigned char tecla, int x, int y) {
-	Cenario::obterInstancia().teclado->teclar(tecla, 0, Cenario::obterInstancia().robo, Cenario::obterInstancia().alvo);
+	Cenario::obterInstancia().teclado->teclar(tecla, 0, &Cenario::obterInstancia());
 }
 
 void
@@ -63,3 +65,35 @@ Cenario::inicializar(const int larguraJanela, const int alturaJanela, const int 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+Robo*
+Cenario::obterRobo(void) {
+	return (robo);
+}
+
+Alvo*
+Cenario::obterAlvo(void) {
+	return (alvo);
+}
+
+bool
+Cenario::atualizou(Projetil* projetil) {
+	cout << "projetil em Cenario: " << projetil << endl;
+	// VERIFICAR SE O PROJÉTIL ESTÁ FORA DA CENA. SE ESTIVER, LIBERAR A MEMÓRIA DO OBJETO.
+	// if (projetil && Cenario::estahNoCenario(projetil))
+	// 	delete projetil;
+	return (false);
+}
+
+// bool
+// Cenario::objetoVisivel(FormaGeometrica2D* formaGeometrica2D) {
+// 	std::vector<Pixel*> pixels = formaGeometrica2D->obterPixels();
+
+// 	for (auto pixelIncial = points.begin(), pixelAtual = std::next(pixelIncial); pixelAtual != points.end(); ++pixelAtual)
+// 		if ((point.getX() <= max(pixelIncial->getX(), pixelAtual->getX())) && 
+// 			(point.getX() >= min(pixelIncial->getX(), pixelAtual->getX())) &&
+// 			(point.getY() <= max(pixelIncial->getY(), pixelAtual->getY())) &&
+// 			(point.getY() >= min(pixelIncial->getY(), pixelAtual->getY())))
+// 			return (true);
+// 	return (false);
+// }

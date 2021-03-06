@@ -8,13 +8,21 @@
 #include "controle/Teclado.h"
 #include "Robo.h"
 #include "Alvo.h"
+#include "IConsumidor.h"
 
-class Cenario {
+class Robo;
+class Alvo;
+
+class Cenario : public IConsumidor {
 public:
 	~Cenario();
 
 	void inicializar(const int, const int, const int, const int);
 	void atualizar(void);
+	Robo* obterRobo(void);
+	Alvo* obterAlvo(void);
+
+	bool atualizou(Projetil*) override;
 
 	static Cenario& obterInstancia(void);
 	static void exibir(void);

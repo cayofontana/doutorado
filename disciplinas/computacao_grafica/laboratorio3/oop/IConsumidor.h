@@ -6,7 +6,7 @@ class Projetil;
 class IConsumidor {
 public:
 	virtual ~IConsumidor() {};
-	virtual void atualizar(Projetil*) = 0;
+	virtual bool atualizou(Projetil*) = 0;
 };
 
 #endif

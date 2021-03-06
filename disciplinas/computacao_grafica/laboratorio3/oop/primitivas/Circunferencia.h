@@ -15,7 +15,8 @@ public:
 	void mover(float, float) override;
 	void desenhar(void) override;
 	void desenhar(float);
-	
+	bool colidiu(Circunferencia*); 
+
 private:
 	float raio;
 	float intervaloAngular;

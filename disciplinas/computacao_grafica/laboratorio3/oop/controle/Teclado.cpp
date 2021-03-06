@@ -1,21 +1,23 @@
 #include "Teclado.h"
 
+#include "../Cenario.h"
 #include <algorithm>
+
 
 Teclado::Teclado() : teclas(256), cor(0.0f, 1.0f, 0.0f) {
 }
 
 void
-Teclado::teclar(unsigned char tecla, int valor, Robo* robo, Alvo* alvo) {
+Teclado::teclar(unsigned char tecla, int valor, Cenario* cenario) {
 	if (valor)
 		switch (tecla) {
 			case 'a':
 			case 'A':
-				robo->mover(-5, 0);
+				cenario->obterRobo()->mover(-5, 0);
 				break;
 			case 'd':
 			case 'D':
-				robo->mover(5, 0);
+				cenario->obterRobo()->mover(5, 0);
 				break;
 			case 'f':
 			case 'F':
@@ -36,7 +38,7 @@ Teclado::teclar(unsigned char tecla, int valor, Robo* robo, Alvo* alvo) {
 			case 'Y':
 				break;
 			case ' ':
-				robo->disparar(alvo);
+				cenario->obterRobo()->disparar(cenario->obterAlvo(), cenario);
 				break;
 			case 27 :
 				exit(0);

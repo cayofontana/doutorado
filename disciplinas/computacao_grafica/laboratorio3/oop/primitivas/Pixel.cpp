@@ -1,5 +1,7 @@
 #include "Pixel.h"
 
+#include <cmath>
+
 Pixel::Pixel(float x, float y) : x(x), y(y), cor(0.0f, 0.0f, 0.0f) {
 }
 
@@ -42,4 +44,9 @@ void
 Pixel::incrementar(float x, float y) {
 	this->x += x;
 	this->y += y;
+}
+
+float
+Pixel::calcularDistancia(Pixel pixel) {
+	return (sqrt(pow(x - pixel.obterX(), 2) + pow(y - pixel.obterY(), 2)));
 }

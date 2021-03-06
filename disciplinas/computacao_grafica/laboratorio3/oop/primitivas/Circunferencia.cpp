@@ -48,3 +48,8 @@ Circunferencia::desenhar(void) {
 	glTranslatef(-obterPixel().obterX(), -obterPixel().obterY(), 0.0f);
 	glEnd();
 }
+
+bool
+Circunferencia::colidiu(Circunferencia* circunferencia) {
+	return (obterPixel().calcularDistancia(circunferencia->obterPixel()) <= raio + circunferencia->obterRaio());
+}

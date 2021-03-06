@@ -16,7 +16,7 @@ public:
 	Circunferencia* obterCorpo(void);
 	void reiniciar(void);
 
-	void atualizar(Projetil*) override;
+	bool atualizou(Projetil*) override;
 
 private:
 	int larguraJanela;

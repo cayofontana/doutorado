@@ -1,8 +1,6 @@
 #include "Robo.h"
 
 #include <GL/gl.h>
-#include <iostream>
-using namespace std;
 
 Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), alturaJanela(alturaJanela), projetil(nullptr) {
 	Pixel pixelReferencia(0.0f, alturaJanela / 2.0f);
@@ -66,19 +64,14 @@ Robo::obterBracos(void) {
 }
 
 void
-Robo::disparar(Alvo* alvo) {
-	Pixel* pixelProjetil = Retangulo::obterPixelIntermediario(*Retangulo::obterPixelSuperiorEsquerdo(bracos[Braco::PONTA]->obterPixels()), *Retangulo::obterPixelSuperiorDireito(bracos[Braco::PONTA]->obterPixels()));
-	
-	projetil = new Projetil(5.0f, new Pixel(pixelProjetil->obterX(), pixelProjetil->obterY(), Cor(255.0f, 255.0f, 255.0f)), 0.1f, GL_TRIANGLE_FAN, 1.0f);
-	projetil->adicionar(this);
-	projetil->adicionar(alvo);
-}
-
-void
-Robo::atualizar(Projetil* projetil) {	
-	// VERIFICAR SE O PROJÉTIL ESTÁ FORA DA CENA. SE ESTIVER, LIBERAR A MEMÓRIA DO OBJETO.
-	// if (projetil && Cenario::estahNoCenario(projetil))
-	// 	delete projetil;
+Robo::disparar(Alvo* alvo, Cenario* cenario) {
+	if (!projetil || (projetil && projetil->obterConsumidores().empty())) {
+		delete projetil;
+		Pixel* pixelProjetil = Retangulo::obterPixelIntermediario(*Retangulo::obterPixelSuperiorEsquerdo(bracos[Braco::PONTA]->obterPixels()), *Retangulo::obterPixelSuperiorDireito(bracos[Braco::PONTA]->obterPixels()));
+		projetil = new Projetil(5.0f, new Pixel(pixelProjetil->obterX(), pixelProjetil->obterY(), Cor(255.0f, 255.0f, 255.0f)), 0.1f, GL_TRIANGLE_FAN, 1.0f);
+		projetil->adicionar(alvo);
+		projetil->adicionar(cenario);
+	}
 }
 
 void

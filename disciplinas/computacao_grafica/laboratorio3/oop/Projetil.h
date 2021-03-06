@@ -13,6 +13,7 @@ public:
 	virtual ~Projetil();
 
 	void desenhar(void) override;
+	std::list<IConsumidor*> obterConsumidores(void);
 
 	void adicionar(IConsumidor*) override;
 	void remover(IConsumidor*) override;

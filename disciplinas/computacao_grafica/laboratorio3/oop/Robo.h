@@ -8,11 +8,11 @@
 #include "primitivas/Retangulo.h"
 #include "Projetil.h"
 #include "Alvo.h"
-#include "IConsumidor.h"
+#include "Cenario.h"
 
 enum Braco { BASE = 1, MEDIO, PONTA };
 
-class Robo : public IConsumidor {
+class Robo {
 public:
 	Robo(int, int);
 	~Robo();
@@ -22,9 +22,7 @@ public:
 	Retangulo* obterBase(void);
 	std::vector<Circunferencia*> obterRodas(void);
 	std::map<Braco, Retangulo*> obterBracos(void);
-	void disparar(Alvo*);
-
-	void atualizar(Projetil*) override;
+	void disparar(Alvo*, Cenario*);
 
 private:
 	int larguraJanela;

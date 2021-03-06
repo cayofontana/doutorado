@@ -13,6 +13,11 @@ Projetil::desenhar(void) {
 	notificar();
 }
 
+std::list<IConsumidor*>
+Projetil::obterConsumidores(void) {
+	return (consumidores);
+}
+
 void
 Projetil::adicionar(IConsumidor* consumidor) {
 	consumidores.push_back(consumidor);
@@ -25,6 +30,7 @@ Projetil::remover(IConsumidor* consumidor) {
 
 void
 Projetil::notificar(void) {
-	for (auto& consumidor : consumidores)
-		consumidor->atualizar(this);
+	for (auto consumidor = consumidores.begin(); consumidor != consumidores.end(); ++consumidor)
+		if ((*consumidor)->atualizou(this))
+			consumidores.erase(consumidor--);
 }

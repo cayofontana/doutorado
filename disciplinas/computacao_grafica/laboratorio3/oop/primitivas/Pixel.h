@@ -15,6 +15,7 @@ public:
 	Cor obterCor(void);
 	void definirCor(Cor);
 	void incrementar(float, float);
+	float calcularDistancia(Pixel);
 
 private:
 	float x;
