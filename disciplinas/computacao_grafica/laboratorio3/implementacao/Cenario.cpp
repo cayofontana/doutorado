@@ -90,9 +90,7 @@ Cenario::atualizou(Projetil* projetil) {
 
 bool
 Cenario::objetoVisivel(FormaGeometrica2D* formaGeometrica2D) {
-	std::vector<Pixel*> pixelsObjeto = formaGeometrica2D->obterPixels();
-
-	for (auto pixelObjeto : pixelsObjeto)
+	for (auto pixelObjeto : formaGeometrica2D->obterPixels())
 		for (auto pixelIncial = pixelsCenario.begin(), pixelAtual = std::next(pixelIncial); pixelAtual != pixelsCenario.end(); ++pixelAtual)
 			if ((pixelObjeto->obterX() <= std::max((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) && 
 				(pixelObjeto->obterX() >= std::min((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) &&
