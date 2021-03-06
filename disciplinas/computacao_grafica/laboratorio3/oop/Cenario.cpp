@@ -43,6 +43,8 @@ Cenario::~Cenario() {
 	delete teclado;
 	delete robo;
 	delete alvo;
+	for (auto pixelCenario : pixelsCenario)
+		delete pixelCenario;
 }
 
 void
@@ -53,6 +55,10 @@ Cenario::inicializar(const int larguraJanela, const int alturaJanela, const int 
 	this->alturaCenario = alturaCenario;
 	robo = new Robo(larguraCenario, alturaCenario);
 	alvo = new Alvo(larguraCenario, alturaCenario);
+	pixelsCenario.push_back(new Pixel(-(this->larguraCenario / 2), -(this->alturaCenario / 2)));
+	pixelsCenario.push_back(new Pixel(-(this->larguraCenario / 2), (this->alturaCenario / 2)));
+	pixelsCenario.push_back(new Pixel((this->larguraCenario / 2), (this->alturaCenario / 2)));
+	pixelsCenario.push_back(new Pixel((this->larguraCenario / 2), -(this->alturaCenario / 2)));
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glMatrixMode(GL_PROJECTION);
@@ -78,22 +84,22 @@ Cenario::obterAlvo(void) {
 
 bool
 Cenario::atualizou(Projetil* projetil) {
-	cout << "projetil em Cenario: " << projetil << endl;
-	// VERIFICAR SE O PROJÉTIL ESTÁ FORA DA CENA. SE ESTIVER, LIBERAR A MEMÓRIA DO OBJETO.
-	// if (projetil && Cenario::estahNoCenario(projetil))
-	// 	delete projetil;
+	if (projetil && !objetoVisivel(projetil)) {
+		return (true);
+	}
 	return (false);
 }
 
-// bool
-// Cenario::objetoVisivel(FormaGeometrica2D* formaGeometrica2D) {
-// 	std::vector<Pixel*> pixels = formaGeometrica2D->obterPixels();
+bool
+Cenario::objetoVisivel(FormaGeometrica2D* formaGeometrica2D) {
+	std::vector<Pixel*> pixelsObjeto = formaGeometrica2D->obterPixels();
 
-// 	for (auto pixelIncial = points.begin(), pixelAtual = std::next(pixelIncial); pixelAtual != points.end(); ++pixelAtual)
-// 		if ((point.getX() <= max(pixelIncial->getX(), pixelAtual->getX())) && 
-// 			(point.getX() >= min(pixelIncial->getX(), pixelAtual->getX())) &&
-// 			(point.getY() <= max(pixelIncial->getY(), pixelAtual->getY())) &&
-// 			(point.getY() >= min(pixelIncial->getY(), pixelAtual->getY())))
-// 			return (true);
-// 	return (false);
-// }
+	for (auto pixelObjeto : pixelsObjeto)
+		for (auto pixelIncial = pixelsCenario.begin(), pixelAtual = std::next(pixelIncial); pixelAtual != pixelsCenario.end(); ++pixelAtual)
+			if ((pixelObjeto->obterX() <= max((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) && 
+				(pixelObjeto->obterX() >= min((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) &&
+				(pixelObjeto->obterY() <= max((*pixelIncial)->obterY(), (*pixelAtual)->obterY())) &&
+				(pixelObjeto->obterY() >= min((*pixelIncial)->obterY(), (*pixelAtual)->obterY())))
+				return (true);
+	return (false);
+}

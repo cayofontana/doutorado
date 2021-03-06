@@ -4,11 +4,13 @@ Projetil::Projetil(float raio, Pixel* pixel, float intervaloAngular, int tipo, f
 }
 
 Projetil::~Projetil() {
+	for (auto consumidor : consumidores)
+		delete consumidor;
 }
 
 void
 Projetil::desenhar(void) {
-	mover(0.0f, 2.0f);
+	mover(0.0f, 5.0f);
 	Circunferencia::desenhar();
 	notificar();
 }
@@ -31,6 +33,8 @@ Projetil::remover(IConsumidor* consumidor) {
 void
 Projetil::notificar(void) {
 	for (auto consumidor = consumidores.begin(); consumidor != consumidores.end(); ++consumidor)
-		if ((*consumidor)->atualizou(this))
-			consumidores.erase(consumidor--);
+		if ((*consumidor)->atualizou(this)) {
+			consumidores.clear();
+			break;
+		}
 }

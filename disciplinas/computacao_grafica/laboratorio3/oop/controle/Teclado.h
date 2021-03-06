@@ -12,6 +12,7 @@ class Cenario;
 class Teclado {
 public:
 	Teclado();
+	~Teclado();
 
 	void teclar(unsigned char, int, Cenario*);
 	void definirValor(unsigned char, int);

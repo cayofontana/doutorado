@@ -38,8 +38,10 @@ private:
 	Robo* robo;
 	Teclado* teclado;
 	Alvo* alvo;
+	std::vector<Pixel*> pixelsCenario;
 
 	Cenario();
+	bool objetoVisivel(FormaGeometrica2D* formaGeometrica2D);
 };
 
 #endif

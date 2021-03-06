@@ -51,7 +51,7 @@ Retangulo::desenhar(void) {
 
 Pixel*
 Retangulo::obterPixelInferirEsquerdo(std::vector<Pixel*> pixels) {
-	float x, y, minX = FLT_MAX, minY = FLT_MAX;
+	float x = pixels.at(0)->obterX(), y = pixels.at(0)->obterY(), minX, minY;
 	
 	for (auto pixelInicial = pixels.begin(), pixelAtual = std::next(pixelInicial); pixelAtual != pixels.end(); ++pixelAtual) {
 		if (x > (minX = std::min((*pixelInicial)->obterX(), (*pixelAtual)->obterX())))
@@ -65,7 +65,7 @@ Retangulo::obterPixelInferirEsquerdo(std::vector<Pixel*> pixels) {
 
 Pixel*
 Retangulo::obterPixelInferirDireito(std::vector<Pixel*> pixels) {
-	float x, y, maxX = FLT_MIN, minY = FLT_MAX;
+	float x = pixels.at(0)->obterX(), y = pixels.at(0)->obterY(), maxX, minY;
 
 	for (auto pixelInicial = pixels.begin(), pixelAtual = std::next(pixelInicial); pixelAtual != pixels.end(); ++pixelAtual) {
 		if (x < (maxX = std::max((*pixelInicial)->obterX(), (*pixelAtual)->obterX())))
@@ -79,7 +79,7 @@ Retangulo::obterPixelInferirDireito(std::vector<Pixel*> pixels) {
 
 Pixel*
 Retangulo::obterPixelSuperiorEsquerdo(std::vector<Pixel*> pixels) {
-	float x, y, minX = FLT_MAX, maxY = FLT_MIN;
+	float x = pixels.at(0)->obterX(), y = pixels.at(0)->obterY(), maxY, minX;
 
 	for (auto pixelInicial = pixels.begin(), pixelAtual = std::next(pixelInicial); pixelAtual != pixels.end(); ++pixelAtual) {
 		if (x > (minX = std::min((*pixelInicial)->obterX(), (*pixelAtual)->obterX())))
@@ -93,7 +93,7 @@ Retangulo::obterPixelSuperiorEsquerdo(std::vector<Pixel*> pixels) {
 
 Pixel*
 Retangulo::obterPixelSuperiorDireito(std::vector<Pixel*> pixels) {
-	float x, y, maxX = FLT_MIN, maxY = FLT_MIN;
+	float x = pixels.at(0)->obterX(), y = pixels.at(0)->obterY(), maxX, maxY;
 
 	for (auto pixelInicial = pixels.begin(), pixelAtual = std::next(pixelInicial); pixelAtual != pixels.end(); ++pixelAtual) {
 		if (x < (maxX = std::max((*pixelInicial)->obterX(), (*pixelAtual)->obterX())))

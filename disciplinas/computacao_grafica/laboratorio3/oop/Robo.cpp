@@ -15,13 +15,14 @@ Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), 
 
 Robo::~Robo() {
 	delete base;
-	for (auto& roda : rodas)
+	for (auto roda : rodas)
 		delete roda;
-	for (auto const& par : bracos) {
+	for (auto const par : bracos) {
 		auto braco = par.second;
 		delete braco;
 	}
-	delete projetil;
+	if (projetil)
+		delete projetil;
 }
 
 void
