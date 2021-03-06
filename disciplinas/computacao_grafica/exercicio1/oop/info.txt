@@ -1,4 +1,0 @@
-REFERENCES:
-
-	http://letslearnbits.blogspot.com/2014/10/icgt1-interpolacao-de-cores.html;
-	https://www.inf.pucrs.br/~pinho/CG/Aulas/OpenGL/Interseccao/CalcIntersec.html
