@@ -1,8 +1,6 @@
 #include "Cenario.h"
 
 #include <cmath>
-#include <iostream>
-using namespace std;
 
 Cenario&
 Cenario::obterInstancia(void) {
