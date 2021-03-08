@@ -13,7 +13,10 @@ public:
 	std::vector<Pixel*> obterPixels(void);
 	float obterAngulo(void);
 	float obterDeslocamentoHorizontal(void);
+	void definirDeslocamentoHorizontal(float);
 	float obterDeslocamentoVertical(void);
+	void definirDeslocamentoVertical(float);
+	void rotacionar(int);
 
 	virtual void mover(float, float) = 0;
 	virtual void desenhar(void) = 0;
@@ -23,7 +26,6 @@ protected:
 	float angulo;
 	float deslocamentoHorizontal;
 	float deslocamentoVertical;
-
 
 	FormaGeometrica2D();
 };

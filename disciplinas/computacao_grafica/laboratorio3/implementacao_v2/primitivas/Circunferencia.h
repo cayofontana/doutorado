@@ -12,10 +12,14 @@ public:
 	float obterRaio(void);
 	float obterDiametro(void);
 	Pixel obterPixel(void);
+	float obterIntervaloAngular(void);
+	int obterTipo(void);
+	float obterTamanhoPonto(void);
+	void desenhar(float);
+	bool colidiu(Circunferencia*);
+
 	void mover(float, float) override;
 	void desenhar(void) override;
-	void desenhar(float);
-	bool colidiu(Circunferencia*); 
 
 private:
 	float raio;

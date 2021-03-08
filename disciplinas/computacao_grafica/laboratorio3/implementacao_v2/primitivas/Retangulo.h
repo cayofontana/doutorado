@@ -15,15 +15,11 @@ public:
 	float obterLargura(void);
 	float obterAltura(void);
 	Cor obterCor(void);
-	void inclinar(int);
 	void mover(float, float) override;
 	void desenhar(void) override;
 
-	static Pixel* obterPixelInferirEsquerdo(std::vector<Pixel*>);
-	static Pixel* obterPixelInferirDireito(std::vector<Pixel*>);
 	static Pixel* obterPixelSuperiorEsquerdo(std::vector<Pixel*>);
 	static Pixel* obterPixelSuperiorDireito(std::vector<Pixel*>);
-	static Pixel* obterPixelIntermediario(Pixel, Pixel);
 	
 private:
 	float largura;

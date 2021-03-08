@@ -23,13 +23,28 @@ FormaGeometrica2D::obterDeslocamentoHorizontal(void) {
 	return (deslocamentoHorizontal);
 }
 
+void
+FormaGeometrica2D::definirDeslocamentoHorizontal(float deslocamentoHorizontal) {
+	this->deslocamentoHorizontal = deslocamentoHorizontal;
+}
+
 float
 FormaGeometrica2D::obterDeslocamentoVertical(void) {
 	return (deslocamentoVertical);
 }
 
 void
+FormaGeometrica2D::definirDeslocamentoVertical(float deslocamentoHorizontal) {
+	this->deslocamentoVertical = deslocamentoVertical;
+}
+
+void
 FormaGeometrica2D::mover(float deslocamentoHorizontal, float deslocamentoVertical) {
 	this->deslocamentoHorizontal += deslocamentoHorizontal;
 	this->deslocamentoVertical += deslocamentoVertical;
+}
+
+void
+FormaGeometrica2D::rotacionar(int angulo) {
+	this->angulo += angulo;
 }

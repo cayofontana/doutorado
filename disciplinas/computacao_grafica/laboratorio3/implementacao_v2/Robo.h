@@ -32,10 +32,12 @@ private:
 	std::map<Braco, Retangulo*> bracos;
 	Retangulo* base;
 	Projetil* projetil;
+	bool emMovimento;
 
 	void construirBase(float, float, int*);
 	Retangulo* construirBraco(float, float, int*, Cor*);
 	Circunferencia* construirRoda(float, float, int, int, Cor*);
+	void desenhar(std::map<Braco, Retangulo*> bracos, Braco braco);
 };
 
 #endif
