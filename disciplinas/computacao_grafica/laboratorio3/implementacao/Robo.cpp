@@ -3,7 +3,7 @@
 #include <GL/gl.h>
 
 Robo::Robo(int larguraJanela, int alturaJanela) : larguraJanela(larguraJanela), alturaJanela(alturaJanela), projetil(nullptr) {
-	Pixel pixelReferencia(0.0f, alturaJanela / 2.0f);
+	Pixel pixelReferencia(0.0f, alturaJanela / 2.0f * -1);
 
 	construirBase(100.0f, 40.0f, &pixelReferencia);
 	bracos.insert(std::pair<Braco, Retangulo*>(Braco::BASE, construirBraco(10.0f, 80.0f, &pixelReferencia, new Cor(0.0f, 0.0f, 255.0f))));
@@ -49,6 +49,11 @@ Robo::mover(float x, float y) {
 		roda->mover(x, y);
 }
 
+void
+Robo::mover(Braco braco, int angulo) {
+	bracos[braco]->inclinar(angulo);
+}
+
 Retangulo*
 Robo::obterBase(void) {
 	return (base);
@@ -77,7 +82,7 @@ Robo::disparar(Alvo* alvo, Cenario* cenario) {
 
 void
 Robo::construirBase(float largura, float altura, Pixel* pixelReferencia) {
-	Pixel pixelCentralBase(pixelReferencia->obterX(), (pixelReferencia->obterY() - pixelReferencia->obterY() * 0.3) * -1);
+	Pixel pixelCentralBase(pixelReferencia->obterX(), pixelReferencia->obterY() * 0.7);
 	base = new Retangulo(pixelCentralBase, largura, altura, Cor(255.0f, 0.0f, 0.0f));
 
 	pixelReferencia->definirX(pixelCentralBase.obterX());

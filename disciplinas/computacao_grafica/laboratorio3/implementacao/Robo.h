@@ -19,6 +19,7 @@ public:
 
 	void desenhar(void);
 	void mover(float, float);
+	void mover(Braco, int);
 	Retangulo* obterBase(void);
 	std::vector<Circunferencia*> obterRodas(void);
 	std::map<Braco, Retangulo*> obterBracos(void);

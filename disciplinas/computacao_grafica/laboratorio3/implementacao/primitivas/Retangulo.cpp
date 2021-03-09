@@ -30,8 +30,8 @@ Retangulo::obterCor(void) {
 }
 
 void
-Retangulo::inclinar(int valor) {
-	this->angulo += valor;
+Retangulo::inclinar(int angulo) {
+	this->angulo += angulo;
 }
 
 void
@@ -43,10 +43,14 @@ Retangulo::mover(float x, float y) {
 void
 Retangulo::desenhar(void) {
 	glColor3f(obterCor().obterVermelho(), obterCor().obterVerde(), obterCor().obterAzul());
+	glPushMatrix();
+	glRotatef(-obterAngulo(), 0.0f, 0.0f, 1.0f);
 	glBegin(GL_POLYGON);
 	for (auto pixel : obterPixels())
 		glVertex3f(pixel->obterX(), pixel->obterY(), 0.0f);
+	glRotatef(obterAngulo(), 0.0f, 0.0f, 1.0f);
 	glEnd();
+	glPopMatrix();
 }
 
 Pixel*
