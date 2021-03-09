@@ -28,12 +28,14 @@ Projetil::~Projetil() {
 
 void
 Projetil::desenhar(void) {
-	mover(0.0f, 5.0f);
+	mover(5.0f * std::sin(obterAngulo()), 5.0f * std::cos(obterAngulo()));
+
+	cout << "(" << obterPixel().obterX() << ", " << obterPixel().obterY() << ")" << endl;
+	cout << obterAngulo() << "°" << endl;
 
 	glColor3f(obterPixel().obterCor().obterVermelho(), obterPixel().obterCor().obterVerde(), obterPixel().obterCor().obterAzul());
 	glLoadIdentity();	
-	glPushMatrix(); {
-		glRotatef(-obterAngulo(), 0.0f, 0.0f, 1.0f);
+
 		glPushMatrix(); {
 			glTranslatef(obterPixel().obterX(), obterPixel().obterY(), 0.0f);
 			glPointSize(obterTamanhoPonto());
@@ -46,9 +48,6 @@ Projetil::desenhar(void) {
 			glEnd();
 		}
 		glPopMatrix();
-		glTranslatef(-obterPixel().obterX(), -obterPixel().obterY(), 0.0f);
-	}
-	glPopMatrix();
 
 	notificar();
 }
