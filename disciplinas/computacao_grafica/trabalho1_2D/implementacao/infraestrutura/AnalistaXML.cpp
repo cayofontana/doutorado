@@ -25,7 +25,7 @@ AnalistaXML::configurar(Cenario& cenario) {
 		if (!strcmp(elemento->Name(), CENARIO))
 			cenario.inicializar(atoi(elemento->Attribute("width")), atoi(elemento->Attribute("height")), obterCor(elemento->Attribute("fill")));
 		else if (!strcmp(elemento->Name(), JOGADOR))
-			cenario.inserir(new Jogador(atoi(elemento->Attribute("cx")), atoi(elemento->Attribute("cy")), atoi(elemento->Attribute("r")), obterCor(elemento->Attribute("fill"))));
+			cenario.inserir(new Jogador(cenario, atoi(elemento->Attribute("cx")), atoi(elemento->Attribute("cy")), atoi(elemento->Attribute("r")), obterCor(elemento->Attribute("fill"))));
 }
 
 Cor*

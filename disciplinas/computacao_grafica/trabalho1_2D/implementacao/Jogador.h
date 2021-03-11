@@ -4,6 +4,7 @@
 #include "modelo/primitivas/Cor.h"
 #include "modelo/Circunferencia.h"
 #include "modelo/Retangulo.h"
+#include "Cenario.h"
 
 #include <map>
 using namespace std;
@@ -12,11 +13,12 @@ enum Membro { BRACO = 1, ANTEBRACO };
 
 class Jogador {
 public:
-	Jogador(int, int, int, Cor*);
+	Jogador(Cenario&, int, int, int, Cor*);
+	~Jogador();
 
 private:
-	Circunferencia* corpo;
 	Circunferencia* cabeca;
+	Circunferencia* nariz;
 	map<Membro, Retangulo*> membrosEsquerdo;
 	map<Membro, Retangulo*> membrosDireito;
 	Circunferencia* luvaEsquerda;

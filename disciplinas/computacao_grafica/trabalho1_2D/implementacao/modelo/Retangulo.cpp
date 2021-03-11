@@ -1,10 +1,10 @@
 #include "Retangulo.h"
 
-Retangulo::Retangulo(Pixel pixel, float largura, float altura, Cor cor) : cor(cor) {
-	// pixels.push_back(new Pixel(pixel.obterX() - largura / 2, pixel.obterY() - altura / 2));
-	// pixels.push_back(new Pixel(pixel.obterX() - largura / 2, pixel.obterY() + altura / 2));
-	// pixels.push_back(new Pixel(pixel.obterX() + largura / 2, pixel.obterY() + altura / 2));
-	// pixels.push_back(new Pixel(pixel.obterX() + largura / 2, pixel.obterY() - altura / 2));
+Retangulo::Retangulo(int deslocamentoHorizontal, int deslocamentoVertical, Cor* cor) : FormaGeometrica2D(deslocamentoHorizontal, deslocamentoVertical), cor(cor) {
+	pixels.push_back(new Pixel(-deslocamentoHorizontal / 2, -deslocamentoVertical / 2));
+	pixels.push_back(new Pixel(-deslocamentoHorizontal / 2, deslocamentoVertical / 2));
+	pixels.push_back(new Pixel(deslocamentoHorizontal / 2, deslocamentoVertical / 2));
+	pixels.push_back(new Pixel(deslocamentoHorizontal / 2, -deslocamentoVertical / 2));
 }
 
 Retangulo::~Retangulo() {
@@ -12,7 +12,7 @@ Retangulo::~Retangulo() {
 
 Cor
 Retangulo::obterCor(void) {
-	return (cor);
+	return (*cor);
 }
 
 void

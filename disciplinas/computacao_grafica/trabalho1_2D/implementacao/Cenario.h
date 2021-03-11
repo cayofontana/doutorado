@@ -11,6 +11,8 @@
 
 using namespace std;
 
+class Jogador;
+
 class Cenario {
 public:
 	~Cenario();

@@ -6,7 +6,7 @@
 class Pixel {
 public:
 	Pixel(float, float);
-	Pixel(float, float, Cor);
+	Pixel(float, float, Cor*);
 
 	float obterX(void);
 	void definirX(float);
@@ -20,7 +20,7 @@ public:
 private:
 	float x;
 	float y;
-	Cor cor;
+	Cor *cor;
 };
 
 #endif

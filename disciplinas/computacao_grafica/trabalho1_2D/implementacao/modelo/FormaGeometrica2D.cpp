@@ -1,6 +1,6 @@
 #include "FormaGeometrica2D.h"
 
-FormaGeometrica2D::FormaGeometrica2D() : angulo(0) {
+FormaGeometrica2D::FormaGeometrica2D(int deslocamentoHorizontal, int deslocamentoVertical) : deslocamentoHorizontal(deslocamentoHorizontal), deslocamentoVertical(deslocamentoVertical), angulo(0) {
 }
 
 FormaGeometrica2D::~FormaGeometrica2D() {

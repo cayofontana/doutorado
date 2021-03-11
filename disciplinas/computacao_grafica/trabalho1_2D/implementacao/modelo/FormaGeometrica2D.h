@@ -18,9 +18,11 @@ public:
 
 protected:
 	std::vector<Pixel*> pixels;
+	int deslocamentoHorizontal;
+	int deslocamentoVertical;
 	float angulo;
 
-	FormaGeometrica2D();
+	FormaGeometrica2D(int, int);
 };
 
 #endif
