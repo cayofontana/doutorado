@@ -1,13 +1,15 @@
-#include <iostream>
-
 #include "infraestrutura/AnalistaXML.h"
 #include "Cenario.h"
+
+#include <iostream>
+
+using namespace std;
 
 int
 main(int argc, char** argv) {
 	if (argc != 4) {
-		cout << "Erro: " << endl;
-		cout << "Use ./trabalho2D <endereco_arquivo_xml> <posição_janela_x> <posição_janela_y>" << endl;
+		cerr << "Erro: " << endl;
+		cerr << "Use ./trabalho2D <endereco_arquivo_xml> <posição_janela_x> <posição_janela_y>" << endl;
 		return (-1);
 	}
 
@@ -15,7 +17,7 @@ main(int argc, char** argv) {
 		AnalistaXML analistaXML(argv[1]);
 		analistaXML.configurar(Cenario::obterInstancia());
 	}
-	catch (const std::invalid_argument& excecao) {
+	catch (const invalid_argument& excecao) {
 		cerr << "Erro: " << excecao.what() << endl;
 		return (-5);
 	}

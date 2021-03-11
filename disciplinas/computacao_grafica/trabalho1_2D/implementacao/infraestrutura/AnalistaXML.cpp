@@ -1,8 +1,6 @@
 #include "AnalistaXML.h"
 
 #include <stdexcept>
-#include <iostream>
-using namespace std;
 
 AnalistaXML::AnalistaXML(const char* arquivoXML) {
 	if (documentoXML.LoadFile(arquivoXML))

@@ -1,8 +1,15 @@
-CPP 		= g++
-CPPFLAGS 	= -Wall -lGL -lglut -ltinyxml2
+APP 		:= trabalho1_2D
+CPP 		:= g++
+CPPFLAGS	:= -Wall -lGL -lglut -ltinyxml2
 
-all:
-	$(CPP) -o trabalho1_2D infraestrutura/AnalistaXML.cpp modelo/primitivas/Cor.cpp modelo/primitivas/Pixel.cpp modelo/FormaGeometrica2D.cpp modelo/Circunferencia.cpp modelo/Retangulo.cpp controle/Teclado.cpp controle/Mouse.cpp Jogador.cpp Cenario.cpp Programa.cpp $(CPPFLAGS)
+SOURCE		:= $(shell find . -name "*.cpp")
+OBJECTS		:= $(patsubst %.cpp, %.o, $(SOURCE))
+
+all: $(APP)
+	$(info PARA EXECUTAR O PROGRAMA, ENTRE COM A SEGUINTE INSTRUÇÃO: "./trabalho2D <endereco_arquivo_xml> <posição_janela_x> <posição_janela_y>")
+
+$(APP): $(OBJECTS)
+	$(CPP) -o $(APP) $(OBJECTS) $(CPPFLAGS)
 
 clean:
-	rm -rf *o trabalho1_2D
+	rm -f $(OBJECTS) $(APP)
