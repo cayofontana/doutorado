@@ -1,7 +1,7 @@
 #include "Jogador.h"
 
 Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca, Cor* cor) {
-	cabeca = new Circunferencia(xAbsoluto - cenario.obterLargura() / 2, yAbsoluto - cenario.obterAltura() / 2, raioCabeca, cor, 0.1f, 1.0f);
+	cabeca = new Circunferencia(xAbsoluto - cenario.obterLargura() / 2, cenario.obterAltura() / 2 - yAbsoluto, raioCabeca, cor, 0.1f, 1.0f);
 	nariz =  new Circunferencia(cabeca->obterDeslocamentoHorizontal() + cabeca->obterRaio() - raioCabeca / 5, cabeca->obterDeslocamentoVertical() + cabeca->obterRaio() - raioCabeca / 5, raioCabeca / 5, cor, 0.1f, 1.0f);
 }
 
