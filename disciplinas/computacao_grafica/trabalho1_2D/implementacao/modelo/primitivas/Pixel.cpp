@@ -40,6 +40,11 @@ Pixel::definirCor(Cor cor) {
 	this->cor->definirAzul(cor.obterAzul());
 }
 
+Cor
+Pixel::obterCorSombreada(void) {
+	return (cor->gerarSombra());	
+}
+
 void
 Pixel::incrementar(float x, float y) {
 	this->x += x;

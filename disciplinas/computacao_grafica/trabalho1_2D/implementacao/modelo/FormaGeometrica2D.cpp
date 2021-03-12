@@ -13,6 +13,16 @@ FormaGeometrica2D::obterPixels(void) {
 	return (pixels);
 }
 
+int
+FormaGeometrica2D::obterDeslocamentoHorizontal(void) {
+	return (deslocamentoHorizontal);
+}
+
+int
+FormaGeometrica2D::obterDeslocamentoVertical(void) {
+	return (deslocamentoVertical);
+}
+
 float
 FormaGeometrica2D::obterAngulo(void) {
 	return (angulo);

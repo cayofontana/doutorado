@@ -14,6 +14,7 @@ public:
 	void definirY(float);
 	Cor obterCor(void);
 	void definirCor(Cor);
+	Cor obterCorSombreada(void);
 	void incrementar(float, float);
 	float calcularDistancia(Pixel);
 

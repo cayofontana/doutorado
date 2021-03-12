@@ -11,6 +11,8 @@ public:
 	~FormaGeometrica2D();
 
 	std::vector<Pixel*> obterPixels(void);
+	int obterDeslocamentoHorizontal(void);
+	int obterDeslocamentoVertical(void);
 	float obterAngulo(void);
 
 	virtual void mover(float, float) = 0;

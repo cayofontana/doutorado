@@ -36,10 +36,10 @@ AnalisadorXML::configurar(Cenario& cenario) {
 Cor*
 AnalisadorXML::obterCor(const char* nomeCor) {
 	if (!strcmp(nomeCor, "red"))
-		return (new Cor(255.0f, 0.0f, 0.0f));
+		return (new Cor(1.0f, 0.0f, 0.0f));
 	else if (!strcmp(nomeCor, "green"))
-		return (new Cor(0.0f, 255.0f, 0.0f));
+		return (new Cor(0.0f, 1.0f, 0.0f));
 	else if (!strcmp(nomeCor, "blue"))
-		return (new Cor(0.0f, 0.0f, 255.0f));
+		return (new Cor(0.0f, 0.0f, 1.0f));
 	return (new Cor(0.0f, 0.0f, 0.0f));
 }

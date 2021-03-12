@@ -32,3 +32,8 @@ void
 Cor::definirAzul(float azul) {
 	this->azul = azul;
 }
+
+Cor
+Cor::gerarSombra(void) {
+	return (Cor(vermelho * 0.5f, verde * 0.5f, azul * 0.5f));	
+}

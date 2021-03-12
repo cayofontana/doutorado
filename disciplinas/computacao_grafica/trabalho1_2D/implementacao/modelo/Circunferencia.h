@@ -6,9 +6,10 @@
 
 class Circunferencia : public FormaGeometrica2D {
 public:
-	Circunferencia(int, int, float, Cor*, float, int, float);
+	Circunferencia(int, int, float, Cor*, float, float);
 	virtual ~Circunferencia();
 	
+	float obterRaio(void);
 	Pixel obterPixel(void);
 	void mover(float, float) override;
 	void desenhar(void) override;
@@ -16,7 +17,6 @@ public:
 private:
 	float raio;
 	float intervaloAngular;
-	int tipo;
 	float tamanhoPonto;
 };
 

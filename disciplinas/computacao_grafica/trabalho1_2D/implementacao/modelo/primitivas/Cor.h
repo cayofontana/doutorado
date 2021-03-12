@@ -11,6 +11,7 @@ public:
 	void definirVerde(float);
 	float obterAzul(void);
 	void definirAzul(float);
+	Cor gerarSombra(void);
 
 private:
 	float vermelho;
