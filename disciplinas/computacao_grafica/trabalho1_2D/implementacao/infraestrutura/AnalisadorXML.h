@@ -1,5 +1,5 @@
-#ifndef ANALISTAXML_H
-#define ANALISTAXML_H
+#ifndef ANALISADORXML_H
+#define ANALISADORXML_H
 
 #include "../modelo/primitivas/Cor.h"
 #include "../Cenario.h"
@@ -13,10 +13,10 @@ using namespace tinyxml2;
 #define CENARIO "rect"
 #define JOGADOR "circle"
 
-class AnalistaXML {
+class AnalisadorXML {
 public:
-	AnalistaXML(const char*);
-	virtual ~AnalistaXML() = default;
+	AnalisadorXML(const char*);
+	virtual ~AnalisadorXML() = default;
 
 	void obterListaElementosFilhos(XMLNode*, const char*);
 	void configurar(Cenario&);

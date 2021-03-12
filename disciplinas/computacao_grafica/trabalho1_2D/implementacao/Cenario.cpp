@@ -11,8 +11,8 @@ Cenario::exibir(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearColor(Cenario::obterInstancia().cor->obterVermelho(), Cenario::obterInstancia().cor->obterVerde(), Cenario::obterInstancia().cor->obterAzul(), 1.0f);
 
-	// Cenario::obterInstancia().robo->desenhar();
-	// Cenario::obterInstancia().alvo->desenhar();
+	for (auto& jogador : Cenario::obterInstancia().jogadores)
+		jogador->desenhar();
 
 	glutSwapBuffers();
 }
@@ -28,23 +28,30 @@ Cenario::liberarTecla(unsigned char tecla, int x, int y) {
 }
 
 void
+Cenario::clicar(int botao, int estado, int x, int y) {
+	Cenario::obterInstancia().mouse->clicar(botao, estado, x, y);
+}
+
+void
 Cenario::ociar(void) {
 	glutPostRedisplay();
 }
 
 Cenario::Cenario() {
 	teclado = new Teclado();
+	mouse = new Mouse();
 }
 
 Cenario::~Cenario() {
 	delete cor;
 	delete teclado;
+	delete mouse;
 	for (auto pixel : pixels)
 		delete pixel;
 }
 
 void
-Cenario::inicializar(const int largura, const int altura, Cor* cor) {
+Cenario::configurar(const int largura, const int altura, Cor* cor) {
 	this->largura = largura;
 	this->altura = altura;
 	this->cor = cor;
@@ -52,7 +59,10 @@ Cenario::inicializar(const int largura, const int altura, Cor* cor) {
 	pixels.push_back(new Pixel(-(this->largura / 2), (this->altura / 2)));
 	pixels.push_back(new Pixel((this->largura / 2), (this->altura / 2)));
 	pixels.push_back(new Pixel((this->largura / 2), -(this->altura / 2)));
+}
 
+void
+Cenario::inicializar(void) {
 	glMatrixMode(GL_PROJECTION);
 	glOrtho(-(this->largura / 2),
 		(this->largura / 2),

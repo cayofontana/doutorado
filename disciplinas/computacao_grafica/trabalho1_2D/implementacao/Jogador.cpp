@@ -1,7 +1,7 @@
 #include "Jogador.h"
 
 Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca, Cor* cor) {
-	cabeca = new Circunferencia(xAbsoluto - cenario.obterLargura() / 2, yAbsoluto - cenario.obterAltura() / 2, raioCabeca, cor, 0.01f, GL_TRIANGLE_FAN, 1.0f);
+	cabeca = new Circunferencia(xAbsoluto - cenario.obterLargura() / 2, yAbsoluto - cenario.obterAltura() / 2, raioCabeca, cor, 0.1f, GL_TRIANGLE_FAN, 1.0f);
 }
 
 Jogador::~Jogador() {
@@ -13,4 +13,9 @@ Jogador::~Jogador() {
 		delete par.second;
 	delete luvaEsquerda;
 	delete luvaDireita;
+}
+
+void
+Jogador::desenhar(void) {
+	cabeca->desenhar();
 }

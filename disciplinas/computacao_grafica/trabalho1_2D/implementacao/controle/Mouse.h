@@ -1,14 +1,11 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
-#include <GL/glut.h>
-#include <vector>
-
 class Mouse {
 public:
 	Mouse();
 
-	// void click(int, int, int, int, const int, const int);
+	void clicar(int, int, int, int);
 	// Point* clickMotion(int, int, const int, const int, std::vector<Point*>);
 	// bool isLeftButtonClicked(void);
 	// bool isMotionClickOnArea(void);

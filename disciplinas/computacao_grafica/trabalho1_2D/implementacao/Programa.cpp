@@ -1,4 +1,4 @@
-#include "infraestrutura/AnalistaXML.h"
+#include "infraestrutura/AnalisadorXML.h"
 #include "Cenario.h"
 
 #include <iostream>
@@ -9,13 +9,14 @@ int
 main(int argc, char** argv) {
 	if (argc != 4) {
 		cerr << "Erro: " << endl;
-		cerr << "Use ./trabalho2D <endereco_arquivo_xml> <posição_janela_x> <posição_janela_y>" << endl;
+		cerr << "Use ./trabalhocg <endereco_arquivo_xml> <posição_janela_x> <posição_janela_y>" << endl;
 		return (-1);
 	}
 
+	Cenario& cenario = Cenario::obterInstancia();	
 	try {
-		AnalistaXML analistaXML(argv[1]);
-		analistaXML.configurar(Cenario::obterInstancia());
+		AnalisadorXML analisadorXML(argv[1]);
+		analisadorXML.configurar(cenario);
 	}
 	catch (const invalid_argument& excecao) {
 		cerr << "Erro: " << excecao.what() << endl;
@@ -24,13 +25,15 @@ main(int argc, char** argv) {
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-	glutInitWindowSize(Cenario::obterInstancia().obterLargura(), Cenario::obterInstancia().obterAltura()); 
 	glutInitWindowPosition(atoi(argv[2]), atoi(argv[3]));
+	glutInitWindowSize(cenario.obterLargura(), cenario.obterAltura()); 
 	glutCreateWindow(argv[0]);
-	glutDisplayFunc(Cenario::obterInstancia().exibir);
-	glutKeyboardFunc(Cenario::obterInstancia().pressionarTecla);
-	glutKeyboardUpFunc(Cenario::obterInstancia().liberarTecla);
-	glutIdleFunc(Cenario::obterInstancia().ociar);
+	cenario.inicializar();
+	glutDisplayFunc(cenario.exibir);
+	glutKeyboardFunc(cenario.pressionarTecla);
+	glutKeyboardUpFunc(cenario.liberarTecla);
+	glutMouseFunc(cenario.clicar);
+	glutIdleFunc(cenario.ociar);
 	glutMainLoop();
 	return (0);
 }

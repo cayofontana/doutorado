@@ -16,6 +16,8 @@ public:
 	Jogador(Cenario&, int, int, int, Cor*);
 	~Jogador();
 
+	void desenhar(void);
+
 private:
 	Circunferencia* cabeca;
 	Circunferencia* nariz;

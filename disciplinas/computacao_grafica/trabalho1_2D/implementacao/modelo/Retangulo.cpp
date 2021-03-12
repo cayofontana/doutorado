@@ -8,6 +8,7 @@ Retangulo::Retangulo(int deslocamentoHorizontal, int deslocamentoVertical, Cor* 
 }
 
 Retangulo::~Retangulo() {
+	delete cor;
 }
 
 Cor

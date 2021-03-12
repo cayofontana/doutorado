@@ -17,7 +17,8 @@ class Cenario {
 public:
 	~Cenario();
 
-	void inicializar(const int, const int, Cor*);
+	void configurar(const int largura, const int altura, Cor* cor);
+	void inicializar(void);
 	int obterLargura(void);
 	int obterAltura(void);
 	void inserir(Jogador*);
@@ -26,6 +27,7 @@ public:
 	static void exibir(void);
 	static void pressionarTecla(unsigned char, int, int);
 	static void liberarTecla(unsigned char, int, int);
+	static void clicar(int, int, int, int);
 	static void ociar(void);
 
 private:
@@ -34,6 +36,7 @@ private:
 	Cor* cor;
 	vector<Pixel*> pixels;
 	Teclado* teclado;
+	Mouse* mouse;
 	vector<Jogador*> jogadores;
 
 	Cenario();

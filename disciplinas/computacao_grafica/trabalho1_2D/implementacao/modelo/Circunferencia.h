@@ -9,6 +9,7 @@ public:
 	Circunferencia(int, int, float, Cor*, float, int, float);
 	virtual ~Circunferencia();
 	
+	Pixel obterPixel(void);
 	void mover(float, float) override;
 	void desenhar(void) override;
 

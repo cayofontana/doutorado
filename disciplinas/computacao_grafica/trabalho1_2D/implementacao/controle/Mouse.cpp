@@ -3,11 +3,10 @@
 Mouse::Mouse() {
 }
 
-// void
-// Mouse::click(int button, int state, int x, int y, const int width, const int height) {
-// 	point.setGLCoordinates(x, y, width, height);
-// 	leftButtonClicked = (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) ? state == GLUT_DOWN : false;
-// }
+void
+Mouse::clicar(int botao, int estado, int x, int y) {
+	// leftButtonClicked = (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) ? state == GLUT_DOWN : false;
+}
 
 // Point*
 // Mouse::clickMotion(int x, int y, const int width, const int height, std::vector<Point*> points) {
