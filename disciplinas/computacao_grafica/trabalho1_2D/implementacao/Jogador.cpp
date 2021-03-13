@@ -4,7 +4,7 @@ using namespace std;
 
 Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca, Cor* cor) {
 	cabeca = new Circunferencia(xAbsoluto - cenario.obterLargura() / 2, cenario.obterAltura() / 2 - yAbsoluto, raioCabeca, cor, 0.1f, 1.0f);
-	nariz =  new Circunferencia(cabeca->obterDeslocamentoHorizontal() + (raioCabeca - raioCabeca * 0.2f), cabeca->obterDeslocamentoVertical() + (raioCabeca - raioCabeca * 0.2f), raioCabeca * 0.2f, cor, 0.1f, 1.0f);
+	nariz =  new Circunferencia(raioCabeca * 0.8f, raioCabeca * 0.8f, raioCabeca * 0.2f, cor, 0.1f, 1.0f);
 }
 
 Jogador::~Jogador() {
@@ -21,10 +21,15 @@ Jogador::~Jogador() {
 void
 Jogador::desenhar(void) {
 	glLoadIdentity();
-	glPushMatrix();
-	nariz->desenhar();
-	glPushMatrix();
-	cabeca->desenhar();
-	glPopMatrix();
+	glPushMatrix(); {
+		glRotatef(cabeca->obterAngulo(), 0.0f, 0.0f, 1.0f);
+		glTranslatef(cabeca->obterDeslocamentoHorizontal(), cabeca->obterDeslocamentoVertical(), 0.0f);
+		glPushMatrix(); {
+			glTranslatef(nariz->obterDeslocamentoHorizontal(), nariz->obterDeslocamentoVertical(), 0.0f);
+			nariz->desenhar();
+		}
+		glPopMatrix();
+		cabeca->desenhar();
+	}
 	glPopMatrix();
 }

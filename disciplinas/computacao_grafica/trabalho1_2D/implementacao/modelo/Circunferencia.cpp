@@ -29,8 +29,6 @@ Circunferencia::mover(float x, float y) {
 void
 Circunferencia::desenhar(void) {
 	glEnable(GL_POINT_SMOOTH);
-	glRotatef(obterAngulo(), 0.0f, 0.0f, 1.0f);
-	glTranslatef(deslocamentoHorizontal, deslocamentoVertical, 0.0f);
 	glPointSize(tamanhoPonto);
 	Cor corSombreada = obterPixel().obterCorSombreada();
 	glColor3f(corSombreada.obterVermelho(), corSombreada.obterVerde(), corSombreada.obterAzul());
