@@ -1,5 +1,7 @@
 #include "Cenario.h"
 
+static Cenario& cenario = Cenario::obterInstancia();
+
 Cenario&
 Cenario::obterInstancia(void) {
 	static Cenario instance;
@@ -9,9 +11,9 @@ Cenario::obterInstancia(void) {
 void
 Cenario::exibir(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glClearColor(Cenario::obterInstancia().cor->obterVermelho(), Cenario::obterInstancia().cor->obterVerde(), Cenario::obterInstancia().cor->obterAzul(), 1.0f);
+	glClearColor(cenario.cor->obterVermelho(), cenario.cor->obterVerde(), cenario.cor->obterAzul(), 1.0f);
 
-	for (auto& jogador : Cenario::obterInstancia().jogadores)
+	for (auto& jogador : cenario.jogadores)
 		jogador->desenhar();
 
 	glutSwapBuffers();
@@ -19,17 +21,17 @@ Cenario::exibir(void) {
 
 void
 Cenario::pressionarTecla(unsigned char tecla, int x, int y) {
-	Cenario::obterInstancia().teclado->teclar(tecla, 1, &Cenario::obterInstancia());
+	cenario.teclado->teclar(tecla, 1, &cenario);
 }
 
 void
 Cenario::liberarTecla(unsigned char tecla, int x, int y) {
-	Cenario::obterInstancia().teclado->teclar(tecla, 0, &Cenario::obterInstancia());
+	cenario.teclado->teclar(tecla, 0, &cenario);
 }
 
 void
 Cenario::clicar(int botao, int estado, int x, int y) {
-	Cenario::obterInstancia().mouse->clicar(botao, estado, x, y);
+	cenario.mouse->clicar(botao, estado, x, y);
 }
 
 void

@@ -18,6 +18,9 @@ Jogador::~Jogador() {
 
 void
 Jogador::desenhar(void) {
+	glLoadIdentity();
+	glPushMatrix();
 	nariz->desenhar();
 	cabeca->desenhar();
+	glPopMatrix();
 }
