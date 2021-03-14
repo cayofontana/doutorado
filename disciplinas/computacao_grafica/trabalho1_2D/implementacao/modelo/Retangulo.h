@@ -9,15 +9,16 @@
 
 class Retangulo : public FormaGeometrica2D {
 public:
-	Retangulo(int, int, Cor*);
+	Retangulo(int, int, float, float, Cor*);
 	virtual ~Retangulo();
 
 	Cor obterCor(void);
 
-	void mover(float, float) override;
 	void desenhar(void) override;
 	
 private:
+	float base;
+	float lateral;
 	Cor* cor;
 };
 

@@ -14,6 +14,7 @@ public:
 
 	void teclar(unsigned char, int, Cenario*);
 	void definirValor(unsigned char, int);
+	void atualizar(Cenario*);
 	Cor obterCor(void);
 	bool possuiTeclaPressionada(void);
 

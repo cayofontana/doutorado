@@ -2,8 +2,6 @@
 
 #include <GL/glut.h>
 #include <cmath>
-#include <iostream>
-using namespace std;
 
 Circunferencia::Circunferencia(int deslocamentoHorizontal, int deslocamentoVertical, float raio, Cor* cor, float intervaloAngular, float tamanhoPonto) : FormaGeometrica2D(deslocamentoHorizontal, deslocamentoVertical), raio(raio), intervaloAngular(intervaloAngular), tamanhoPonto(tamanhoPonto) {
 	pixels.push_back(new Pixel(0.0f, 0.0f, cor));
@@ -20,10 +18,6 @@ Circunferencia::obterRaio(void) {
 Pixel
 Circunferencia::obterPixel(void) {
 	return (*pixels.at(0));
-}
-
-void
-Circunferencia::mover(float x, float y) {
 }
 
 void

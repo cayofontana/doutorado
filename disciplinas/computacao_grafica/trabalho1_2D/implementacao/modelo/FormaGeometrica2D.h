@@ -15,8 +15,10 @@ public:
 	int obterDeslocamentoVertical(void);
 	float obterAngulo(void);
 
-	virtual void mover(float, float) = 0;
 	virtual void desenhar(void) = 0;
+	void transladar(float, float);
+	void rotacionar(int);
+	
 
 protected:
 	std::vector<Pixel*> pixels;

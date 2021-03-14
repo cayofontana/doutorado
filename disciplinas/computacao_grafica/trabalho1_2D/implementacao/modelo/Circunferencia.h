@@ -11,7 +11,6 @@ public:
 	
 	float obterRaio(void);
 	Pixel obterPixel(void);
-	void mover(float, float) override;
 	void desenhar(void) override;
 
 private:

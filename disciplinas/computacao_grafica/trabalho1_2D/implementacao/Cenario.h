@@ -21,6 +21,7 @@ public:
 	void inicializar(void);
 	int obterLargura(void);
 	int obterAltura(void);
+	vector<Jogador*> obterJogadores(void);
 	void inserir(Jogador*);
 
 	static Cenario& obterInstancia(void);

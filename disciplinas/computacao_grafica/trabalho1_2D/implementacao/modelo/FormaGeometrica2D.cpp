@@ -27,3 +27,14 @@ float
 FormaGeometrica2D::obterAngulo(void) {
 	return (angulo);
 }
+
+void 
+FormaGeometrica2D::transladar(float deslocamentoHorizontal, float deslocamentoVertical) {
+	this->deslocamentoHorizontal += deslocamentoHorizontal;
+	this->deslocamentoVertical += deslocamentoVertical;
+}
+
+void
+FormaGeometrica2D::rotacionar(int angulo) {
+	this->angulo += angulo;
+}

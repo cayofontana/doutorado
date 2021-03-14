@@ -36,6 +36,9 @@ Cenario::clicar(int botao, int estado, int x, int y) {
 
 void
 Cenario::ociar(void) {
+	if (cenario.teclado->possuiTeclaPressionada())
+		cenario.teclado->atualizar(&cenario);
+
 	glutPostRedisplay();
 }
 
@@ -84,6 +87,11 @@ Cenario::obterLargura(void) {
 int
 Cenario::obterAltura(void) {
 	return (altura);
+}
+
+vector<Jogador*>
+Cenario::obterJogadores(void) {
+	return (jogadores);
 }
 
 void
