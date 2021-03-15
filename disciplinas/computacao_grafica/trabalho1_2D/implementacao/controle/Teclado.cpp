@@ -45,10 +45,10 @@ Teclado::atualizar(Cenario* cenario) {
 		cenario->obterJogadores().at(0)->rotacionar(1);
 	if (teclas.at((int)'d') || teclas.at((int)'D'))
 		cenario->obterJogadores().at(0)->rotacionar(-1);
-	if (teclas.at((int)'w') || teclas.at((int)'W'))
-		cenario->obterJogadores().at(0)->transladar(0.0f, 1.0f);
-	if (teclas.at((int)'s') || teclas.at((int)'S'))
-		cenario->obterJogadores().at(0)->transladar(0.0f, -1.0f);
+	if ((teclas.at((int)'w') || teclas.at((int)'W'))) // && !cenario->obterJogadores().at(0)->colidiu(cenario->obterJogadores().at(1)))
+		cenario->obterJogadores().at(0)->transladar(5.0f, 0.0f);
+	if ((teclas.at((int)'s') || teclas.at((int)'S'))) // && !cenario->obterJogadores().at(0)->colidiu(cenario->obterJogadores().at(1)))
+		cenario->obterJogadores().at(0)->transladar(-5.0f, 0.0f);
 }
 
 Cor

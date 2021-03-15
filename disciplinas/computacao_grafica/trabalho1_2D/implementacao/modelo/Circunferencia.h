@@ -11,8 +11,13 @@ public:
 	
 	float obterRaio(void);
 	Pixel obterPixel(void);
+	bool colidiu(Circunferencia*);
+	
 	void desenhar(void) override;
 
+protected:
+	void definirRaio(float);
+	
 private:
 	float raio;
 	float intervaloAngular;

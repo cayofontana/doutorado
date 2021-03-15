@@ -1,13 +1,15 @@
 #include "Jogador.h"
 
-Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca, Cor* cor) {
-	cabeca = new Circunferencia(xAbsoluto - cenario.obterLargura() / 2, cenario.obterAltura() / 2 - yAbsoluto, raioCabeca, cor, 0.1f, 1.0f);
-	nariz =  new Circunferencia(raioCabeca * 0.8f, raioCabeca * 0.8f, raioCabeca * 0.2f, cor, 0.1f, 1.0f);
+Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca, Cor* cor) : Circunferencia(xAbsoluto - cenario.obterLargura() / 2, cenario.obterAltura() / 2 - yAbsoluto, 0, nullptr, 0.0f, 0.0f) {
+	this->definirAngulo(xAbsoluto < cenario.obterLargura() / 2 ? -45.0f : 135.0f);
+	cabeca = new Circunferencia(0, 0, raioCabeca, cor, 0.1f, 1.0f);
+	nariz = new Circunferencia(0, 0, raioCabeca * 0.2f, cor, 0.1f, 1.0f);
 	membrosEsquerdo.insert(std::pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
 	membrosEsquerdo.insert(std::pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
 	membrosDireito.insert(std::pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
 	membrosDireito.insert(std::pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
-	luva =  new Circunferencia(0, 0, raioCabeca * 0.4f, new Cor(cabeca->obterPixel().obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f);
+	luvaEsquerda = new Circunferencia(0, 0, raioCabeca * 0.4f, new Cor(cabeca->obterPixel().obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f);
+	luvaDireita = new Circunferencia(0, 0, raioCabeca * 0.4f, new Cor(cabeca->obterPixel().obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f);
 }
 
 Jogador::~Jogador() {
@@ -17,17 +19,18 @@ Jogador::~Jogador() {
 		delete par.second;
 	for (auto par : membrosDireito)
 		delete par.second;
-	delete luva;
+	delete luvaEsquerda;
+	delete luvaDireita;
 }
 
 void
 Jogador::desenhar(void) {
 	glLoadIdentity();
 	glPushMatrix(); {
-		glTranslatef(cabeca->obterDeslocamentoHorizontal(), cabeca->obterDeslocamentoVertical(), 0.0f);
-		glRotatef(cabeca->obterAngulo() - 45.0f, 0.0f, 0.0f, 1.0f);
+		glTranslatef(this->obterDeslocamentoHorizontal(), this->obterDeslocamentoVertical(), 0.0f);
+		glRotatef(this->obterAngulo(), 0.0f, 0.0f, 1.0f);
 		glPushMatrix(); {
-			glTranslatef(nariz->obterDeslocamentoHorizontal(), nariz->obterDeslocamentoVertical(), 0.0f);
+			glTranslatef(cabeca->obterRaio() * 0.8f, cabeca->obterRaio() * 0.8f, 0.0f);
 			nariz->desenhar();
 		}
 		glPopMatrix();
@@ -47,7 +50,7 @@ Jogador::desenhar(void) {
 					anteBracoEsquerdo->desenhar();
 					glPushMatrix(); {
 						glTranslatef(anteBracoEsquerdo->obterDeslocamentoHorizontal(), 0.0f, 0.0f);
-						luva->desenhar();
+						luvaEsquerda->desenhar();
 					}
 					glPopMatrix();
 				}
@@ -72,7 +75,7 @@ Jogador::desenhar(void) {
 					anteBracoDireito->desenhar();
 					glPushMatrix(); {
 						glTranslatef(-anteBracoDireito->obterDeslocamentoHorizontal(), 0.0f, 0.0f);
-						luva->desenhar();
+						luvaDireita->desenhar();
 					}
 					glPopMatrix();
 				}
@@ -84,14 +87,4 @@ Jogador::desenhar(void) {
 		cabeca->desenhar();
 	}
 	glPopMatrix();
-}
-
-void 
-Jogador::transladar(float deslocamentoHorizontal, float deslocamentoVertical) {
-	cabeca->transladar(deslocamentoHorizontal, deslocamentoVertical);
-}
-
-void
-Jogador::rotacionar(int angulo) {
-	cabeca->rotacionar(angulo);
 }

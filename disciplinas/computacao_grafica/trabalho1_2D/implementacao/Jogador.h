@@ -11,21 +11,20 @@ using namespace std;
 
 enum Membro { BRACO = 1, ANTEBRACO };
 
-class Jogador {
+class Jogador : public Circunferencia {
 public:
 	Jogador(Cenario&, int, int, int, Cor*);
 	~Jogador();
 
 	void desenhar(void);
-	void transladar(float, float);
-	void rotacionar(int);
 
 private:
 	Circunferencia* cabeca;
 	Circunferencia* nariz;
 	map<Membro, Retangulo*> membrosEsquerdo;
 	map<Membro, Retangulo*> membrosDireito;
-	Circunferencia* luva;
+	Circunferencia* luvaEsquerda;
+	Circunferencia* luvaDireita;
 };
 
 #endif

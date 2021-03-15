@@ -45,3 +45,13 @@ Circunferencia::desenhar(void) {
 	}
 	glEnd();
 }
+
+bool
+Circunferencia::colidiu(Circunferencia* circunferencia) {
+	return (obterPixel().calcularDistancia(circunferencia->obterPixel()) <= raio + circunferencia->obterRaio());
+}
+
+void
+Circunferencia::definirRaio(float raio) {
+	this->raio = raio;
+}
