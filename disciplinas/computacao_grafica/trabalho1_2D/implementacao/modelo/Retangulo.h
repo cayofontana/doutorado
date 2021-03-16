@@ -12,6 +12,8 @@ public:
 	Retangulo(int, int, float, float, Cor*);
 	virtual ~Retangulo();
 
+	float obterBase(void);
+	float obterLateral(void);
 	Cor obterCor(void);
 
 	void desenhar(void) override;

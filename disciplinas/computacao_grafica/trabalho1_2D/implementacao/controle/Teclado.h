@@ -21,6 +21,8 @@ public:
 private:
 	std::vector<int> teclas;
 	Cor cor;
+	bool colisaoFrontal;
+	bool colisaoTraseira;
 };
 
 #endif

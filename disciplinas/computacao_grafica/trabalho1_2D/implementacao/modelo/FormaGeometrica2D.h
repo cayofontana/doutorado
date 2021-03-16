@@ -14,7 +14,6 @@ public:
 	int obterDeslocamentoHorizontal(void);
 	int obterDeslocamentoVertical(void);
 	float obterAngulo(void);
-	void definirAngulo(float);
 
 	virtual void desenhar(void) = 0;
 	void transladar(float, float);

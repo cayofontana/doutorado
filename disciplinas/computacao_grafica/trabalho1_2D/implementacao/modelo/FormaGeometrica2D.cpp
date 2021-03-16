@@ -28,11 +28,6 @@ FormaGeometrica2D::obterAngulo(void) {
 	return (angulo);
 }
 
-void
-FormaGeometrica2D::definirAngulo(float angulo) {
-	this->angulo = angulo;
-}
-
 void 
 FormaGeometrica2D::transladar(float deslocamentoHorizontal, float deslocamentoVertical) {
 	this->deslocamentoHorizontal += deslocamentoHorizontal;

@@ -48,7 +48,7 @@ Circunferencia::desenhar(void) {
 
 bool
 Circunferencia::colidiu(Circunferencia* circunferencia) {
-	return (obterPixel().calcularDistancia(circunferencia->obterPixel()) <= raio + circunferencia->obterRaio());
+	return (Pixel(obterDeslocamentoHorizontal(), obterDeslocamentoVertical()).calcularDistancia(Pixel(circunferencia->obterDeslocamentoHorizontal(), circunferencia->obterDeslocamentoVertical())) <= obterRaio());
 }
 
 void

@@ -1,11 +1,17 @@
 #include "Mouse.h"
+#include "../Cenario.h"
+
+#include <GL/glut.h>
 
 Mouse::Mouse() {
 }
 
 void
-Mouse::clicar(int botao, int estado, int x, int y) {
-	// leftButtonClicked = (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) ? state == GLUT_DOWN : false;
+Mouse::clicar(int botao, int estado, int x, int y, Cenario* cenario) {
+	if (botao == GLUT_LEFT_BUTTON && estado == GLUT_DOWN)
+		cenario->obterJogadores().at(1)->socar(true);
+	else
+		cenario->obterJogadores().at(1)->socar(false);
 }
 
 // Point*

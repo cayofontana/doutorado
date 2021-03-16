@@ -31,7 +31,7 @@ Cenario::liberarTecla(unsigned char tecla, int x, int y) {
 
 void
 Cenario::clicar(int botao, int estado, int x, int y) {
-	cenario.mouse->clicar(botao, estado, x, y);
+	cenario.mouse->clicar(botao, estado, x, y, &cenario);
 }
 
 void

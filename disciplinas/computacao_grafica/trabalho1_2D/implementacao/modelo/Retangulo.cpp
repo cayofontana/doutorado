@@ -14,6 +14,16 @@ Retangulo::~Retangulo() {
 	delete cor;
 }
 
+float
+Retangulo::obterBase(void) {
+	return (base);
+}
+
+float
+Retangulo::obterLateral(void) {
+	return (lateral);
+}
+
 Cor
 Retangulo::obterCor(void) {
 	return (*cor);

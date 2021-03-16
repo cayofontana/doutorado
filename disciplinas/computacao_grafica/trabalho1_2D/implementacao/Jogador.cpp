@@ -1,13 +1,25 @@
 #include "Jogador.h"
 
+#include <cmath>
+using namespace std;
+
 Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca, Cor* cor) : Circunferencia(xAbsoluto - cenario.obterLargura() / 2, cenario.obterAltura() / 2 - yAbsoluto, 0, nullptr, 0.0f, 0.0f) {
-	this->definirAngulo(xAbsoluto < cenario.obterLargura() / 2 ? -45.0f : 135.0f);
+	rotacionar(xAbsoluto < cenario.obterLargura() / 2 ? -45.0f : 135.0f);
+
 	cabeca = new Circunferencia(0, 0, raioCabeca, cor, 0.1f, 1.0f);
+	definirRaio(obterRaio() + raioCabeca);
+
 	nariz = new Circunferencia(0, 0, raioCabeca * 0.2f, cor, 0.1f, 1.0f);
-	membrosEsquerdo.insert(std::pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
-	membrosEsquerdo.insert(std::pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
-	membrosDireito.insert(std::pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
-	membrosDireito.insert(std::pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	definirRaio(obterRaio() + raioCabeca * 0.8f);
+
+	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	definirRaio(obterRaio() + membrosEsquerdo[Membro::BRACO]->obterBase() * sin(45));
+	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	definirRaio(obterRaio() + membrosEsquerdo[Membro::ANTEBRACO]->obterBase() * sin(45));
+	
+	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(raioCabeca, raioCabeca, 60.0f, 10.0f, new Cor(0.6f, 0.6f, 0.0f))));
+
 	luvaEsquerda = new Circunferencia(0, 0, raioCabeca * 0.4f, new Cor(cabeca->obterPixel().obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f);
 	luvaDireita = new Circunferencia(0, 0, raioCabeca * 0.4f, new Cor(cabeca->obterPixel().obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterPixel().obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f);
 }
@@ -21,6 +33,11 @@ Jogador::~Jogador() {
 		delete par.second;
 	delete luvaEsquerda;
 	delete luvaDireita;
+}
+
+void
+Jogador::socar(bool socou) {
+	this->socou = socou;
 }
 
 void
@@ -39,13 +56,13 @@ Jogador::desenhar(void) {
 			glRotatef(bracoEsquerdo->obterAngulo() - 45.0f, 0.0f, 0.0f, 1.0f);
 			glTranslatef(-bracoEsquerdo->obterDeslocamentoHorizontal(), 0.0f, 0.0f);
 			glPushMatrix(); {
-				glRotatef(bracoEsquerdo->obterAngulo() + 45.0f, 0.0f, 0.0f, 1.0f);
+				glRotatef(bracoEsquerdo->obterAngulo() + socou ? -45.0f : 45.0f, 0.0f, 0.0f, 1.0f);
 				glTranslatef(-bracoEsquerdo->obterDeslocamentoHorizontal() * 0.8, 0.0f, 0.0f);
 				bracoEsquerdo->desenhar();
 				Retangulo* anteBracoEsquerdo = membrosEsquerdo[Membro::ANTEBRACO];
 				glPushMatrix(); {
 					glTranslatef(-anteBracoEsquerdo->obterDeslocamentoHorizontal(), 0.0f, 0.0f);
-					glRotatef(anteBracoEsquerdo->obterAngulo() + 45.0f, 0.0f, 0.0f, 1.0f);
+					glRotatef(anteBracoEsquerdo->obterAngulo() + socou ? 105.0f : 45.0f, 0.0f, 0.0f, 1.0f);
 					glTranslatef(anteBracoEsquerdo->obterDeslocamentoHorizontal(), 0.0f, 0.0f);
 					anteBracoEsquerdo->desenhar();
 					glPushMatrix(); {

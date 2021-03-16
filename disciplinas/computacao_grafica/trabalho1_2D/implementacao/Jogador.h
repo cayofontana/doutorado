@@ -16,7 +16,9 @@ public:
 	Jogador(Cenario&, int, int, int, Cor*);
 	~Jogador();
 
-	void desenhar(void);
+	void socar(bool);
+
+	void desenhar(void) override;
 
 private:
 	Circunferencia* cabeca;
@@ -25,6 +27,7 @@ private:
 	map<Membro, Retangulo*> membrosDireito;
 	Circunferencia* luvaEsquerda;
 	Circunferencia* luvaDireita;
+	bool socou;
 };
 
 #endif

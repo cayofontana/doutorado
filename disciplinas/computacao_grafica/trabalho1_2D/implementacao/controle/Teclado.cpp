@@ -4,7 +4,7 @@
 #include <algorithm>
 
 
-Teclado::Teclado() : teclas(256), cor(0.0f, 1.0f, 0.0f) {
+Teclado::Teclado() : teclas(256), cor(0.0f, 1.0f, 0.0f), colisaoFrontal(false), colisaoTraseira(false) {
 }
 
 Teclado::~Teclado() {
@@ -26,7 +26,6 @@ Teclado::teclar(unsigned char tecla, int valor, Cenario* cenario) {
 		case 'S':
 			definirValor(tecla, valor);
 			definirValor(tecla ^ 0x20, valor);
-			cenario->obterJogadores().at(0)->rotacionar(-1);
 			break;
 		case 27:
 			exit(1);
@@ -42,13 +41,25 @@ Teclado::definirValor(unsigned char tecla, int valor) {
 void
 Teclado::atualizar(Cenario* cenario) {
 	if (teclas.at((int)'a') || teclas.at((int)'A'))
-		cenario->obterJogadores().at(0)->rotacionar(1);
+		cenario->obterJogadores().at(1)->rotacionar(1);
 	if (teclas.at((int)'d') || teclas.at((int)'D'))
-		cenario->obterJogadores().at(0)->rotacionar(-1);
-	if ((teclas.at((int)'w') || teclas.at((int)'W'))) // && !cenario->obterJogadores().at(0)->colidiu(cenario->obterJogadores().at(1)))
-		cenario->obterJogadores().at(0)->transladar(5.0f, 0.0f);
-	if ((teclas.at((int)'s') || teclas.at((int)'S'))) // && !cenario->obterJogadores().at(0)->colidiu(cenario->obterJogadores().at(1)))
-		cenario->obterJogadores().at(0)->transladar(-5.0f, 0.0f);
+		cenario->obterJogadores().at(1)->rotacionar(-1);
+	if (teclas.at((int)'w') || teclas.at((int)'W')) {
+		if (!cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)) || (cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)) && !colisaoFrontal)) {
+			cenario->obterJogadores().at(1)->transladar(3.0f, 0.0f);
+			colisaoTraseira = false;
+		}
+		else
+			colisaoFrontal = true;
+	}
+	if (teclas.at((int)'s') || teclas.at((int)'S')) {
+		if (!cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)) || (cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)) && colisaoFrontal)) {
+			cenario->obterJogadores().at(1)->transladar(-3.0f, 0.0f);
+			colisaoTraseira = colisaoFrontal = false;
+		}
+		else
+			colisaoTraseira = true;
+	}
 }
 
 Cor
