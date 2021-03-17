@@ -23,6 +23,7 @@ public:
 	int obterAltura(void);
 	vector<Jogador*> obterJogadores(void);
 	void inserir(Jogador*);
+	bool jogadorVisivel(Jogador*);
 
 	static Cenario& obterInstancia(void);
 	static void exibir(void);

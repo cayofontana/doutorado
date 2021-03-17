@@ -98,3 +98,15 @@ void
 Cenario::inserir(Jogador* jogador) {
 	jogadores.push_back(jogador);
 }
+
+bool
+Cenario::jogadorVisivel(Jogador* jogador) {
+	for (auto pixelObjeto : jogador->obterPixels())
+		for (auto pixelIncial = pixels.begin(), pixelAtual = next(pixelIncial); pixelAtual != pixels.end(); ++pixelAtual)
+			if ((pixelObjeto->obterX() <= max((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) && 
+				(pixelObjeto->obterX() >= min((*pixelIncial)->obterX(), (*pixelAtual)->obterX())) &&
+				(pixelObjeto->obterY() <= max((*pixelIncial)->obterY(), (*pixelAtual)->obterY())) &&
+				(pixelObjeto->obterY() >= min((*pixelIncial)->obterY(), (*pixelAtual)->obterY())))
+				return (true);
+	return (false);
+}

@@ -4,7 +4,7 @@
 #include <cmath>
 
 Circunferencia::Circunferencia(int deslocamentoHorizontal, int deslocamentoVertical, float raio, Cor* cor, float intervaloAngular, float tamanhoPonto) : FormaGeometrica2D(deslocamentoHorizontal, deslocamentoVertical), raio(raio), intervaloAngular(intervaloAngular), tamanhoPonto(tamanhoPonto) {
-	pixels.push_back(new Pixel(0.0f, 0.0f, cor));
+	pixels.push_back(new Pixel(deslocamentoHorizontal, deslocamentoVertical, cor));
 }
 
 Circunferencia::~Circunferencia() {
