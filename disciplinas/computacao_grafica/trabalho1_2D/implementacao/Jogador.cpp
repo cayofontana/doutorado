@@ -58,7 +58,6 @@ Jogador::socar(Cenario& cenario, bool socou, int x, int y) {
 		socouEsquerda = socou;
 		socouDireira = socou;
 	}
-	
 }
 
 void
