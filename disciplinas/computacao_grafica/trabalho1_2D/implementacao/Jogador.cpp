@@ -1,6 +1,7 @@
 #include "Jogador.h"
 
 #include <cmath>
+#include <iostream>
 using namespace std;
 
 Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca, Cor* cor) : Circunferencia(0, Vetor2(xAbsoluto - cenario.obterLargura() / 2, cenario.obterAltura() / 2 - yAbsoluto), nullptr, 0.0f, 0.0f, GL_POINTS) {
@@ -41,22 +42,26 @@ Jogador::encarar(Jogador& jogador) {
 
 void
 Jogador::socar(Cenario& cenario, bool socou, int x, int y) {
-	Vetor2 poseSoco(x - cenario.obterLargura() / 2, y - cenario.obterAltura() / 2);
+	Vetor2 poseSoco(x - cenario.obterLargura() / 2, (y - cenario.obterAltura() / 2) * -1);
 	float anguloSoco = obterAngulo(poseSoco);
+
+	cout << "(" << poseSoco.obterX() << ", " << poseSoco.obterY() << ")" << endl;
+	cout << "anguloSoco: " << anguloSoco << endl;
+	cout << "obterAngulo(): " << obterAngulo() << endl;
 	
 	if (socou) {
-		if (anguloSoco > 0.0f) {
-			socouEsquerda = !socou;
-			socouDireira = socou;
+		socouEsquerda = !socou;
+		socouDireita = !socou;
+		if (anguloSoco > obterAngulo()) {
+			socouDireita = socou;
 		}
 		else {
 			socouEsquerda = socou;
-			socouDireira = !socou;
 		}
 	}
 	else {
 		socouEsquerda = socou;
-		socouDireira = socou;
+		socouDireita = socou;
 	}
 }
 
@@ -73,22 +78,22 @@ Jogador::desenhar(void) {
 		glPopMatrix();
 
 		glPushMatrix();
-			Retangulo* bracoEsquerdo = membrosEsquerdo[Membro::BRACO];
+			Retangulo* bracoDireito = membrosDireito[Membro::BRACO];
 			glTranslatef(cabeca->obterRaio(), 0.0f, 0.0f);
-			glRotatef(socouEsquerda ? 65.0f : -45.0f, 0.0f, 0.0f, 1.0f);
+			glRotatef(socouDireita ? 65.0f : -45.0f, 0.0f, 0.0f, 1.0f);
 			glTranslatef(cabeca->obterRaio() * 0.8f, 0.0f, 0.0f);
-			bracoEsquerdo->desenhar();			
+			bracoDireito->desenhar();			
 
 			glPushMatrix();
-				Retangulo* anteBracoEsquerdo = membrosEsquerdo[Membro::ANTEBRACO];
-				glTranslatef(bracoEsquerdo->obterLargura() * 0.5f, 0.0f, 0.0f);
-				glRotatef(socouEsquerda ? -125.0f : -45.0f, 0.0f, 0.0f, 1.0f);
-				glTranslatef(-bracoEsquerdo->obterLargura() * 0.5f, -bracoEsquerdo->obterAltura() * 0.4f, 0.0f);
-				anteBracoEsquerdo->desenhar();
+				Retangulo* anteBracoDireito = membrosDireito[Membro::ANTEBRACO];
+				glTranslatef(bracoDireito->obterLargura() * 0.5f, 0.0f, 0.0f);
+				glRotatef(socouDireita ? -125.0f : -45.0f, 0.0f, 0.0f, 1.0f);
+				glTranslatef(-bracoDireito->obterLargura() * 0.5f, -bracoDireito->obterAltura() * 0.4f, 0.0f);
+				anteBracoDireito->desenhar();
 
 				glPushMatrix();
-					glTranslatef(-anteBracoEsquerdo->obterLargura() * 0.5f, 0.0f, 0.0f);
-					luvaEsquerda->desenhar();
+					glTranslatef(-anteBracoDireito->obterLargura() * 0.5f, 0.0f, 0.0f);
+					luvaDireita->desenhar();
 				glPopMatrix();
 				
 			glPopMatrix();
@@ -96,22 +101,22 @@ Jogador::desenhar(void) {
 		glPopMatrix();
 
 		glPushMatrix();
-			Retangulo* bracoDireito = membrosDireito[Membro::BRACO];
+			Retangulo* bracoEsquerdo = membrosEsquerdo[Membro::BRACO];
 			glTranslatef(-cabeca->obterRaio(), 0.0f, 0.0f);
-			glRotatef(socouDireira ? -65.0f : 45.0f, 0.0f, 0.0f, 1.0f);
+			glRotatef(socouEsquerda ? -65.0f : 45.0f, 0.0f, 0.0f, 1.0f);
 			glTranslatef(-cabeca->obterRaio() * 0.8f, 0.0f, 0.0f);
-			bracoDireito->desenhar();
+			bracoEsquerdo->desenhar();
 
 			glPushMatrix();
-				Retangulo* anteBracoDireito = membrosDireito[Membro::ANTEBRACO];
-				glTranslatef(-bracoDireito->obterLargura() * 0.5f, 0.0f, 0.0f);
-				glRotatef(socouDireira ? 125.0f : 45.0f, 0.0f, 0.0f, 1.0f);
-				glTranslatef(bracoDireito->obterLargura() * 0.5f, -bracoDireito->obterAltura() * 0.4f, 0.0f);
-				anteBracoDireito->desenhar();
+				Retangulo* anteBracoEsquerdo = membrosDireito[Membro::ANTEBRACO];
+				glTranslatef(-bracoEsquerdo->obterLargura() * 0.5f, 0.0f, 0.0f);
+				glRotatef(socouEsquerda ? 125.0f : 45.0f, 0.0f, 0.0f, 1.0f);
+				glTranslatef(bracoEsquerdo->obterLargura() * 0.5f, -bracoEsquerdo->obterAltura() * 0.4f, 0.0f);
+				anteBracoEsquerdo->desenhar();
 
 				glPushMatrix();
-					glTranslatef(anteBracoDireito->obterLargura() * 0.5f, 0.0f, 0.0f);
-					luvaDireita->desenhar();
+					glTranslatef(anteBracoEsquerdo->obterLargura() * 0.5f, 0.0f, 0.0f);
+					luvaEsquerda->desenhar();
 				glPopMatrix();
 
 			glPopMatrix();

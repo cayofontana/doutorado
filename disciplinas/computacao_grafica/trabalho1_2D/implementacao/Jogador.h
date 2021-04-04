@@ -31,7 +31,7 @@ private:
 	Circunferencia* luvaDireita;
 	Jogador* oponente;
 	bool socouEsquerda;
-	bool socouDireira;
+	bool socouDireita;
 };
 
 #endif
