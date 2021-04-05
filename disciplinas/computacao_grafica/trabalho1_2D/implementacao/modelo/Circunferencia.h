@@ -6,8 +6,8 @@
 
 class Circunferencia : public FormaGeometrica2D {
 public:
+	Circunferencia(float, Vetor2*, Cor*, float, float, int);
 	Circunferencia(float, Cor*, float, float, int);
-	Circunferencia(float, Vetor2, Cor*, float, float, int);
 	virtual ~Circunferencia();
 
 	float obterRaio(void);

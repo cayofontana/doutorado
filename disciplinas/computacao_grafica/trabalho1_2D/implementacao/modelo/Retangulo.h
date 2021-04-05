@@ -10,8 +10,9 @@ using namespace std;
 
 class Retangulo : public FormaGeometrica2D {
 public:
+	Retangulo(float, float, Vetor2*, float, Cor*);
+	Retangulo(float, float, Vetor2*, Cor*);
 	Retangulo(float, float, Cor*);
-	Retangulo(float, float, Vetor2, Cor*);
 	virtual ~Retangulo();
 
 	float obterLargura(void);

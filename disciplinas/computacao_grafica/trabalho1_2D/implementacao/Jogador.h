@@ -18,7 +18,7 @@ public:
 
 	void definirOponente(Jogador*);
 	void encarar(Jogador&);
-	void socar(Cenario&, bool, int, int);
+	void socar(Cenario&, float, int, int);
 
 	void desenhar(void) override;
 

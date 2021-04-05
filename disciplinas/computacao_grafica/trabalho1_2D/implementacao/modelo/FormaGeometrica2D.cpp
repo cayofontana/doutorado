@@ -2,18 +2,23 @@
 
 #include <cmath>
 
-FormaGeometrica2D::FormaGeometrica2D(Vetor2 pose, Cor* cor) : pose(pose), angulo(0.0f), cor(cor) {
+FormaGeometrica2D::FormaGeometrica2D(Vetor2* pose, float angulo, Cor* cor) : pose(pose), angulo(angulo), cor(cor) {
 }
 
-FormaGeometrica2D::FormaGeometrica2D(Cor* cor) : pose(0.0f, 0.0f), angulo(0.0f), cor(cor) {
+FormaGeometrica2D::FormaGeometrica2D(Vetor2* pose, Cor* cor) : FormaGeometrica2D(pose, 0.0f, cor) {
+}
+
+FormaGeometrica2D::FormaGeometrica2D(Cor* cor) : FormaGeometrica2D(nullptr, 0.0f, cor) {
 }
 
 FormaGeometrica2D::~FormaGeometrica2D() {
+	delete pose;
+	delete cor;
 }
 
-Vetor2
+Vetor2&
 FormaGeometrica2D::obterPose(void) {
-	return (pose);
+	return (*pose);
 }
 
 float
@@ -23,7 +28,7 @@ FormaGeometrica2D::obterAngulo(void) {
 
 float
 FormaGeometrica2D::obterAngulo(Vetor2 pose) {
-	return (atan2f(pose.obterY() - this->pose.obterY(), pose.obterX() - this->pose.obterX()) * 180.0f / M_PI - 90.0f);
+	return (atan2f(pose.obterY() - this->pose->obterY(), pose.obterX() - this->pose->obterX()) * 180.0f / M_PI - 90.0f);
 }
 
 Cor
@@ -33,7 +38,7 @@ FormaGeometrica2D::obterCor(void) {
 
 void 
 FormaGeometrica2D::transladar(float x, float y) {
-	pose.incrementar(x, y);
+	pose->incrementar(x, y);
 }
 
 void

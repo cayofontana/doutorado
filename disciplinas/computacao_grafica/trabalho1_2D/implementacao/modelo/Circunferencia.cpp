@@ -3,10 +3,10 @@
 #include <GL/glut.h>
 #include <cmath>
 
-Circunferencia::Circunferencia(float raio, Cor* cor, float intervaloAngular, float tamanhoPonto, int tipo) : FormaGeometrica2D(cor), raio(raio), intervaloAngular(intervaloAngular), tamanhoPonto(tamanhoPonto), tipo(tipo) {
+Circunferencia::Circunferencia(float raio, Vetor2* pose, Cor* cor, float intervaloAngular, float tamanhoPonto, int tipo) : FormaGeometrica2D(pose, cor), raio(raio), intervaloAngular(intervaloAngular), tamanhoPonto(tamanhoPonto), tipo(tipo) {
 }
 
-Circunferencia::Circunferencia(float raio, Vetor2 pose, Cor* cor, float intervaloAngular, float tamanhoPonto, int tipo) : FormaGeometrica2D(pose, cor), raio(raio), intervaloAngular(intervaloAngular), tamanhoPonto(tamanhoPonto), tipo(tipo) {
+Circunferencia::Circunferencia(float raio, Cor* cor, float intervaloAngular, float tamanhoPonto, int tipo) : Circunferencia(raio, nullptr, cor, intervaloAngular, tamanhoPonto, tipo) {
 }
 
 Circunferencia::~Circunferencia() {

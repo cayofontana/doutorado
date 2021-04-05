@@ -8,7 +8,7 @@ class FormaGeometrica2D {
 public:
 	~FormaGeometrica2D();
 
-	Vetor2 obterPose(void);
+	Vetor2& obterPose(void);
 	float obterAngulo(void);
 	float obterAngulo(Vetor2);
 	Cor obterCor(void);
@@ -18,11 +18,12 @@ public:
 	virtual void desenhar(void) = 0;
 
 protected:
-	Vetor2 pose;
+	Vetor2 *pose;
 	float angulo;
 	Cor* cor;
 
-	FormaGeometrica2D(Vetor2, Cor*);
+	FormaGeometrica2D(Vetor2*, float, Cor*);
+	FormaGeometrica2D(Vetor2*, Cor*);
 	FormaGeometrica2D(Cor*);
 };
 

@@ -2,18 +2,17 @@
 
 #include <GL/gl.h>
 
-Retangulo::Retangulo(float largura, float altura, Cor* cor) : FormaGeometrica2D(cor), largura(largura), altura(altura) {
+Retangulo::Retangulo(float largura, float altura, Vetor2* pose, float angulo, Cor* cor) : FormaGeometrica2D(pose, angulo, cor), largura(largura), altura(altura) {
 	vertices.push_back(Vetor2(-largura / 2, -altura / 2));
 	vertices.push_back(Vetor2(-largura / 2, altura / 2));
 	vertices.push_back(Vetor2(largura / 2, altura / 2));
 	vertices.push_back(Vetor2(largura / 2, -altura / 2));
 }
 
-Retangulo::Retangulo(float largura, float altura, Vetor2 pose, Cor* cor) : FormaGeometrica2D(pose, cor), largura(largura), altura(altura) {
-	vertices.push_back(Vetor2(-largura / 2, -altura / 2));
-	vertices.push_back(Vetor2(-largura / 2, altura / 2));
-	vertices.push_back(Vetor2(largura / 2, altura / 2));
-	vertices.push_back(Vetor2(largura / 2, -altura / 2));
+Retangulo::Retangulo(float largura, float altura, Vetor2* pose, Cor* cor) : Retangulo(largura, altura, pose, 0.0f, cor) {
+}
+
+Retangulo::Retangulo(float largura, float altura, Cor* cor) : Retangulo(largura, altura, nullptr, cor) {
 }
 
 Retangulo::~Retangulo(){
