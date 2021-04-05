@@ -2,10 +2,7 @@
 
 #include <cmath>
 
-Vetor2::Vetor2(float x, float y) : x(x), y(y), cor(new Cor(0.0f, 0.0f, 0.0f)) {
-}
-
-Vetor2::Vetor2(float x, float y, Cor* cor) : x(x), y(y), cor(cor) {
+Vetor2::Vetor2(float x, float y) : x(x), y(y) {
 }
 
 float
@@ -26,18 +23,6 @@ Vetor2::obterY(void) {
 void
 Vetor2::definirY(float y) {
 	this->y = y;
-}
-
-Cor
-Vetor2::obterCor(void) {
-	return (*cor);
-}
-
-void
-Vetor2::definirCor(Cor cor) {
-	this->cor->definirVermelho(cor.obterVermelho());
-	this->cor->definirVerde(cor.obterVerde());
-	this->cor->definirAzul(cor.obterAzul());
 }
 
 void

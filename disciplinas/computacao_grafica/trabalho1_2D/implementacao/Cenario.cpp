@@ -53,6 +53,8 @@ Cenario::~Cenario() {
 	delete mouse;
 	for (auto vertice : vertices)
 		delete vertice;
+	for (auto jogador : jogadores)
+		delete jogador;
 }
 
 void
