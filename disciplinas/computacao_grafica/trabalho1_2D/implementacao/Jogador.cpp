@@ -1,13 +1,11 @@
 #include "Jogador.h"
 
 #include <cmath>
-#include <iostream>
-using namespace std;
 
 Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca, Cor* cor) : Circunferencia(0, new Vetor2(xAbsoluto - cenario.obterLargura() / 2, cenario.obterAltura() / 2 - yAbsoluto), nullptr, 0.0f, 0.0f, GL_POINTS) {
-	cabeca = new Circunferencia(raioCabeca, cor, 0.1f, 1.0f, GL_TRIANGLE_FAN);
+	cabeca = new Circunferencia(raioCabeca, new Vetor2(obterPose().obterX(), obterPose().obterY()), cor, 0.1f, 1.0f, GL_TRIANGLE_FAN);
 
-	nariz = new Circunferencia(raioCabeca * 0.2f, new Vetor2(0.0f, cabeca->obterRaio() + raioCabeca * 0.2f * 0.7f), cor, 0.1f, 1.0f, GL_TRIANGLE_FAN);
+	nariz = new Circunferencia(raioCabeca * 0.2f, new Vetor2(0.0f, cabeca->obterRaio() * 1.15f), cor, 0.1f, 1.0f, GL_TRIANGLE_FAN);
 
 	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(100.0f, 20.0f, new Vetor2(cabeca->obterRaio(), 0.0f), -45.0f, new Cor(0.6f, 0.6f, 0.0f))));
 	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(100.0f, 20.0f, new Vetor2(membrosDireito[Membro::BRACO]->obterLargura() * 0.5f, 0.0f), -45.0f, new Cor(0.6f, 0.6f, 0.0f))));
@@ -44,10 +42,6 @@ void
 Jogador::socar(Cenario& cenario, float angulo, int x, int y) {
 	Vetor2 poseSoco(x - cenario.obterLargura() / 2, (y - cenario.obterAltura() / 2) * -1);
 	float anguloSoco = obterAngulo(poseSoco);
-
-	// cout << "(" << poseSoco.obterX() << ", " << poseSoco.obterY() << ")" << endl;
-	// cout << "anguloSoco: " << anguloSoco << endl;
-	// cout << "obterAngulo(): " << obterAngulo() << endl;
 	
 	if (anguloSoco > obterAngulo()) {
 		membrosDireito[Membro::BRACO]->rotacionar(angulo);

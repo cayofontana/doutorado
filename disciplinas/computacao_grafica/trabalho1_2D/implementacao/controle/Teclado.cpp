@@ -46,6 +46,7 @@ Teclado::atualizar(Cenario* cenario) {
 		cenario->obterJogadores().at(1)->rotacionar(-2);
 	if (teclas.at((int)'w') || teclas.at((int)'W')) {
 		// if (!cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)) || (cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)) && !colisaoFrontal)) {
+		if (!cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)))
 			cenario->obterJogadores().at(1)->transladar(3.0f * -sinf(cenario->obterJogadores().at(1)->obterAngulo() * M_PI / 180.0f), 3.0f * cosf(cenario->obterJogadores().at(1)->obterAngulo() * M_PI / 180.0f));
 			// colisaoTraseira = false;
 		// }
@@ -54,6 +55,7 @@ Teclado::atualizar(Cenario* cenario) {
 	}
 	if (teclas.at((int)'s') || teclas.at((int)'S')) {
 		// if (!cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)) || (cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)) && colisaoFrontal)) {
+		if (!cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)))
 			cenario->obterJogadores().at(1)->transladar(-3.0f * -sinf(cenario->obterJogadores().at(1)->obterAngulo() * M_PI / 180.0f), -3.0f * cosf(cenario->obterJogadores().at(1)->obterAngulo() * M_PI / 180.0f));
 		// 	colisaoTraseira = colisaoFrontal = false;
 		// }

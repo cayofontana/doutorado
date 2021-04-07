@@ -32,6 +32,6 @@ Vetor2::incrementar(float x, float y) {
 }
 
 float
-Vetor2::calcularDistancia(Vetor2 Vetor2) {
-	return (sqrt(pow(x - Vetor2.obterX(), 2) + pow(y - Vetor2.obterY(), 2)));
+Vetor2::calcularDistancia(Vetor2 pose) {
+	return (sqrt(pow(x - pose.obterX(), 2) + pow(y - pose.obterY(), 2)));
 }
