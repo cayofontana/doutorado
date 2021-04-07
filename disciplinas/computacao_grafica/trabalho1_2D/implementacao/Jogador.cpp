@@ -22,12 +22,12 @@ Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca,
 Jogador::~Jogador() {
 	delete cabeca;
 	delete nariz;
-	for (auto par : membrosEsquerdo)
-		delete par.second;
 	for (auto par : membrosDireito)
 		delete par.second;
-	delete luvaEsquerda;
+	for (auto par : membrosEsquerdo)
+		delete par.second;
 	delete luvaDireita;
+	delete luvaEsquerda;
 }
 
 void
