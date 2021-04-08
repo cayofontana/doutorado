@@ -10,8 +10,8 @@ Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca,
 	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(100.0f, 20.0f, new Vetor2(cabeca->obterRaio(), 0.0f), -45.0f, new Cor(0.6f, 0.6f, 0.0f))));
 	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(100.0f, 20.0f, new Vetor2(membrosDireito[Membro::BRACO]->obterLargura() * 0.5f, 0.0f), -45.0f, new Cor(0.6f, 0.6f, 0.0f))));
 
-	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(100.0f, 20.0f, new Vetor2(cabeca->obterRaio(), 0.0f), 45.0f, new Cor(0.6f, 0.6f, 0.0f))));
-	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(100.0f, 20.0f, new Vetor2(membrosEsquerdo[Membro::BRACO]->obterLargura() * 0.5f, 0.0f), 45.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(100.0f, 20.0f, new Vetor2(-cabeca->obterRaio(), 0.0f), 45.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(100.0f, 20.0f, new Vetor2(-membrosEsquerdo[Membro::BRACO]->obterLargura() * 0.5f, 0.0f), 45.0f, new Cor(0.6f, 0.6f, 0.0f))));
 
 	luvaDireita = new Circunferencia(raioCabeca * 0.4f, new Vetor2(-membrosDireito[Membro::ANTEBRACO]->obterLargura() * 0.5f, 0.0f), new Cor(cabeca->obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f, GL_TRIANGLE_FAN);
 	luvaEsquerda = new Circunferencia(raioCabeca * 0.4f, new Vetor2(membrosEsquerdo[Membro::ANTEBRACO]->obterLargura() * 0.5f, 0.0f), new Cor(cabeca->obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f, GL_TRIANGLE_FAN);
@@ -56,6 +56,7 @@ Jogador::socar(Cenario& cenario, float angulo, int x, int y) {
 void
 Jogador::desenhar(void) {
 	glLoadIdentity();
+	
 	glPushMatrix();
 		glTranslatef(obterPose().obterX(), obterPose().obterY(), 0.0f);
 		glRotatef(obterAngulo(), 0.0f, 0.0f, 1.0f);
@@ -74,13 +75,13 @@ Jogador::desenhar(void) {
 
 			glPushMatrix();
 				Retangulo* anteBracoDireito = membrosDireito[Membro::ANTEBRACO];
-				glTranslatef(anteBracoDireito->obterPose().obterX(), 0.0f, 0.0f);
+				glTranslatef(anteBracoDireito->obterPose().obterX(), anteBracoDireito->obterPose().obterY(), 0.0f);
 				glRotatef(anteBracoDireito->obterAngulo(), 0.0f, 0.0f, 1.0f);
 				glTranslatef(-anteBracoDireito->obterPose().obterX(), -anteBracoDireito->obterAltura() * 0.4f, 0.0f);
 				anteBracoDireito->desenhar();
 
 				glPushMatrix();
-					glTranslatef(luvaDireita->obterPose().obterX(), 0.0f, 0.0f);
+					glTranslatef(luvaDireita->obterPose().obterX(), luvaDireita->obterPose().obterY(), 0.0f);
 					luvaDireita->desenhar();
 				glPopMatrix();
 				
@@ -90,20 +91,20 @@ Jogador::desenhar(void) {
 
 		glPushMatrix();
 			Retangulo* bracoEsquerdo = membrosEsquerdo[Membro::BRACO];
-			glTranslatef(-bracoEsquerdo->obterPose().obterX(), 0.0f, 0.0f);
+			glTranslatef(bracoEsquerdo->obterPose().obterX(), 0.0f, 0.0f);
 			glRotatef(bracoEsquerdo->obterAngulo(), 0.0f, 0.0f, 1.0f);
-			glTranslatef(-bracoEsquerdo->obterPose().obterX() + bracoEsquerdo->obterAltura(), 0.0f, 0.0f);
+			glTranslatef(bracoEsquerdo->obterPose().obterX() + bracoEsquerdo->obterAltura(), bracoEsquerdo->obterPose().obterY(), 0.0f);
 			bracoEsquerdo->desenhar();
 
 			glPushMatrix();
 				Retangulo* anteBracoEsquerdo = membrosEsquerdo[Membro::ANTEBRACO];
-				glTranslatef(-anteBracoEsquerdo->obterPose().obterX(), 0.0f, 0.0f);
+				glTranslatef(anteBracoEsquerdo->obterPose().obterX(), anteBracoEsquerdo->obterPose().obterY(), 0.0f);
 				glRotatef(anteBracoEsquerdo->obterAngulo(), 0.0f, 0.0f, 1.0f);
-				glTranslatef(anteBracoEsquerdo->obterPose().obterX(), -anteBracoEsquerdo->obterAltura() * 0.4f, 0.0f);
+				glTranslatef(-anteBracoEsquerdo->obterPose().obterX(), -anteBracoEsquerdo->obterAltura() * 0.4f, 0.0f);
 				anteBracoEsquerdo->desenhar();
 
 				glPushMatrix();
-					glTranslatef(luvaEsquerda->obterPose().obterX(), 0.0f, 0.0f);
+					glTranslatef(luvaEsquerda->obterPose().obterX(), luvaDireita->obterPose().obterY(), 0.0f);
 					luvaEsquerda->desenhar();
 				glPopMatrix();
 
