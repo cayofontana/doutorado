@@ -1,0 +1,17 @@
+3. Subsistema de controle baseado em métodos de rastreamento de caminho (path tracking)
+
+Artigos:
+
+R. Guidolini, A. F. De Souza, F. Mutz and C. Badue, “Neural-Based Model Predictive Control for
+Tackling Steering Delays of Autonomous Cars”, 2017 International Joint Conference on Neural
+Networks (IJCNN), Anchorage, Alasca, 2017.
+
+V. A. Laurense, J. Y. Goh, J. Y. and J. C. Gerdes, J. C., “Path-Tracking for Autonomous Vehicles at
+the Limit of Friction”, American Control Conference (ACC), 2017.
+[https://scholar.google.com.br/scholar?hl=pt-BR&as_sdt=0%2C5&q=Path-
+tracking+for+autonomous+vehicles+at+the+limit+of+friction&btnG=]
+
+v) K. Kritayakirana and J. C. Gerdes, “Autonomous Vehicle Control at the Limits of Handling”, Ph.D.
+thesis Stanford University Stanford, CA, 2012.
+[https://ddl.stanford.edu/sites/g/files/sbiybj9456/f/publications/2012_Thesis_Kritayakirana_Aut
+onomous_Vehicle_Control_at_the_Limits_of_Handling.pdf]
