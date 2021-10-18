@@ -23,7 +23,7 @@ public:
 	Retangulo* obterBase(void);
 	std::vector<Circunferencia*> obterRodas(void);
 	std::map<Braco, Retangulo*> obterBracos(void);
-	void disparar(Alvo*, Cenario*);
+	void disparar(Cenario*);
 
 private:
 	int larguraJanela;

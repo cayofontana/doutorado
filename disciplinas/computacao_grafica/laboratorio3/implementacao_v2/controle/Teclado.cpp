@@ -47,7 +47,7 @@ Teclado::teclar(unsigned char tecla, int valor, Cenario* cenario) {
 				cenario->obterRobo()->mover(Braco::PONTA, 1);
 				break;
 			case ' ':
-				cenario->obterRobo()->disparar(cenario->obterAlvo(), cenario);
+				cenario->obterRobo()->disparar(cenario);
 				break;
 			case 27 :
 				exit(0);

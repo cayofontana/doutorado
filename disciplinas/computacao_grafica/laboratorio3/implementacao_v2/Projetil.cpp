@@ -14,11 +14,10 @@ Projetil::Projetil(float raio, Pixel* pixel, float intervaloAngular, int tipo, f
 		deslocamentoVertical = braco->obterAltura() + braco->obterDeslocamentoVertical();
 		angulo += braco->obterAngulo();
 	}
+	cout << "deslocamentoHorizontal: " << deslocamentoHorizontal << endl;
+	cout << "deslocamentoVertical: " << deslocamentoVertical << endl;
 	mover(deslocamentoHorizontal, deslocamentoVertical);
 	rotacionar(angulo);
-
-	cout << "(" << obterPixel().obterX() << ", " << obterPixel().obterY() << ")" << endl;
-	cout << obterAngulo() << "°" << endl;
 }
 
 Projetil::~Projetil() {
@@ -28,10 +27,8 @@ Projetil::~Projetil() {
 
 void
 Projetil::desenhar(void) {
-	mover(5.0f * std::sin(obterAngulo()), 5.0f * std::cos(obterAngulo()));
-
-	cout << "(" << obterPixel().obterX() << ", " << obterPixel().obterY() << ")" << endl;
-	cout << obterAngulo() << "°" << endl;
+	float anguloRadianos = obterAngulo() * M_PI / 180.0f;
+	mover(5.0f * sinf(anguloRadianos), 5.0f * cosf(anguloRadianos));
 
 	glColor3f(obterPixel().obterCor().obterVermelho(), obterPixel().obterCor().obterVerde(), obterPixel().obterCor().obterAzul());
 	glLoadIdentity();	

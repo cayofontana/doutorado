@@ -89,7 +89,7 @@ Robo::obterBracos(void) {
 }
 
 void
-Robo::disparar(Alvo* alvo, Cenario* cenario) {
+Robo::disparar(Cenario* cenario) {
 	if (!projetil || (projetil && projetil->obterConsumidores().empty())) {
 		delete projetil;
 
@@ -98,7 +98,7 @@ Robo::disparar(Alvo* alvo, Cenario* cenario) {
 			_bracos.push_back(braco.second);
 
 		projetil = new Projetil(5.0f, new Pixel(0.0f, 0.0f, Cor(255.0f, 255.0f, 255.0f)), 0.1f, GL_TRIANGLE_FAN, 1.0f, _bracos);
-		projetil->adicionar(alvo);
+		projetil->adicionar(cenario->obterAlvo());
 		projetil->adicionar(cenario);
 	}
 }

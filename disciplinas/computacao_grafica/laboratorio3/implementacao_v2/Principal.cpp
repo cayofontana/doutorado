@@ -6,7 +6,7 @@ int
 main(int argc, char** argv) {
 	if (argc != 7) {
 		std::cout << "Erro!" << std::endl;
-		std::cout << "Use: ./lab3 <largura_janela> <altura_janela> <largura_cenário> <altura_cenário> <posição_janela_x> <posição_janela_y>" << std::endl;
+		std::cout << "Use: ./laboratorio3 <largura_janela> <altura_janela> <largura_cenário> <altura_cenário> <posição_janela_x> <posição_janela_y>" << std::endl;
 		
 		return (-1);
 	}

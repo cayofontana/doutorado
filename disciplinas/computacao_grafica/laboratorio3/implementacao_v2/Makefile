@@ -1,8 +1,15 @@
-CPP 		= g++
-CPPFLAGS 	= -Wall -lGL -lglut
+APP 		:= laboratorio3
+CPP 		:= g++
+CPPFLAGS	:= -Wall -lGL -lglut
 
-all:
-	$(CPP) -o lab3 primitivas/Cor.cpp primitivas/Pixel.cpp primitivas/FormaGeometrica2D.cpp primitivas/Circunferencia.cpp primitivas/Retangulo.cpp controle/Teclado.cpp Robo.cpp Projetil.cpp Alvo.cpp Cenario.cpp Principal.cpp $(CPPFLAGS)
+SOURCE		:= $(shell find . -name "*.cpp")
+OBJECTS		:= $(patsubst %.cpp, %.o, $(SOURCE))
+
+all: $(APP)
+	$(info PARA EXECUTAR O PROGRAMA, ENTRE COM A SEGUINTE INSTRUÇÃO: "./$(APP) <largura_janela> <altura_janela> <largura_cenário> <altura_cenário> <posição_janela_x> <posição_janela_y>")
+
+$(APP): $(OBJECTS)
+	$(CPP) -o $(APP) $(OBJECTS) $(CPPFLAGS)
 
 clean:
-	rm -rf *o lab3
+	rm -f $(OBJECTS) $(APP)
