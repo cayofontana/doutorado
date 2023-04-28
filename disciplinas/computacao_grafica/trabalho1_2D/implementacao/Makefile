@@ -1,6 +1,6 @@
 APP 		:= trabalhocg
 CPP 		:= g++
-CPPFLAGS	:= -Wall -lGL -lglut -ltinyxml2
+CPPFLAGS	:= -Wall -lGL -lglut
 
 SOURCE		:= $(shell find . -name "*.cpp")
 OBJECTS		:= $(patsubst %.cpp, %.o, $(SOURCE))
