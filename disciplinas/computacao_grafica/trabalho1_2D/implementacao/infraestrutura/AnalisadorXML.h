@@ -5,7 +5,7 @@
 #include "../Cenario.h"
 
 #include <vector>
-#include <tinyxml2.h>
+#include "../recursos/tinyxml2.h"
 
 using namespace std;
 using namespace tinyxml2;
