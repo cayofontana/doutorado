@@ -16,8 +16,8 @@ Projetil::Projetil(float raio, Pixel* pixel, float intervaloAngular, int tipo, f
 	}
 	cout << "deslocamentoHorizontal: " << deslocamentoHorizontal << endl;
 	cout << "deslocamentoVertical: " << deslocamentoVertical << endl;
-	mover(deslocamentoHorizontal, deslocamentoVertical);
 	rotacionar(angulo);
+	mover(deslocamentoHorizontal * sinf(angulo), deslocamentoVertical * cosf(angulo));
 }
 
 Projetil::~Projetil() {
