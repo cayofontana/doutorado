@@ -33,6 +33,7 @@ main(int argc, char** argv) {
 	glutKeyboardFunc(cenario.pressionarTecla);
 	glutKeyboardUpFunc(cenario.liberarTecla);
 	glutMouseFunc(cenario.clicar);
+    glutMotionFunc(cenario.moverMouse);
 	glutIdleFunc(cenario.ociar);
 	glutMainLoop();
 	return (0);

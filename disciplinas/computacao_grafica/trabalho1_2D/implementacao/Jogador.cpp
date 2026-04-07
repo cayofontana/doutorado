@@ -7,11 +7,11 @@ Jogador::Jogador(Cenario& cenario, int xAbsoluto, int yAbsoluto, int raioCabeca,
 
 	nariz = new Circunferencia(raioCabeca * 0.2f, new Vetor2(0.0f, cabeca->obterRaio() * 1.15f), cor, 0.1f, 1.0f, GL_TRIANGLE_FAN);
 
-	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(100.0f, 20.0f, new Vetor2(cabeca->obterRaio(), 0.0f), -45.0f, new Cor(0.6f, 0.6f, 0.0f))));
-	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(100.0f, 20.0f, new Vetor2(membrosDireito[Membro::BRACO]->obterLargura() * 0.5f, 0.0f), -45.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(raioCabeca * 2.0f, raioCabeca * .4f, new Vetor2(cabeca->obterRaio(), 0.0f), -45.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	membrosDireito.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(raioCabeca * 2.0f, raioCabeca * .4f, new Vetor2(membrosDireito[Membro::BRACO]->obterLargura() * 0.5f, 0.0f), -45.0f, new Cor(0.6f, 0.6f, 0.0f))));
 
-	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(100.0f, 20.0f, new Vetor2(-cabeca->obterRaio(), 0.0f), 45.0f, new Cor(0.6f, 0.6f, 0.0f))));
-	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(100.0f, 20.0f, new Vetor2(-membrosEsquerdo[Membro::BRACO]->obterLargura() * 0.5f, 0.0f), 45.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::BRACO, new Retangulo(raioCabeca * 2.0f, raioCabeca * .4f, new Vetor2(-cabeca->obterRaio(), 0.0f), 45.0f, new Cor(0.6f, 0.6f, 0.0f))));
+	membrosEsquerdo.insert(pair<Membro, Retangulo*>(Membro::ANTEBRACO, new Retangulo(raioCabeca * 2.0f, raioCabeca * .4f, new Vetor2(-membrosEsquerdo[Membro::BRACO]->obterLargura() * 0.5f, 0.0f), 45.0f, new Cor(0.6f, 0.6f, 0.0f))));
 
 	luvaDireita = new Circunferencia(raioCabeca * 0.4f, new Vetor2(-membrosDireito[Membro::ANTEBRACO]->obterLargura() * 0.5f, 0.0f), new Cor(cabeca->obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f, GL_TRIANGLE_FAN);
 	luvaEsquerda = new Circunferencia(raioCabeca * 0.4f, new Vetor2(membrosEsquerdo[Membro::ANTEBRACO]->obterLargura() * 0.5f, 0.0f), new Cor(cabeca->obterCor().obterVermelho() > 0.0f ? 0.0f : 1.0f, cabeca->obterCor().obterVerde() > 0.0f ? 0.0f : 1.0f, cabeca->obterCor().obterAzul() > 0.0f ? 0.0f : 1.0f), 0.1f, 1.0f, GL_TRIANGLE_FAN);
@@ -35,7 +35,7 @@ Jogador::definirOponente(Jogador* oponente) {
 
 void
 Jogador::encarar(Jogador& jogador) {
-	rotacionar(obterAngulo(jogador.obterPose()));
+	rotacionar((int)(obterAngulo(jogador.obterPose()) - obterAngulo()));
 }
 
 void
@@ -114,4 +114,46 @@ Jogador::desenhar(void) {
 
 		cabeca->desenhar();
 	glPopMatrix();
+}
+
+Circunferencia*
+Jogador::obterCabeca() {
+	return (cabeca);
+}
+
+float
+Jogador::obterRaioColisao() {
+	return (cabeca->obterRaio() * 2.2f);
+}
+
+void
+Jogador::voltarPosicaoInicialDosBracos() {
+	membrosDireito[Membro::BRACO]->rotacionar(-45 - (int)membrosDireito[Membro::BRACO]->obterAngulo());
+	membrosDireito[Membro::ANTEBRACO]->rotacionar(-45 - (int)membrosDireito[Membro::ANTEBRACO]->obterAngulo());
+	membrosEsquerdo[Membro::BRACO]->rotacionar(45 - (int)membrosEsquerdo[Membro::BRACO]->obterAngulo());
+	membrosEsquerdo[Membro::ANTEBRACO]->rotacionar(45 - (int)membrosEsquerdo[Membro::ANTEBRACO]->obterAngulo());
+}
+
+void Jogador::socarDireito(Cenario& cenario, float intensidade, int x, int y) {
+	float metadeJanela = cenario.obterLargura() / 2.0f;
+	float t = std::min(intensidade / metadeJanela, 1.0f);
+	int alvoBraco = (int)lround(-45.0f + 100.0f * t);
+	int alvoAnte = (int)lround(-45.0f - 65.0f * t);
+
+	membrosEsquerdo[Membro::BRACO]->rotacionar(45 - (int)membrosEsquerdo[Membro::BRACO]->obterAngulo());
+	membrosEsquerdo[Membro::ANTEBRACO]->rotacionar(45 - (int)membrosEsquerdo[Membro::ANTEBRACO]->obterAngulo());
+	membrosDireito[Membro::BRACO]->rotacionar(alvoBraco - (int)membrosDireito[Membro::BRACO]->obterAngulo());
+	membrosDireito[Membro::ANTEBRACO]->rotacionar(alvoAnte - (int)membrosDireito[Membro::ANTEBRACO]->obterAngulo());
+}
+
+void Jogador::socarEsquerdo(Cenario& cenario, float intensidade, int x, int y) {
+	float metadeJanela = cenario.obterLargura() / 2.0f;
+	float t = std::min(intensidade / metadeJanela, 1.0f);
+	int alvoBraco = (int)lround(45.0f - 100.0f * t);
+	int alvoAnte = (int)lround(45.0f + 65.0f * t);
+
+	membrosDireito[Membro::BRACO]->rotacionar(-45 - (int)membrosDireito[Membro::BRACO]->obterAngulo());
+	membrosDireito[Membro::ANTEBRACO]->rotacionar(-45 - (int)membrosDireito[Membro::ANTEBRACO]->obterAngulo());
+	membrosEsquerdo[Membro::BRACO]->rotacionar(alvoBraco - (int)membrosEsquerdo[Membro::BRACO]->obterAngulo());
+	membrosEsquerdo[Membro::ANTEBRACO]->rotacionar(alvoAnte - (int)membrosEsquerdo[Membro::ANTEBRACO]->obterAngulo());
 }

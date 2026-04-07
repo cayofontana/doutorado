@@ -8,6 +8,8 @@
 
 #include <GL/glut.h>
 #include <vector>
+#include <cmath>
+
 
 using namespace std;
 
@@ -24,12 +26,17 @@ public:
 	vector<Jogador*> obterJogadores(void);
 	void inserir(Jogador*);
 	bool jogadorVisivel(Jogador*);
+	bool jogadorDentroArena(Jogador*);
+	bool colisaoJogadores(Jogador*, Jogador*);
+	void atualizarOponente();
+	void reiniciarJogo();
 
 	static Cenario& obterInstancia(void);
 	static void exibir(void);
 	static void pressionarTecla(unsigned char, int, int);
 	static void liberarTecla(unsigned char, int, int);
 	static void clicar(int, int, int, int);
+	static void moverMouse(int, int);
 	static void ociar(void);
 
 private:
@@ -40,6 +47,14 @@ private:
 	Teclado* teclado;
 	Mouse* mouse;
 	vector<Jogador*> jogadores;
+	int pontosJogador;
+	int pontosOponente;
+	bool bloqueioJogadorDireita;
+	bool bloqueioJogadorEsquerda;
+	bool bloqueioOponenteDireita;
+	bool bloqueioOponenteEsquerda;
+	bool jogoEncerrado;
+	int contadorIA;
 
 	Cenario();
 };

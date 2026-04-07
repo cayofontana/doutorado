@@ -19,6 +19,11 @@ public:
 	void definirOponente(Jogador*);
 	void encarar(Jogador&);
 	void socar(Cenario&, float, int, int);
+	void voltarPosicaoInicialDosBracos();
+	Circunferencia* obterCabeca();
+	float obterRaioColisao();
+	void socarDireito(Cenario&, float, int, int);
+	void socarEsquerdo(Cenario&, float, int, int);
 
 	void desenhar(void) override;
 

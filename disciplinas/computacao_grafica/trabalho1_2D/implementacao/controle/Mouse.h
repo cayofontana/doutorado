@@ -8,6 +8,13 @@ public:
 	Mouse();
 
 	void clicar(int, int, int, int, Cenario&);
+	void mover(int, int, Cenario&);
+
+private:
+	bool pressionado;
+	int xInicial;
+	int xAtual;
+	
 };
 
 #endif

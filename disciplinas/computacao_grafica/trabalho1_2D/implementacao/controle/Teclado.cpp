@@ -1,5 +1,6 @@
 #include "Teclado.h"
 #include "../Cenario.h"
+#include "../Jogador.h"
 
 #include <algorithm>
 #include <cmath>
@@ -27,6 +28,11 @@ Teclado::teclar(unsigned char tecla, int valor, Cenario* cenario) {
 			definirValor(tecla, valor);
 			definirValor(tecla ^ 0x20, valor);
 			break;
+		case 'r':
+		case 'R':
+			if (valor)
+				cenario->reiniciarJogo();
+			break;
 		case 27:
 			exit(1);
 			break;
@@ -40,16 +46,29 @@ Teclado::definirValor(unsigned char tecla, int valor) {
 
 void
 Teclado::atualizar(Cenario* cenario) {
+    Jogador* jogador = cenario->obterJogadores().at(1);
+    Jogador* oponente = cenario->obterJogadores().at(0);
+
 	if (teclas.at((int)'a') || teclas.at((int)'A'))
-		cenario->obterJogadores().at(1)->rotacionar(2);
+		jogador->rotacionar(2);
 	if (teclas.at((int)'d') || teclas.at((int)'D'))
-		cenario->obterJogadores().at(1)->rotacionar(-2);
-	if (teclas.at((int)'w') || teclas.at((int)'W'))
-		if (!cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)))
-			cenario->obterJogadores().at(1)->transladar(3.0f * -sinf(cenario->obterJogadores().at(1)->obterAngulo() * M_PI / 180.0f), 3.0f * cosf(cenario->obterJogadores().at(1)->obterAngulo() * M_PI / 180.0f));
-	if (teclas.at((int)'s') || teclas.at((int)'S'))
-		if (!cenario->obterJogadores().at(1)->colidiu(cenario->obterJogadores().at(0)))
-			cenario->obterJogadores().at(1)->transladar(-3.0f * -sinf(cenario->obterJogadores().at(1)->obterAngulo() * M_PI / 180.0f), -3.0f * cosf(cenario->obterJogadores().at(1)->obterAngulo() * M_PI / 180.0f));
+		jogador->rotacionar(-2);
+
+	if (teclas.at((int)'w') || teclas.at((int)'W')) {
+        float dx = 3.0f * -sinf(jogador->obterAngulo() * M_PI / 180.0f);
+        float dy = 3.0f *  cosf(jogador->obterAngulo() * M_PI / 180.0f);
+        jogador->transladar(dx, dy);
+        if (!cenario->jogadorDentroArena(jogador) || cenario->colisaoJogadores(jogador, oponente))
+            jogador->transladar(-dx, -dy);
+    }
+
+	if (teclas.at((int)'s') || teclas.at((int)'S')) {
+        float dx = -3.0f * -sinf(jogador->obterAngulo() * M_PI / 180.0f);
+        float dy = -3.0f *  cosf(jogador->obterAngulo() * M_PI / 180.0f);
+        jogador->transladar(dx, dy);
+        if (!cenario->jogadorDentroArena(jogador) || cenario->colisaoJogadores(jogador, oponente))
+            jogador->transladar(-dx, -dy);
+    }
 }
 
 Cor

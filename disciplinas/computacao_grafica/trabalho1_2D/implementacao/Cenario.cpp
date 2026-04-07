@@ -16,6 +16,8 @@ Cenario::exibir(void) {
 	for (auto& jogador : cenario.jogadores)
 		jogador->desenhar();
 
+    // cenario.desenharPlacar();
+
 	glutSwapBuffers();
 }
 
@@ -35,14 +37,23 @@ Cenario::clicar(int botao, int estado, int x, int y) {
 }
 
 void
+Cenario::moverMouse(int x, int y) {
+	cenario.mouse->mover(x, y, cenario);
+}
+
+void
 Cenario::ociar(void) {
-	if (cenario.teclado->possuiTeclaPressionada())
-		cenario.teclado->atualizar(&cenario);
+	if (!cenario.jogoEncerrado) {
+		if (cenario.teclado->possuiTeclaPressionada())
+			cenario.teclado->atualizar(&cenario);
+		cenario.atualizarOponente();
+		// cenario.atualizarPontuacao();
+	}
 
 	glutPostRedisplay();
 }
 
-Cenario::Cenario() {
+Cenario::Cenario() : largura(0), altura(0), cor(nullptr), pontosJogador(0), pontosOponente(0), bloqueioJogadorDireita(false), bloqueioJogadorEsquerda(false), bloqueioOponenteDireita(false), bloqueioOponenteEsquerda(false), jogoEncerrado(false), contadorIA(0) {
 	teclado = new Teclado();
 	mouse = new Mouse();
 }
@@ -62,6 +73,7 @@ Cenario::configurar(const int largura, const int altura, Cor* cor) {
 	this->largura = largura;
 	this->altura = altura;
 	this->cor = cor;
+    vertices.clear();
 	vertices.push_back(new Vetor2(-(this->largura / 2), -(this->altura / 2)));
 	vertices.push_back(new Vetor2(-(this->largura / 2), (this->altura / 2)));
 	vertices.push_back(new Vetor2((this->largura / 2), (this->altura / 2)));
@@ -84,7 +96,9 @@ Cenario::inicializar(void) {
 	jogadores.at(1)->definirOponente(jogadores.at(0));
 
 	jogadores.at(0)->encarar(*jogadores.at(1));
-	jogadores.at(1)->encarar(*jogadores.at(0));	
+	jogadores.at(1)->encarar(*jogadores.at(0));
+
+    reiniciarJogo();
 }
 
 int
@@ -117,4 +131,76 @@ Cenario::jogadorVisivel(Jogador* jogador) {
 			(verticeObjeto.obterY() >= min((*verticeInicial)->obterY(), (*verticeAtual)->obterY())))
 			return (true);
 	return (false);
+}
+
+
+bool
+Cenario::jogadorDentroArena(Jogador* jogador) {
+	float x = jogador->obterPose().obterX();
+	float y = jogador->obterPose().obterY();
+	float r = jogador->obterCabeca()->obterRaio();
+	
+	return (x - r >= -largura / 2.0f && x + r <=  largura / 2.0f && y - r >= -altura / 2.0f && y + r <=  altura / 2.0f);
+}
+
+bool
+Cenario::colisaoJogadores(Jogador* jogador, Jogador* oponente) {
+	float dx = jogador->obterPose().obterX() - oponente->obterPose().obterX();
+	float dy = jogador->obterPose().obterY() - oponente->obterPose().obterY();
+	float dist = sqrtf(dx * dx + dy * dy);
+
+	return (dist < (jogador->obterRaioColisao() + oponente->obterCabeca()->obterRaio()));
+}
+
+void
+Cenario::reiniciarJogo() {
+	pontosJogador = 0;
+	pontosOponente = 0;
+	bloqueioJogadorDireita = false;
+	bloqueioJogadorEsquerda = false;
+	bloqueioOponenteDireita = false;
+	bloqueioOponenteEsquerda = false;
+	jogoEncerrado = false;
+	contadorIA = 0;
+
+	if (jogadores.size() >= 2) {
+		jogadores.at(0)->voltarPosicaoInicialDosBracos();
+		jogadores.at(1)->voltarPosicaoInicialDosBracos();
+		jogadores.at(0)->encarar(*jogadores.at(1));
+		jogadores.at(1)->encarar(*jogadores.at(0));
+	}
+}
+
+void Cenario::atualizarOponente() {
+	if (jogoEncerrado)
+		return;
+	
+	Jogador* cpu = jogadores.at(0);
+	Jogador* player = jogadores.at(1);
+
+	cpu->encarar(*player);
+	contadorIA++;
+
+	float dx = player->obterPose().obterX() - cpu->obterPose().obterX();
+	float dy = player->obterPose().obterY() - cpu->obterPose().obterY();
+	float dist = sqrtf(dx * dx + dy * dy);
+
+	if (dist > cpu->obterRaioColisao() + player->obterCabeca()->obterRaio() + 30.0f) {
+		float mx = 2.0f * -sinf(cpu->obterAngulo() * M_PI / 180.0f);
+		float my = 2.0f *  cosf(cpu->obterAngulo() * M_PI / 180.0f);
+		cpu->transladar(mx, my);
+		if (!jogadorDentroArena(cpu) || colisaoJogadores(cpu, player))
+			cpu->transladar(-mx, -my);
+		cpu->voltarPosicaoInicialDosBracos();
+	}
+	else {
+		float intensidade = largura * 0.35f + (rand() % 40);
+		int fase = (contadorIA / 18) % 4;
+		if (fase == 0)
+			cpu->socarDireito(*this, intensidade, 0, 0);
+		else if (fase == 2)
+			cpu->socarEsquerdo(*this, intensidade, 0, 0);
+		else
+			cpu->voltarPosicaoInicialDosBracos();
+	}
 }
