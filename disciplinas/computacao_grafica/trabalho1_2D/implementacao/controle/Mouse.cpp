@@ -5,7 +5,7 @@
 #include <cmath>
 #include <algorithm>
 
-Mouse::Mouse() : pressionado(false), xInicial(0), xAtual(0) {
+Mouse::Mouse() : pressionado(false), xInicial(0), yInicial(0), xAtual(0), yAtual(0), anguloReferencia(0.0f) {
 }
 
 void
@@ -16,7 +16,11 @@ Mouse::clicar(int botao, int estado, int x, int y, Cenario& cenario) {
 	if (estado == GLUT_DOWN) {
 		pressionado = true;
 		xInicial = x;
+		yInicial = y;
 		xAtual = x;
+		yAtual = y;
+
+		anguloReferencia = cenario.obterJogadores().at(1)->obterAngulo();
 	}
 	else {
 		pressionado = false;
@@ -30,15 +34,30 @@ Mouse::mover(int x, int y, Cenario& cenario) {
 		return;
 
 	xAtual = x;
+	yAtual = y;
 
-	float dx = (float)(xAtual - xInicial);
+	// deslocamento do mouse na tela
+	float dxTela = (float)(xAtual - xInicial);
+	float dyTela = (float)(yInicial - yAtual); // invertido para ficar compatível com eixo Y matemático
+
+	float angRad = anguloReferencia * M_PI / 180.0f;
+
+	// eixo "direita" do jogador
+	float direitaX = cosf(angRad);
+	float direitaY = sinf(angRad);
+
+	// projeção do deslocamento do mouse no eixo lateral do jogador
+	float dxLocal = dxTela * direitaX + dyTela * direitaY;
+
 	float metade = cenario.obterLargura() / 2.0f;
-	float intensidade = std::min(std::fabs(dx), metade);
+	float intensidade = std::min(std::fabs(dxLocal), metade);
 
-	if (dx > 0.0f)
-		cenario.obterJogadores().at(1)->socarDireito(cenario, intensidade, x, y);
-	else if (dx < 0.0f)
-		cenario.obterJogadores().at(1)->socarEsquerdo(cenario, intensidade, x, y);
+	Jogador* jogador = cenario.obterJogadores().at(1);
+
+	if (dxLocal > 0.0f)
+		jogador->socarDireito(cenario, intensidade, x, y);
+	else if (dxLocal < 0.0f)
+		jogador->socarEsquerdo(cenario, intensidade, x, y);
 	else
-		cenario.obterJogadores().at(1)->voltarPosicaoInicialDosBracos();
+		jogador->voltarPosicaoInicialDosBracos();
 }

@@ -5,16 +5,18 @@ class Cenario;
 
 class Mouse {
 public:
-	Mouse();
+    Mouse();
 
-	void clicar(int, int, int, int, Cenario&);
-	void mover(int, int, Cenario&);
+    void clicar(int, int, int, int, Cenario&);
+    void mover(int, int, Cenario&);
 
 private:
-	bool pressionado;
-	int xInicial;
-	int xAtual;
-	
+    bool pressionado;
+    int xInicial;
+    int yInicial;
+    int xAtual;
+    int yAtual;
+    float anguloReferencia;
 };
 
 #endif
