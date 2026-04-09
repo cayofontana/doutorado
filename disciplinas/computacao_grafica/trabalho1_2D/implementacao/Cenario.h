@@ -28,8 +28,8 @@ public:
 	bool jogadorVisivel(Jogador*);
 	bool jogadorDentroArena(Jogador*);
 	bool colisaoJogadores(Jogador*, Jogador*);
-	void atualizarOponente();
-	void reiniciarJogo();
+	void atualizarOponente(void);
+	void reiniciarJogo(void);
 
 	static Cenario& obterInstancia(void);
 	static void exibir(void);

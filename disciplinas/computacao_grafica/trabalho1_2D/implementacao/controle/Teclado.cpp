@@ -12,7 +12,7 @@ Teclado::~Teclado() {
 }
 
 void
-Teclado::teclar(unsigned char tecla, int valor, Cenario* cenario) {
+Teclado::teclar(unsigned char tecla, int valor, Cenario* cenario, bool teclaPressionada) {
 	switch (tecla) {
 		case 'a':
 		case 'd':
@@ -32,6 +32,14 @@ Teclado::teclar(unsigned char tecla, int valor, Cenario* cenario) {
 		case 'R':
 			if (valor)
 				cenario->reiniciarJogo();
+			break;
+		case 'c':
+		case 'C':
+			if (teclaPressionada)
+				for (auto jogador : cenario->obterJogadores())
+					jogador->alterarCirculoColisao();
+				// definirValor(tecla, valor);
+				// definirValor(tecla & 0x5f, valor);
 			break;
 		case 27:
 			exit(1);
@@ -55,20 +63,23 @@ Teclado::atualizar(Cenario* cenario) {
 		jogador->rotacionar(-2);
 
 	if (teclas.at((int)'w') || teclas.at((int)'W')) {
-        float dx = 3.0f * -sinf(jogador->obterAngulo() * M_PI / 180.0f);
-        float dy = 3.0f *  cosf(jogador->obterAngulo() * M_PI / 180.0f);
-        jogador->transladar(dx, dy);
-        if (!cenario->jogadorDentroArena(jogador) || cenario->colisaoJogadores(jogador, oponente))
-            jogador->transladar(-dx, -dy);
-    }
+		float dx = 3.0f * -sinf(jogador->obterAngulo() * M_PI / 180.0f);
+		float dy = 3.0f *  cosf(jogador->obterAngulo() * M_PI / 180.0f);
+		jogador->transladar(dx, dy);
+		if (!cenario->jogadorDentroArena(jogador) || cenario->colisaoJogadores(jogador, oponente))
+			jogador->transladar(-dx, -dy);
+	}
 
 	if (teclas.at((int)'s') || teclas.at((int)'S')) {
-        float dx = -3.0f * -sinf(jogador->obterAngulo() * M_PI / 180.0f);
-        float dy = -3.0f *  cosf(jogador->obterAngulo() * M_PI / 180.0f);
-        jogador->transladar(dx, dy);
-        if (!cenario->jogadorDentroArena(jogador) || cenario->colisaoJogadores(jogador, oponente))
-            jogador->transladar(-dx, -dy);
-    }
+		float dx = -3.0f * -sinf(jogador->obterAngulo() * M_PI / 180.0f);
+		float dy = -3.0f *  cosf(jogador->obterAngulo() * M_PI / 180.0f);
+		jogador->transladar(dx, dy);
+		if (!cenario->jogadorDentroArena(jogador) || cenario->colisaoJogadores(jogador, oponente))
+			jogador->transladar(-dx, -dy);
+	}
+
+	// if (teclas.at((int)'c') || teclas.at((int)'C'))
+	// 	jogador->alterarCirculoColisao();
 }
 
 Cor

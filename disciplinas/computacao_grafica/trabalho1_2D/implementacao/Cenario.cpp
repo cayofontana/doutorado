@@ -23,12 +23,12 @@ Cenario::exibir(void) {
 
 void
 Cenario::pressionarTecla(unsigned char tecla, int x, int y) {
-	cenario.teclado->teclar(tecla, 1, &cenario);
+	cenario.teclado->teclar(tecla, 1, &cenario, true);
 }
 
 void
 Cenario::liberarTecla(unsigned char tecla, int x, int y) {
-	cenario.teclado->teclar(tecla, 0, &cenario);
+	cenario.teclado->teclar(tecla, 0, &cenario, false);
 }
 
 void
@@ -149,7 +149,7 @@ Cenario::colisaoJogadores(Jogador* jogador, Jogador* oponente) {
 	float dy = jogador->obterPose().obterY() - oponente->obterPose().obterY();
 	float dist = sqrtf(dx * dx + dy * dy);
 
-	return (dist < (jogador->obterRaioColisao() + oponente->obterCabeca()->obterRaio()));
+	return (dist < (jogador->obterRaioColisao() + oponente->obterCabeca()->obterRaio() * 1.55f));
 }
 
 void

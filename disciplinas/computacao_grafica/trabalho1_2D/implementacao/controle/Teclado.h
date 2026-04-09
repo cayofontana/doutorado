@@ -12,7 +12,7 @@ public:
 	Teclado();
 	~Teclado();
 
-	void teclar(unsigned char, int, Cenario*);
+	void teclar(unsigned char, int, Cenario*, bool);
 	void definirValor(unsigned char, int);
 	void atualizar(Cenario*);
 	Cor obterCor(void);

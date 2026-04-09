@@ -19,9 +19,10 @@ public:
 	void definirOponente(Jogador*);
 	void encarar(Jogador&);
 	void socar(Cenario&, float, int, int);
-	void voltarPosicaoInicialDosBracos();
-	Circunferencia* obterCabeca();
-	float obterRaioColisao();
+	void voltarPosicaoInicialDosBracos(void);
+	void alterarCirculoColisao(void);
+	Circunferencia* obterCabeca(void);
+	float obterRaioColisao(void);
 	void socarDireito(Cenario&, float, int, int);
 	void socarEsquerdo(Cenario&, float, int, int);
 
@@ -34,9 +35,9 @@ private:
 	map<Membro, Retangulo*> membrosDireito;
 	Circunferencia* luvaEsquerda;
 	Circunferencia* luvaDireita;
+	Circunferencia* circuloColisao;
 	Jogador* oponente;
-	bool socouEsquerda;
-	bool socouDireita;
+	bool exibeCirculoColisao;
 };
 
 #endif
