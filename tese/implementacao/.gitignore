@@ -1,0 +1,19 @@
+# Ambiente virtual
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Modelos treinados
+*.keras
+*.h5
+
+# Backups do TensorFlow
+backup_treinamento*/
+
+dataset/
